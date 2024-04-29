@@ -26,7 +26,7 @@ export default function AppNavbar() {
     navigate('/signin')
   }
   return (
-    <Navbar bg="primary" variant="dark" expand="lg">
+    <Navbar style={{ backgroundColor: 'white', color: 'black' }} expand="lg">
       <Container>
         <Navbar.Brand href="#home">
           <FaShoppingCart style={{ color: "#0aad0a" }} />
@@ -38,6 +38,12 @@ export default function AppNavbar() {
             <Nav className="me-auto">
               <Nav.Link href="home">Home </Nav.Link>
               <Nav.Link href="MostVisited">MostVisited</Nav.Link>
+              <Nav.Link href="#">About</Nav.Link>
+              <Nav.Link href="#">Offers</Nav.Link>
+              <Nav.Link href="#">Seats</Nav.Link>
+              <Nav.Link href="#">Destination</Nav.Link>
+
+
 
             </Nav>
           ) : (

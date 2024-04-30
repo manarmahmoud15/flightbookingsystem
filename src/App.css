@@ -236,7 +236,7 @@ body {
   padding: 10px 20px;      
   background-color: #f0f0f0;
   cursor: pointer;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   transition: background-color 0.3s;
 }
 

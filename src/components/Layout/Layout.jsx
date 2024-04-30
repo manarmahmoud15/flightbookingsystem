@@ -4,6 +4,8 @@ import AppNavbar from '../Navbar/Navbar'
 import { userContext } from '../../Context/TokenContext'
 import Footer from '../Footer/Footer'
 export default function Layout() {
+  let { userToken, UserToken } = useContext(userContext);
+
   const {setUserToken}=useContext(userContext)
   useEffect(()=>{
     if (localStorage.getItem('userToken') !==null) 
@@ -15,9 +17,13 @@ export default function Layout() {
     <div>
       <AppNavbar/>
       <div >
-      <Outlet/>
+      <Outlet/>   
       </div>
-      <Footer/>
+      {userToken !== null ? (
+             <Footer/>
+          ) : (
+            ""
+          )}
     </div>
   )
 }

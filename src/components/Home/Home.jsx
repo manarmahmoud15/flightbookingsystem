@@ -1,5 +1,5 @@
 import React from "react";
-import video from "../../assets/205873.mp4";
+import video from "../../assets/Videos/205873.mp4";
 import { GrLocation } from "react-icons/gr";
 import { HiFilter } from "react-icons/hi";
 import { FaFacebook, FaInstagram, FaTripadvisor } from "react-icons/fa";
@@ -141,6 +141,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      
     </section>
   );
 }

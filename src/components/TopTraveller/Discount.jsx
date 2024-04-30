@@ -1,14 +1,14 @@
 
 import React from 'react'
 import '../TopTraveller/Discount.css'
-import img1 from "../../Assets/imgs/Aswan.jpeg";
-import img2 from "../../Assets/imgs/Egyp.jpeg";
-import img3 from "../../Assets/imgs/London.jpeg";
-import img4 from "../../Assets/imgs/Turky.jpeg";
-import img5 from "../../Assets/imgs/uk.jpeg";
-import img6 from "../../Assets/imgs/Dubai.webp";
-import img7 from "../../Assets/imgs/Swizerland.jpeg";
-import img8 from "../../Assets/imgs/Germany.jpeg"
+import img1 from "../../assets/imgs/Aswan.jpeg";
+import img2 from "../../assets/imgs/Egyp.jpeg";
+// import img3 from "../../Assets/imgs/London.jpeg";
+import img4 from "../../assets/imgs/Turky.jpeg";
+// import img5 from "../../Assets/imgs/uk.jpeg";
+import img6 from "../../assets/imgs/Dubai.webp";
+import img7 from "../../assets/imgs/Swizerland.jpeg";
+import img8 from "../../assets/imgs/Germany.jpeg"
 export default function Discount() {
     return (
 <>

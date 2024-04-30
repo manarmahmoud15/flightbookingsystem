@@ -94,7 +94,7 @@ export default function SignUp() {
 
   return (
     <div className="my-5">
-      <h1 style={{ color: "#0aad0a" }} className="text-center">
+      <h1 style={{ color: "hsl(199, 100%, 33%)" }} className="text-center">
         Register Form
       </h1>
       <form onSubmit={formik.handleSubmit}>
@@ -210,7 +210,7 @@ export default function SignUp() {
                 <Link
                   to={"/signin"}
                   className="fw-bold mx-3"
-                  style={{ color: "#0aad0a" }}
+                  style={{ color: "hsl(199, 100%, 33%)" }}
                 >
                   Log in
                 </Link>

@@ -41,15 +41,15 @@ export default function AppNavbar() {
               <Nav.Link href="#">Offers</Nav.Link>
               <Nav.Link href="#">Seats</Nav.Link>
               <Nav.Link href="#">Destination</Nav.Link>
-              <button className='btn' style={{borderRadius: "3rem"}}><a>Book Now</a></button>
+              <button className='btn px-3' style={{borderRadius: "3rem" ,color:"white"}}><a>Book Now</a></button>
             </Nav>
           ) : (
             ""
           )}
           {userToken === null ? (
             <Nav className="ms-auto">
-              <Nav.Link href="signup">Register</Nav.Link>
-              <Nav.Link href="signin">Log in</Nav.Link>
+              <Nav.Link href="signup" >Register</Nav.Link>
+              <Nav.Link href="signin" className="btn log">Log in</Nav.Link>
             </Nav>
           ) : (
             ""
@@ -70,7 +70,7 @@ export default function AppNavbar() {
                 <Nav.Link href="https://www.linkedin.com">
                   <FaLinkedin color="white" />
                 </Nav.Link>
-                <Nav.Link onClick={() => logOut()}>Log Out</Nav.Link>
+                <Nav.Link onClick={() => logOut()} className="btn log">Log Out</Nav.Link>
               </>
             ) : (
               ""

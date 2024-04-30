@@ -43,7 +43,7 @@ export default function AppNavbar() {
               <Nav.Link href="#">Destination</Nav.Link>
               <Nav.Link href="discount">Discounts</Nav.Link>
 
-              <button className='btn px-3' style={{borderRadius: "3rem" ,color:"white"}}><a>Book Now</a></button>
+
             </Nav>
           ) : (
             ""

@@ -7,10 +7,12 @@ import { FaListUl } from "react-icons/fa6";
 import { TbApps } from "react-icons/tb";
 import { IoCalendarNumber } from "react-icons/io5";
 import { RiAccountPinCircleLine } from "react-icons/ri";
+import Discount from "../TopTraveller/Discount";
 
 export default function Home() {
   return (
-    <section className="home">
+     <>
+      <section className="home">
       <div className="overlay"></div>
       <video
         src={video}
@@ -143,5 +145,8 @@ export default function Home() {
       </div>
       
     </section>
+    <Discount/> 
+     </>
+   
   );
 }

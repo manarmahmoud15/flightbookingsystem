@@ -3,34 +3,33 @@ import { useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import {
-  FaShoppingCart,
-  FaFacebook,
-  FaTwitter,
-  FaInstagram,
-  FaLinkedin,
-} from "react-icons/fa";
+import { MdOutlineTravelExplore } from "react-icons/md";
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { userContext } from "../../Context/TokenContext";
 import { useNavigate } from "react-router-dom";
 // import { counterContext } from "../../Context/counter";
 
 export default function AppNavbar() {
-  let { userToken,setUserToken } = useContext(userContext);
+  let { userToken, setUserToken } = useContext(userContext);
   // let {counter} = useContext(counterContext);
 
-  let navigate = useNavigate()
-  function logOut ()
-  {
-    localStorage.removeItem('userToken')
-    setUserToken(null)
-    navigate('/signin')
+  let navigate = useNavigate();
+  function logOut() {
+    localStorage.removeItem("userToken");
+    setUserToken(null);
+    navigate("/signin");
   }
   return (
-    <Navbar style={{ backgroundColor: 'white', color: 'black' }} expand="lg">
+    <Navbar style={{ backgroundColor: "white", color: "black" }} expand="lg">
       <Container>
         <Navbar.Brand href="#home">
-          <FaShoppingCart style={{ color: "#0aad0a" }} />
-          <span className="fw-bold"> Travel </span>
+          <a style={{textDecoration: 'none'}} className="fw-bold logo flex">
+            {" "}
+            <h1>
+              <MdOutlineTravelExplore className="icon" />
+              Travel
+            </h1>{" "}
+          </a>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -42,8 +41,8 @@ export default function AppNavbar() {
               <Nav.Link href="#">Offers</Nav.Link>
               <Nav.Link href="#">Seats</Nav.Link>
               <Nav.Link href="#">Destination</Nav.Link>
-
               <Nav.Link href="discount">Discounts</Nav.Link>
+
 
             </Nav>
           ) : (
@@ -51,8 +50,8 @@ export default function AppNavbar() {
           )}
           {userToken === null ? (
             <Nav className="ms-auto">
-              <Nav.Link href="signup">Register</Nav.Link>
-              <Nav.Link href="signin">Log in</Nav.Link>
+              <Nav.Link href="signup" >Register</Nav.Link>
+              <Nav.Link href="signin" className="btn log">Log in</Nav.Link>
             </Nav>
           ) : (
             ""
@@ -73,7 +72,7 @@ export default function AppNavbar() {
                 <Nav.Link href="https://www.linkedin.com">
                   <FaLinkedin color="white" />
                 </Nav.Link>
-                <Nav.Link  onClick={()=>logOut()}>Log Out</Nav.Link>
+                <Nav.Link onClick={() => logOut()} className="btn log">Log Out</Nav.Link>
               </>
             ) : (
               ""

@@ -1,6 +1,310 @@
 .App {
   text-align: center;
 }
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+:root {
+  --primaryColor: hsl(199, 100%, 33%);
+  --secondaryColor: hsl(187, 85%, 43%);
+  --gradientColor: linear-gradient(to right, hsl(187, 85%, 43%), hsl(199, 100%, 33%));
+  --whiteColor: hsl(0, 0%, 100%);
+  --blackColor: hsl(201, 33%, 16%);
+  --textColor: hsl(240, 4%, 36%);
+  --whiteColorDeam: hsl(0, 0%, 93%);
+  --greytext: rgb(190, 190, 190);
+  --inputColor: rgb(239, 239, 239);
+  --bodyColor: rgb(240, 240, 246);
+  --cardBG: rgb(255, 255, 235);
+}
+a {
+  text-decoration: none;
+}
+li {
+  list-style: none;
+}
+.section {
+  padding: 4rem 0 2rem;
+}
+.container {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+.icon {
+  font-size: 2rem;
+  cursor: pointer;
+}
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+.btn {
+  padding: 0.6rem 1.5rem;
+  background: var(--gradientColor);
+  /* border-radius: 3rem; */
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.btn a {
+  color: var(--whiteColor);
+  font-weight: 500;
+}
+.btn:hover, .btn:focus {
+  background-color: var(--secondaryColor);
+}
+img, video {
+  width: 100%;
+  height: auto;
+}
+input, button {
+  font-size: 100%;
+}
+body {
+  background: var(--bodyColor);
+}
+.home {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+.home .overlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(47, 106, 127);
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  mix-blend-mode: hard-light;
+}
+.home video {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  object-fit: cover;
+}
+.HomeContent {
+  width: 100%;
+  height: max-content;
+  padding: 8rem 1.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  color: var(--whiteColor);
+  z-index: 100;
+  text-align: center;
+}
+.HomeContent .textDiv {
+  padding: 2rem 0;
+}
+.HomeContent .textDiv .smalltext, .HomeContent .textDiv .homeTitle {
+  text-transform: uppercase;
+}
+.HomeContent .textDiv .homeTitle {
+  font-size: 1.8rem;
+}
+/* .HomeContent .cardDiv {
+  position: relative;
+  padding: 2rem 1rem;
+  background-color: var(--whiteColor);
+  border-radius: 10px;
+}
+.HomeContent .cardDiv label {
+  display: block;
+  color: var(--textColor);
+  font-size: 13px;
+  font-weight: 500;
+}
+.HomeContent .cardDiv .input {
+  height: 40px;
+  padding: 0 1rem;
+  background-color: var(--inputColor);
+  border-radius: 3rem;
+}
+.HomeContent .cardDiv .input input {
+  background: none;
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 13px;
+  font-weight: 500;
+}
+.HomeContent .cardDiv .input input::placeholder {
+  font-size: 13px;
+}
+.HomeContent .cardDiv .input .icon {
+  font-size: 18px;
+  color: var(--primaryColor);
+  margin-left: 10px;
+}
+.HomeContent .cardDiv .searchOptions {
+  position: absolute;
+  background: var(--gradientColor);
+  width: max-content;
+  bottom: -0.7rem;
+  padding: 5px 1rem;
+  border-radius: 3rem;
+  left: 50%;
+  transform: translate(-50%);
+  justify-content: center;
+  cursor: pointer;
+  /* transition: background-color 0.3s ease; */
+/*}
+.HomeContent .cardDiv .searchOptions:hover {
+  background: var(--primaryColor);
+}
+.HomeContent .cardDiv .searchOptions .icon {
+  font-size: 18px;
+}
+.HomeContent .cardDiv .searchOptions span {
+  font-size: 13px;
+}
+.HomeContent .cardDiv label{
+  display: block;
+  color: var(--textColor);
+  padding-bottom: 10px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.HomeContent .cardDiv .label_total {
+  justify-content: space-between;
+  align-items: center;
+}
+.HomeContent .cardDiv .label_total .total {
+  color: var(--textColor);
+  font-size: 18px;
+  padding-bottom: 10px;
+} 
+.HomeContent .homeFooterIcons 
+{
+  width: 100%;
+  justify-content: space-between;
+}
+.HomeContent .homeFooterIcons .icon {
+  font-size: 20px;
+  margin: 0 5px;
+  color: var(--whiteColor);
+  font-weight: 600;
+}
+.HomeContent .homeFooterIcons .icon:hover {
+  color: var(--primaryColor);
+} */
+
+/* Start Search Section */
+.search .sectioncontainer{
+  width: 100%;
+  padding: 1.5rem;
+  border: 2px solid grey;
+  border-radius: 16px;
+  row-gap: 2rem;
+  background: var(--whiteColor);
+}
+.btnBox {
+  display: flex;
+  justify-content: center; 
+  align-items: center;    
+}
+
+.btns {
+  width: 50%;
+  display: flex;           
+  justify-content: space-evenly; 
+  align-items: center;      
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.singleBtn {
+  flex: 1;                  
+  text-align: center;      
+  padding: 10px 20px;      
+  background-color: #f0f0f0;
+  cursor: pointer;
+  /* border-radius: 5px; */
+  transition: background-color 0.3s;
+}
+
+.singleBtn:hover {
+  background-color: #ddd; /* Slightly darken the button on hover */
+}
+
+.singleBtn span {
+  font-size: 16px;
+  color: #333;
+}
+
+
+.search .sectioncontainer .btns .singleBtn:hover {
+  background: var(--primaryColor);
+  color: var(--whiteColor);
+  /* font-weight: 500; */
+  transition: .4s ease;
+}
+.search .sectioncontainer .active {
+  background: var(--primaryColor);
+  color: var(--whiteColor);
+  font-weight: 500;
+}
+.search .sectioncontainer .searchInput {
+  width: 100%;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.search .sectioncontainer .searchInput .singleInput .iconDiv {
+  padding: 10px 5px;
+  border-radius: 3rem;
+  background: rgb(233, 233, 233);
+  margin-right: 1rem;
+}
+.search .sectioncontainer .searchInput .singleInput .iconDiv .icon {
+  color: var(--blackColor);
+  opacity: 0.7;
+}
+.search .sectioncontainer .searchInput .singleInput .texts {
+  display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.search .sectioncontainer .searchInput .singleInput .texts h4{
+  padding-top: 0;
+  /* padding-bottom: 0.7rem; */
+  color: var(--blackColor);
+  /* font-weight: 700; */
+}
+.search .sectioncontainer .searchInput .singleInput .texts input {
+  width: 95%;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+.search .sectioncontainer .searchInput .singleInput .texts input::placeholder {
+  font-size: 12px;
+  opacity: 0.5;
+}
+.btnBlock {
+  width: 20%;
+  margin-top: 25px;
+  
+}
+/* End Search Section */
 
 .App-logo {
   height: 40vmin;

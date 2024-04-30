@@ -13,7 +13,7 @@ export default function Layout() {
   return (
     <div>
       <AppNavbar/>
-      <div className="container">
+      <div >
       <Outlet/>
 
       </div>

@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import AppNavbar from '../Navbar/Navbar'
 import { userContext } from '../../Context/TokenContext'
+import Footer from '../Footer/Footer'
 export default function Layout() {
   const {setUserToken}=useContext(userContext)
   useEffect(()=>{
@@ -15,8 +16,8 @@ export default function Layout() {
       <AppNavbar/>
       <div className="container">
       <Outlet/>
-
       </div>
+      <Footer/>
     </div>
   )
 }

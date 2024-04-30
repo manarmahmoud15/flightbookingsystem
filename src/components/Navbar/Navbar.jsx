@@ -43,7 +43,7 @@ export default function AppNavbar() {
               <Nav.Link href="#">Seats</Nav.Link>
               <Nav.Link href="#">Destination</Nav.Link>
 
-
+              <Nav.Link href="discount">Discounts</Nav.Link>
 
             </Nav>
           ) : (

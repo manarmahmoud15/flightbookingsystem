@@ -1,0 +1,191 @@
+:root {
+    --primaryColor: hsl(199,100%,33%);
+    --SecondaryColor: hsl(187,85%,43%);
+    --GradientColor: linear-gradient(to right, hsl(199,100%,33%), hsl(187,85%,43%));
+    --whiteColor: hsl(0,0%,100%);
+    --blackColor: hsl(201,33%,16%);
+    --textColor: hsl(240,4%,36%);
+    --WhiteColorDeam: hsl(0,0%,93%);
+    --greyText: rgb(190,190,190);
+    --inputColor: rgb(239,239,239);
+    --bodyColor: rgb(240,240,240);
+    --cardBG: rgb(225,225,235);
+  }
+  
+  .footer {
+    width: 100%;
+    position: relative;
+    padding: 2rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+  }
+  
+  .footer .videoDiv {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+  }
+  
+  .footer .videoDiv video {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+  
+  .footer .videoDiv::after {
+    content: '';
+    position: absolute;
+    background: rgba(10,84,107,0.307);
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    mix-blend-mode: multiply;
+  }
+  
+  .footer .secContent {
+    width: 100%;
+    height: max-content;
+    padding: 2rem initial;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: auto;
+    row-gap: 2rem;
+    z-index: 100;
+  }
+  .footer .secContent .contactDiv{
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 1rem;
+
+  }
+  .footer .secContent .contactDiv .text small{
+font-size: 13px;
+font-weight: 400;
+color: var(--whiteColor);
+  }
+  .footer .secContent .contactDiv .text h2{
+    color: var(--whiteColor);
+    font-size: 2rem;
+  }
+  .inputDiv{
+width: 100%;
+gap: 1rem;
+flex-direction: column;
+  }
+  .inputDiv input{
+    width: 100%;
+    padding: .5rem .6rem;
+    border-radius: 3rem;
+    border: 1px solid var(--whiteColor);
+    outline: none;
+    background: transparent;
+    color: var(--whiteColor);
+  }
+  .inputDiv input::placeholder {
+    color: var(--whiteColor);
+    opacity: .7;
+  }
+  .inputDiv .btn.flex{
+    width: 100%; 
+    background-color: var(--primaryColor) !important; 
+    color: var(--whiteColor);
+    font-weight: 500;
+    justify-content: center; 
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem .6rem; 
+    border-radius: 3rem; 
+    border: none; 
+    transition: .5s ease-in-out;
+  }
+  .inputDiv .btn.flex:hover{
+    color: var(--primaryColor);
+    background-color: var(--whiteColor) !important;
+    transform:translateY(7px);
+  }
+  .inputDiv input .btn .icon{
+    font-size: 18px;
+  }
+  li{
+    list-style: none;
+  }
+  .footerCard {
+    display: flex;
+    position: relative;
+    padding: 1rem 1rem ;
+    gap: 2rem;
+    border-radius: 1rem;
+    background-color: var(--bodyColor);
+    width: 100%;
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start;
+
+overflow: hidden;
+  }
+  .footerCard .footerIntro{
+    flex-basis: 60%;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    row-gap: .5rem;
+  }
+  .footerCard .footerIntro .logoDiv .logo{
+color: var(--primaryColor);
+font-size: 25px;
+text-decoration: none;
+
+  }
+  .footerCard .footerIntro .footerParagraph{
+font-size: 13px;
+color: var(--textColor);
+  }
+  /* .footerCard .footerIntro .footerSocial{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  } */
+  .footerCard .footerIntro .footerSocial .icon{
+    color: var(--blackColor);
+    font-size: 25px;
+  }
+  .footerCard .footerIntro .footerSocial .icon:hover{
+   color: var(--primaryColor);
+  }
+  .footerCard  .footerLinks{
+    display: grid; 
+    flex-basis: 50%;
+    width: 100%;
+    gap: 1rem;
+    grid-template-columns: repeat(3,1fr);
+    justify-content: space-around;
+  }
+  .footerCard .footerLinks .LinkGroup span.groupTitle {
+    display: block;
+    font-weight: 600;
+    color: var(--primaryColor);
+    
+  
+  }
+  .footerCard .footerLinks .LinkGroup .footerList {
+    font-size: 13px;
+    color: var(--textColor);
+    transition: .3s ease-in-out;
+  }
+  .footerCard .footerLinks .LinkGroup .footerList .icon{
+    font-size: 15px;
+    color: var(--greyText);
+  }
+  .footerCard .footerLinks .LinkGroup .footerList:hover{
+    color: var(--primaryColor);
+    transform: translateX(7px);
+    cursor: pointer;
+  }
+

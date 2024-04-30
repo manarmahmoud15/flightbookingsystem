@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+.mostVisitedCard {
+  width: 200px;
+  height: 200px;
+  background-color: lightblue;
+  margin: 10px;
+  opacity: 0;
+  transition: opacity 0.5s ease; 
+  /* Fade-in effect */
+}

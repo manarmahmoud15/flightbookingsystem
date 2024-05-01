@@ -1,6 +1,7 @@
 import React from "react";
-import FooterVideo from "../../assets/Videos/myvideofooter.mp4";
-import Video2 from "../../assets/Videos/Video2.mp4";
+// import FooterVideo from "../../assets/Videos/myvideofooter.mp4";
+// import Video2 from "../../assets/Videos/Video2.mp4";
+import Video2 from "../../Assets/Videos/Video2.mp4"
 import { FiChevronRight, FiSend } from "react-icons/fi";
 // import  "../Footer/Footer.module.scss"
 import "../Footer/Footer.css";

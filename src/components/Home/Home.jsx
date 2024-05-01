@@ -8,6 +8,7 @@ import { TbApps } from "react-icons/tb";
 import { IoCalendarNumber } from "react-icons/io5";
 import { RiAccountPinCircleLine } from "react-icons/ri";
 import Discount from "../TopTraveller/Discount";
+import MostVisited from "../MostVisited/MostVisited";
 
 export default function Home() {
   return (
@@ -145,6 +146,7 @@ export default function Home() {
       </div>
       
     </section>
+    <MostVisited/>
     <Discount/> 
      </>
    

@@ -1,5 +1,5 @@
 import React from "react";
-import video from "../../assets/Videos/205873.mp4";
+import video from "../../Assets/Videos/205873.mp4";
 import { GrLocation } from "react-icons/gr";
 import { HiFilter } from "react-icons/hi";
 import { FaFacebook, FaInstagram, FaTripadvisor } from "react-icons/fa";

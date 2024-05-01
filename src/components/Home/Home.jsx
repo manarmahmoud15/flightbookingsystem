@@ -1,10 +1,6 @@
 import React from "react";
 import video from "../../assets/Videos/205873.mp4";
 import { GrLocation } from "react-icons/gr";
-import { HiFilter } from "react-icons/hi";
-import { FaFacebook, FaInstagram, FaTripadvisor } from "react-icons/fa";
-import { FaListUl } from "react-icons/fa6";
-import { TbApps } from "react-icons/tb";
 import { IoCalendarNumber } from "react-icons/io5";
 import { RiAccountPinCircleLine } from "react-icons/ri";
 import Discount from "../TopTraveller/Discount";

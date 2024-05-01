@@ -55,7 +55,7 @@ const options = {
      {flightDetails.description}
     </p>
     <hr></hr>
-    <a href="sd" className="btn btn-info">
+    <a href="sd" className="btn btn-info text-white" >
     <i class="fa-solid fa-circle-info text-light"></i>  Details 
     </a>
   </div>

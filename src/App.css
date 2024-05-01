@@ -54,6 +54,7 @@ li {
   outline: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  
 }
 .btn a {
   color: var(--whiteColor);
@@ -242,7 +243,7 @@ body {
 }
 
 .singleBtn:hover {
-  background-color: #ddd; /* Slightly darken the button on hover */
+  background-color: #ddd; 
 }
 
 .singleBtn span {
@@ -252,10 +253,13 @@ body {
 
 
 .search .sectioncontainer .btns .singleBtn:hover {
-  background: var(--primaryColor);
+  background: var(--gradientColor);
   color: var(--whiteColor);
   /* font-weight: 500; */
   transition: .4s ease;
+}
+.search .sectioncontainer .btns .singleBtn:hover span {
+  color: white ;
 }
 .search .sectioncontainer .active {
   background: var(--primaryColor);

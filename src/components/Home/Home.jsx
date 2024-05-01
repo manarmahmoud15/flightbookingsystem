@@ -116,11 +116,11 @@ export default function Home() {
               <div className="searchInput flex">
                 <div className="singleInput flex">
                   <div className="iconDiv">
-                    <IoCalendarNumber className="icon" />
+                    <IoCalendarNumber className="icon"  style={{color:'grey'}}/>
                   </div>
                   <div className="texts">
                     <h4>Check In</h4>
-                    <input type="date" placeholder="Add date" />
+                    <input type="date" placeholder="Add date"style={{color:'grey'}} />
                   </div>
                 </div>
               </div>
@@ -128,17 +128,17 @@ export default function Home() {
               <div className="searchInput flex">
                 <div className="singleInput flex">
                   <div className="iconDiv">
-                    <IoCalendarNumber className="icon" />
+                    <IoCalendarNumber className="icon"style={{color:'grey'}} />
                   </div>
                   <div className="texts">
                     <h4>Check Out</h4>
-                    <input type="date" placeholder="Add date" />
+                    <input type="date" placeholder="Add date" style={{color:'grey'}} />
                   </div>
                 </div>
               </div>
 
             </div>
-            <button className="btn btnBlock" style={{borderRadius: "50px"}}>Search Flight</button>
+            <button className="btn btnBlock" style={{borderRadius: "50px" , color:'white'}}>Search Flight</button>
 
 
           </div>

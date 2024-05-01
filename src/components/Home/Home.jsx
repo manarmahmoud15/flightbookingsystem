@@ -1,5 +1,5 @@
 import React from "react";
-import video from "../../assets/Videos/205873.mp4";
+import video from "../../Assets/Videos/205873.mp4";
 import { GrLocation } from "react-icons/gr";
 import { IoCalendarNumber } from "react-icons/io5";
 import { RiAccountPinCircleLine } from "react-icons/ri";

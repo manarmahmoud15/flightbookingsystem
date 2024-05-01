@@ -9,6 +9,7 @@ import TokenContextProvider from "./Context/TokenContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import MostVisited from './components/MostVisited/MostVisited'
 import Details from './components/Details/Details'
+import Discount from './components/TopTraveller/Discount'
 
 
 const router = createBrowserRouter([

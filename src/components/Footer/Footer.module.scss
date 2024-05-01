@@ -1,0 +1,61 @@
+:root{
+    ---primaryColor:hsl(199,100%,33%);
+    ---SecondaryColor:hsl(187,85%,43%);
+    ---GradientColor:linear-gradient(t0-right, hsl(199,100%,33%),hsl(187,85%,43%));
+    ---whiteColor:hsl(0,0%,100%);
+    ---blackColor:hsl(201,33%,16%);
+    ---textColor:hsl(240,4%,36%);
+    ---WhiteColorDeam:hsl(0,0%,93%);
+    ---greyText:rgb(190,190,190);
+    ---inputColor:rgb(239,239,239);
+    ---bodyColor:rgb(240,240,240);
+    ---cardBG:rgb(225,225,235)
+}
+.footer{
+
+    width: 100%;
+    position: relative;
+    padding: 2rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    // color: aqua;
+
+    .videoDiv{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: 1;
+        video{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+    
+        }
+        &::after{
+            content: '';
+            position: absolute;
+            background: rgba(10,84,107,0.307);
+            top:0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            mix-blend-mode: multiply;
+        }
+    };
+    .secContent{
+width: 100%;
+height: max-content;
+padding: 2rem initial;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+margin: auto;
+row-gap: 2rem;
+z-index: 100;
+    };
+
+ 
+}

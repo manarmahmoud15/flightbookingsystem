@@ -19,6 +19,7 @@ const router = createBrowserRouter([
       { path: "home", element: <ProtectedRoute><Home /></ProtectedRoute>  },
       { path: "MostVisited", element:<ProtectedRoute> <MostVisited/> </ProtectedRoute>  },
       { path: "product", element:<ProtectedRoute><Details /> </ProtectedRoute> },
+      { path: "discount", element:<ProtectedRoute><Discount/> </ProtectedRoute> },
       { path: "signin", element: <SignIn /> },
       { path: "signup", element: <SignUp /> },
       { path: "*", element: <NotFound /> },

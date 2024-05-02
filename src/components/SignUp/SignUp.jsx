@@ -22,7 +22,7 @@ export default function SignUp() {
       .matches(/^[A-Z][a-z0-9]{6,15}$/, "Enter Valid Password"),
     rePassword: Yup.string()
       .required("Confirm Password is reqired")
-      .oneOf([Yup.ref("password")], "Not Matched"),
+      .oneOf([Yup.ref("password") ], "Not Matched"),
   });
 
   // function validate(val) {

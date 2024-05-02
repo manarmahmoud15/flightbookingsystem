@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { bool } from 'yup';
 
 export default function FlightCard(props) {
 const {flightDetails} = props;
+let isInitialized = false;
 const mostVisitedCard = document.querySelectorAll('.mostVisitedCard')
 const options = {
     root: null,
@@ -14,6 +16,7 @@ const options = {
       if (entity.isIntersecting) {
         setTimeout(() => {
           entity.target.style.opacity = 1;
+          isInitialized = true;
        //   localStorage.setItem(`opacityCard${index}` , '1');
         }, 500 * Math.pow(2, index));
       observer.unobserve(entity.target);
@@ -24,6 +27,17 @@ const options = {
   mostVisitedCard.forEach(card => {
     observer.observe(card);      
   });
+
+  // useEffect(()=>{
+  //   if(isInitialized)
+  //   {
+  //     mostVisitedCard.forEach(card => {
+  //       card.style.opacity = 1;
+  //     });
+  //   }
+  // },[])
+  
+ 
 //   mostVisitedCard.forEach((card, index) => {
 //     const opacity = localStorage.getItem(`opacityCard${index}`);
 //     if( opacity === '1')
@@ -44,7 +58,7 @@ const options = {
   <div className="card-body">
     <h3 className="card-title">{flightDetails.country}</h3>
 
-    <h5 className="card-title">
+    <h5 className="card-title"> 
          <i class="fa-solid fa-location-dot text-info"></i> {flightDetails.city}
          <span style={{position: 'absolute', right : '7%'}}> 
          <strong>{flightDetails.price}$ </strong> </span>
@@ -55,7 +69,7 @@ const options = {
      {flightDetails.description}
     </p>
     <hr></hr>
-    <a href="sd" className="btn btn-info">
+    <a href="FlightDetails" className="btn btn-info">
     <i class="fa-solid fa-circle-info text-light"></i>  Details 
     </a>
   </div>

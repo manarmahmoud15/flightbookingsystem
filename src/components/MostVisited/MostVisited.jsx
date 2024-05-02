@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import data from '../../data.json'
 import FlightCard from '../FlightCard/FlightCard';
 
 export default function MostVisited() {
  // const mostVisitedCards = document.querySelectorAll('.mostVisitedCard');
-const mostVisitedFlights = data.mostVisitedFlights;
+ let[mostVisitedFlights, setMostVisited] = useState([]);
+ mostVisitedFlights = data.mostVisitedFlights;
 
-
+useEffect(()=>{
+setMostVisited();
+}, [])
   
 
 

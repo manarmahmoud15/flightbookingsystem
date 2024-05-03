@@ -354,3 +354,8 @@ body {
   transition: opacity 0.5s ease; 
   /* Fade-in effect */
 }
+
+.vl {
+  border-left: 3px solid black;
+  height: 45px;
+}

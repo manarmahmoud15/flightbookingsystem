@@ -9,8 +9,7 @@ import TokenContextProvider from "./Context/TokenContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import MostVisited from './components/MostVisited/MostVisited'
 import Details from './components/Details/Details'
-import Discount from './components/TopTraveller/Discount'
-
+import FlightDetails from "./components/FlightDetails/FlightDetails";
 
 const router = createBrowserRouter([
   {
@@ -21,9 +20,9 @@ const router = createBrowserRouter([
       { path: "home", element: <ProtectedRoute><Home /></ProtectedRoute>  },
       { path: "MostVisited", element:<ProtectedRoute> <MostVisited/> </ProtectedRoute>  },
       { path: "product", element:<ProtectedRoute><Details /> </ProtectedRoute> },
-      { path: "discount", element:<ProtectedRoute><Discount/> </ProtectedRoute> },
       { path: "signin", element: <SignIn /> },
       { path: "signup", element: <SignUp /> },
+      { path: "FlightDetails", element: <FlightDetails /> },
     ],
   },
   { path: "*", element: <NotFound /> },

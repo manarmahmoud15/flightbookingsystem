@@ -22,7 +22,7 @@ export default function AppNavbar() {
   return (
     <Navbar style={{ backgroundColor: "white", color: "black" }} expand="lg">
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand to="#home">
           <a style={{textDecoration: 'none'}} className="fw-bold logo flex">
             {" "}
             <h1>

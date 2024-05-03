@@ -24,9 +24,10 @@ const router = createBrowserRouter([
       { path: "discount", element:<ProtectedRoute><Discount/> </ProtectedRoute> },
       { path: "signin", element: <SignIn /> },
       { path: "signup", element: <SignUp /> },
-      { path: "*", element: <NotFound /> },
     ],
   },
+  { path: "*", element: <NotFound /> },
+
 ]);
 function App() {
   return (

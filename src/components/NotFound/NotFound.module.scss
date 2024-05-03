@@ -1,0 +1,83 @@
+
+.notfound {
+    max-width: 410px;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .notfound404 {
+    height: 280px;
+    position: relative;
+    z-index: -1;
+  }
+  
+  .notfound404Bg {
+    background: url('../../Assets/imgs/bg.jpg') no-repeat;
+    background-size: 100%; 
+    background-position: center;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  
+  .notfound404 h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 130px; /* Adjust the font size as needed */
+    margin: 0;
+    font-weight: 900;
+  }
+  
+  .notfound h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: #000;
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 0;
+  }
+  
+  .notfound p {
+    font-family: 'Montserrat', sans-serif;
+    color: #000;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    margin-top: 0px;
+  }
+  
+  .notfound a {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+    background: #0046d5;
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 40px;
+    color: black;
+    font-weight: 700;
+    box-shadow: 0px 4px 15px -5px #0046d5;
+    transition: background-color 0.3s ease; 
+  }
+  
+  .notfound a:hover,
+  .notfound a:focus,
+  .notfound a:active {
+    background-color: #002984; 
+  }
+  
+  
+  @media only screen and (max-width: 767px) {
+    .notfound404 {
+      height: 142px;
+    }
+    .notfound404 h1 {
+      font-size: 100px; 
+    }
+  }
+  

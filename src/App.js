@@ -23,9 +23,10 @@ const router = createBrowserRouter([
       { path: "signin", element: <SignIn /> },
       { path: "signup", element: <SignUp /> },
       { path: "FlightDetails", element: <FlightDetails /> },
-      { path: "*", element: <NotFound /> },
     ],
   },
+  { path: "*", element: <NotFound /> },
+
 ]);
 function App() {
   return (

@@ -10,6 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import MostVisited from './components/MostVisited/MostVisited'
 import Details from './components/Details/Details'
 import FlightDetails from "./components/FlightDetails/FlightDetails";
+import About from "./components/About/About";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
       { path: "signin", element: <SignIn /> },
       { path: "signup", element: <SignUp /> },
       { path: "FlightDetails", element: <FlightDetails /> },
+      { path: "about", element: <About /> },
     ],
   },
   { path: "*", element: <NotFound /> },

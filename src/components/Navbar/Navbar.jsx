@@ -37,7 +37,7 @@ export default function AppNavbar() {
             <Nav className="me-auto">
               <Link to="home" className="nav-link">Home </Link>
               <Link to="MostVisited" className="nav-link">MostVisited</Link>
-              <Link to="#" className="nav-link">About</Link>
+              <Link to="about" className="nav-link">About</Link>
               <Link to="#" className="nav-link">Offers</Link>
               <Link to="#" className="nav-link">Seats</Link>
               <Link to="#" className="nav-link">Destination</Link>

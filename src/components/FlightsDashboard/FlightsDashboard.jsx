@@ -8,11 +8,14 @@ export default function FlightsDashboard() {
   useEffect(() => {
     axios
       .get(
-        `https://api.themoviedb.org/3/movie/popular?api_key=d74557f6023c01b46f392b5abfafd020`
+        `http://localhost:5269/api/Country`
       )
       .then((res) => {
-        if (res.data && Array.isArray(res.data.results)) {
-          setFlights(res.data.results);
+        console.log(res)
+
+        if (res.data && Array.isArray(res.data.data)) {
+          setFlights(res.data.data);
+          console.log(res.data.data)
         } else {
           throw new Error("Invalid response data format");
         }
@@ -22,8 +25,8 @@ export default function FlightsDashboard() {
   ///Remove Flight///
   async function removeFlight(id) {
     let { data } = await CancelFlight(id);
-    console.log(data.data.products);
-    setFlights(data.data.products);
+    console.log(data.data.data);
+    setFlights(data.data.data);
   }
   return (
     <section className="intro shadow-3-strong">
@@ -72,7 +75,7 @@ export default function FlightsDashboard() {
                                     style={{ fontSize: "20px" }}
                                   ></i>
 
-                                  {flight.title}
+                                  {flight.name}
                                 </td>
                                 <td>{flight.original_language}</td>
                                 <td>{flight.original_language}</td>

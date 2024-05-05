@@ -42,6 +42,8 @@ export default function AppNavbar() {
               <Link to="#" className="nav-link">Seats</Link>
               <Link to="#" className="nav-link">Destination</Link>
               <Link to="discount" className="nav-link">Discounts</Link>
+              <Link to="flightdashboard" className="nav-link">Flight Dashboard</Link>
+
 
 
             </Nav>

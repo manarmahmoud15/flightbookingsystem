@@ -59,7 +59,7 @@ const options = {
     <h3 className="card-title">{flightDetails.country}</h3>
 
     <h5 className="card-title"> 
-         <i class="fa-solid fa-location-dot text-info"></i> {flightDetails.city}
+         <i className="fa-solid fa-location-dot text-info"></i> {flightDetails.city}
          <span style={{position: 'absolute', right : '7%'}}> 
          <strong>{flightDetails.price}$ </strong> </span>
     </h5>
@@ -70,7 +70,7 @@ const options = {
     </p>
     <hr></hr>
     <a href="FlightDetails" className="btn btn-info">
-    <i class="fa-solid fa-circle-info text-light"></i>  Details 
+    <i className="fa-solid fa-circle-info text-light"></i>  Details 
     </a>
   </div>
 </div>

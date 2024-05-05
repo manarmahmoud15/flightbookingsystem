@@ -10,6 +10,8 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import MostVisited from './components/MostVisited/MostVisited'
 import Details from './components/Details/Details'
 import FlightDetails from "./components/FlightDetails/FlightDetails";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 const router = createBrowserRouter([
   {
@@ -30,8 +32,9 @@ const router = createBrowserRouter([
 ]);
 function App() {
   return (
-    <TokenContextProvider>
-        <RouterProvider router={router}></RouterProvider>
+    <TokenContextProvider >
+
+      <RouterProvider router={router}></RouterProvider>
     </TokenContextProvider>
   );
 }

@@ -10,18 +10,12 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import MostVisited from './components/MostVisited/MostVisited'
 import Details from './components/Details/Details'
 import FlightDetails from "./components/FlightDetails/FlightDetails";
-<<<<<<< HEAD
 import FlightsDashboard from "./components/FlightsDashboard/FlightsDashboard";
 import FlightDashboardContextProvider from "./Context/flightDashboardContext";
-=======
-<<<<<<< HEAD
 import { Provider } from "react-redux";
 import store from "./redux/store";
-=======
-import About from "./components/About/About";
->>>>>>> 001070033b49f9c6a27f6e9bd522aec227541c18
+import About from './components/About/About'
 
->>>>>>> a77586d72cbdde1626b66736aa2888b9388d4019
 const router = createBrowserRouter([
   {
     path: "",
@@ -35,7 +29,7 @@ const router = createBrowserRouter([
       { path: "signup", element: <SignUp /> },
       { path: "flightdashboard", element:<ProtectedRoute><FlightsDashboard/></ProtectedRoute>  },
       { path: "FlightDetails", element: <FlightDetails /> },
-      { path: "about", element: <About /> },
+      { path: "about", element: <About/> },
     ],
   },
   { path: "*", element: <NotFound /> },
@@ -44,7 +38,6 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-<<<<<<< HEAD
     <div>
       <FlightDashboardContextProvider>
         <TokenContextProvider>
@@ -52,12 +45,8 @@ function App() {
         </TokenContextProvider>
       </FlightDashboardContextProvider>
     </div>
-=======
-    <TokenContextProvider >
 
-      <RouterProvider router={router}></RouterProvider>
-    </TokenContextProvider>
->>>>>>> a77586d72cbdde1626b66736aa2888b9388d4019
+
   );
 }
 

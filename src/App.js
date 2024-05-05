@@ -10,7 +10,8 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import MostVisited from './components/MostVisited/MostVisited'
 import Details from './components/Details/Details'
 import FlightDetails from "./components/FlightDetails/FlightDetails";
-
+import FlightsDashboard from "./components/FlightsDashboard/FlightsDashboard";
+import FlightDashboardContextProvider from "./Context/flightDashboardContext";
 const router = createBrowserRouter([
   {
     path: "",
@@ -22,17 +23,23 @@ const router = createBrowserRouter([
       { path: "product", element:<ProtectedRoute><Details /> </ProtectedRoute> },
       { path: "signin", element: <SignIn /> },
       { path: "signup", element: <SignUp /> },
+      { path: "flightdashboard", element:<ProtectedRoute><FlightsDashboard/></ProtectedRoute>  },
       { path: "FlightDetails", element: <FlightDetails /> },
     ],
   },
   { path: "*", element: <NotFound /> },
 
 ]);
+
 function App() {
   return (
-    <TokenContextProvider>
-        <RouterProvider router={router}></RouterProvider>
-    </TokenContextProvider>
+    <div>
+      <FlightDashboardContextProvider>
+        <TokenContextProvider>
+          <RouterProvider router={router}></RouterProvider>
+        </TokenContextProvider>
+      </FlightDashboardContextProvider>
+    </div>
   );
 }
 

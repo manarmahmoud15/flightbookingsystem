@@ -10,12 +10,9 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import MostVisited from './components/MostVisited/MostVisited'
 import Details from './components/Details/Details'
 import FlightDetails from "./components/FlightDetails/FlightDetails";
-<<<<<<< HEAD
-import { Provider } from "react-redux";
-import store from "./redux/store";
-=======
 import About from "./components/About/About";
->>>>>>> 001070033b49f9c6a27f6e9bd522aec227541c18
+// import { Provider } from "react-redux";
+// import store from "./redux/store";
 
 const router = createBrowserRouter([
   {

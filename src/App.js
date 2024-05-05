@@ -14,6 +14,11 @@ import About from "./components/About/About";
 // import { Provider } from "react-redux";
 // import store from "./redux/store";
 
+import FlightsDashboard from "./components/FlightsDashboard/FlightsDashboard";
+import FlightDashboardContextProvider from "./Context/flightDashboardContext";
+import { Provider } from "react-redux";
+import store from "./redux/store";
+
 const router = createBrowserRouter([
   {
     path: "",
@@ -25,19 +30,26 @@ const router = createBrowserRouter([
       { path: "product", element:<ProtectedRoute><Details /> </ProtectedRoute> },
       { path: "signin", element: <SignIn /> },
       { path: "signup", element: <SignUp /> },
+      { path: "flightdashboard", element:<ProtectedRoute><FlightsDashboard/></ProtectedRoute>  },
       { path: "FlightDetails", element: <FlightDetails /> },
-      { path: "about", element: <About /> },
+      { path: "about", element: <About/> },
     ],
   },
   { path: "*", element: <NotFound /> },
 
 ]);
+
 function App() {
   return (
-    <TokenContextProvider >
+    <div>
+      <FlightDashboardContextProvider>
+        <TokenContextProvider>
+          <RouterProvider router={router}></RouterProvider>
+        </TokenContextProvider>
+      </FlightDashboardContextProvider>
+    </div>
 
-      <RouterProvider router={router}></RouterProvider>
-    </TokenContextProvider>
+
   );
 }
 

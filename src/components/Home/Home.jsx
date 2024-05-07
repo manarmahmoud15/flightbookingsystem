@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import video from "../../Assets/Videos/205873.mp4";
 import { GrLocation } from "react-icons/gr";
 import { IoCalendarNumber } from "react-icons/io5";
@@ -12,76 +12,129 @@ import { useDispatch, useSelector } from "react-redux";
 // import { object } from "yup";
 import { makeBooking } from "../../redux/actions";
 import ShowFlight from "../ShowFlight/ShowFlight";
+import axios from "axios";
 
 export default function Home() {
-  const data = useSelector((state) => state.data)
+  const data = useSelector((state) => state.data);
   let dispatch = useDispatch();
-  const size = data.length
-  console.log(data)
+  const size = data.length;
+  // console.log(data);
   const [adultCount, setAdultCount] = useState(0);
   const [childCount, setChildCount] = useState(0);
+  const [flights, setFlights] = useState([]);
+  const [selectedFlight, setSelectedFlight] = useState(null);
+
   const handleAdultIncrement = () => {
     setAdultCount(adultCount + 1);
     SetBookingData({
       ...BookingData,
       adults: adultCount + 1,
-      children: childCount  // ensure children count is also up-to-date
+      children: childCount,
     });
   };
-  
+
   const handleAdultDecrement = () => {
     if (adultCount > 0) {
       setAdultCount(adultCount - 1);
       SetBookingData({
         ...BookingData,
         adults: adultCount - 1,
-        children: childCount  
+        children: childCount,
       });
     }
   };
-  
+
   const handleChildIncrement = () => {
     setChildCount(childCount + 1);
     SetBookingData({
       ...BookingData,
       adults: adultCount,
-      children: childCount + 1
+      children: childCount + 1,
     });
   };
-  
+
   const handleChildDecrement = () => {
     if (childCount > 0) {
       setChildCount(childCount - 1);
       SetBookingData({
         ...BookingData,
         adults: adultCount,
-        children: childCount - 1
+        children: childCount - 1,
       });
     }
   };
-  
-  const [BookingData , SetBookingData] = useState({})
+
+  const [BookingData, SetBookingData] = useState({});
+  // const handleChange = (e) => {
+  //   SetBookingData({
+  //     ...BookingData,
+  //     [e.target.name]: e.target.value,
+  //     adults: adultCount,
+  //     children: childCount,
+  //   });
+  // };
+  // const handleBook = (e) => {
+  //   e.preventDefault();
+  //   // console.log(e.target.value)
+  //   if (Object.keys(BookingData).length === 6) {
+  //     dispatch(makeBooking({ ...BookingData, id: size + 1 }));
+  //   } else {
+  //     alert("please select data properly !");
+  //   }
+  // };
+  // console.log(BookingData);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5269/api/Flight");
+        setFlights(response.data.data);
+        console.log(response.data.data);
+      } catch (error) {
+        console.error("Failed to fetch flights:", error);
+      }
+    };
+    fetchData();
+  }, []);
+  useEffect(() => {
+    if (selectedFlight) {
+      SetBookingData({
+        ...BookingData,
+        from: selectedFlight.sourceAirportName,
+        to: selectedFlight.destinationAirportName,
+        checkin: selectedFlight.departureTime.split("T")[0],
+        checkOut: selectedFlight.arrivalTime.split("T")[0],
+      });
+    }
+  }, [selectedFlight]);
+
+  const handleFlightChange = (e) => {
+    const flightId = e.target.value;
+    const flight = flights.find(
+      (f) => f.sourceAirportNum.toString() === flightId
+    );
+    setSelectedFlight(flight);
+  };
+
   const handleChange = (e) => {
     SetBookingData({
       ...BookingData,
       [e.target.name]: e.target.value,
       adults: adultCount,
-      children: childCount
+      children: childCount,
     });
   };
-  const handleBook =(e)=>
-  {
-    e.preventDefault()
-    // console.log(e.target.value)
-    if (Object.keys(BookingData).length === 6) 
-    {
-      dispatch(makeBooking({...BookingData , id : size +1}))
+
+  const handleBook = (e) => {
+    e.preventDefault();
+    if (Object.keys(BookingData).length === 6) {
+      dispatch(
+        makeBooking({ ...BookingData, id: selectedFlight?.sourceAirportNum })
+      );
+    } else {
+      alert("please select data properly !");
     }
-    else {
-      alert('please select data properly !')
-    }
-  }
-  console.log(BookingData);
+  };
+
   return (
     <>
       <section className="home">
@@ -98,7 +151,7 @@ export default function Home() {
           <div className="textDiv">
             <span className="smalltext">Our Packages</span>
             <h1 className="homeTitle">Search Your Holidays</h1>
-          </div>    
+          </div>
           <form className="search container section">
             <div className="sectioncontainer ">
               <div className="btnBox">
@@ -114,7 +167,6 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-
               <div className="flex">
                 <div className="searchInput flex">
                   <div className="singleInput flex">
@@ -122,23 +174,26 @@ export default function Home() {
                       <GrLocation className="icon" />
                     </div>
                     <div className="texts">
-                      {/* <h4>Location</h4>
-                    <input type="text" placeholder="where do you want to go?" /> */}
                       <h6>Destination Form</h6>
                       <div>
                         <select
-                        required 
-                        onChange={(e)=>handleChange(e)}
+                          required
+                          // onChange={(e) => handleChange(e)}
+                          onChange={handleFlightChange}
+                          value={selectedFlight?.sourceAirportNum || ""}
                           name="from"
                           id="from"
                           style={{ border: "none" }}
                           className="my-1"
                         >
-                          <option value={""}>please Select</option>
-                          <option>Egypt</option>
-                          <option>london</option>
-                          <option>paris</option>
-                          <option>Rome</option>
+                          {flights.map((flight ,index) => (
+                            <option
+                              key={index}
+                              value={flight.sourceAirportNum}
+                            >
+                              {flight.sourceAirportName}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>
@@ -151,23 +206,26 @@ export default function Home() {
                       <GrLocation className="icon" />
                     </div>
                     <div className="texts">
-                      {/* <h4>Location</h4>
-                    <input type="text" placeholder="where do you want to go?" /> */}
                       <h6>Destination To</h6>
                       <div>
                         <select
-                        required 
-                        onChange={(e)=>handleChange(e)}
+                          required
+                          // onChange={(e) => handleChange(e)}
+                          onChange={handleFlightChange}
+                          value={selectedFlight?.destinationAirporNum || ""}
                           name="to"
                           id="to"
                           style={{ border: "none" }}
                           className="my-1"
                         >
-                          <option value={""}>please Select</option>
-                          <option>Egypt</option>
-                          <option>london</option>
-                          <option>paris</option>
-                          <option>Rome</option>
+                          {flights.map((flight ,index) => (
+                            <option
+                            key={index}
+                              value={flight.destinationAirporNum}
+                            >
+                              {flight.destinationAirportName}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>
@@ -183,11 +241,14 @@ export default function Home() {
                       <Popup
                         trigger={
                           <button
-                          onChange={(e)=>handleChange(e)}
-                          type="button"
-                          name="travels"
-                          id="travels"
-                            style={{ border: "none", backgroundColor: "white" }}
+                            onChange={(e) => handleChange(e)}
+                            type="button"
+                            name="travels"
+                            id="travels"
+                            style={{
+                              border: "none",
+                              backgroundColor: "white",
+                            }}
                           >
                             Adults : {adultCount} , Child :{childCount}
                           </button>
@@ -202,7 +263,7 @@ export default function Home() {
                               <button
                                 className="btn btn-outline-success text-light"
                                 onClick={handleAdultIncrement}
-                                onChange={(e)=>handleChange(e)}
+                                onChange={(e) => handleChange(e)}
                               >
                                 +
                               </button>
@@ -210,7 +271,7 @@ export default function Home() {
                               <button
                                 className="btn btn-outline-success text-light"
                                 onClick={handleAdultDecrement}
-                                onChange={(e)=>handleChange(e)}
+                                onChange={(e) => handleChange(e)}
                               >
                                 -
                               </button>
@@ -225,7 +286,7 @@ export default function Home() {
                               <button
                                 className="btn btn-outline-success text-light"
                                 onClick={handleChildIncrement}
-                                onChange={(e)=>handleChange(e)}
+                                onChange={(e) => handleChange(e)}
                               >
                                 +
                               </button>
@@ -233,7 +294,7 @@ export default function Home() {
                               <button
                                 className="btn btn-outline-success text-light"
                                 onClick={handleChildDecrement}
-                                onChange={(e)=>handleChange(e)}
+                                onChange={(e) => handleChange(e)}
                               >
                                 -
                               </button>
@@ -248,22 +309,28 @@ export default function Home() {
                 <div className="searchInput flex">
                   <div className="singleInput flex">
                     <div className="iconDiv">
-                      <IoCalendarNumber
-                        className="icon"
-                        style={{ color: "grey" }}
-                      />
+                      <IoCalendarNumber className="icon" />
                     </div>
                     <div className="texts">
                       <h4>Check In</h4>
-                      <input
-                        type="date"
+                      <select
                         name="checkin"
-                        id="checkin"
-                        required 
-                        onChange={(e)=>handleChange(e)}
-                        placeholder="Add date"
-                        style={{ color: "grey" }}
-                      />
+                        value={BookingData.checkin}
+                        onChange={handleChange}
+                        required
+                      >
+                        <option value="">Select a Check-in Date</option>
+                        {flights.map((flight, index) => (
+                          <option
+                            key={index}
+                            value={flight.departureTime.split("T")[0]}
+                          >
+                            {new Date(
+                              flight.departureTime
+                            ).toLocaleDateString()}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -278,23 +345,33 @@ export default function Home() {
                     </div>
                     <div className="texts">
                       <h4>Check Out</h4>
-                      <input
-                        type="date"
-                        name="checkOut"
-                        id="checkOut"
-                        required 
-                        onChange={(e)=>handleChange(e)}
-                        placeholder="Add date"
-                        style={{ color: "grey" }}
-                      />
+                      <select
+                        name="checkin"
+                        value={BookingData.checkOut}
+                        onChange={handleChange}
+                        required
+                      >
+                        <option value="">Select a Check-in Date</option>
+                        {flights.map((flight, index) => (
+                          <option
+                            key={index}
+                            value={flight.arrivalTime.split("T")[0]}
+                          >
+                            {new Date(
+                              flight.departureTime
+                            ).toLocaleDateString()}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </div>
                 </div>
               </div>
+              ;
               <button
                 className="btn btnBlock "
-                onClick={(e)=> handleBook(e)}
-                type="submit" 
+                onClick={(e) => handleBook(e)}
+                type="submit"
                 style={{ borderRadius: "50px", color: "white" }}
               >
                 Search Flight
@@ -303,10 +380,9 @@ export default function Home() {
           </form>
         </div>
       </section>
-      <ShowFlight/>
+      <ShowFlight />
       <MostVisited />
       <Discount />
-
     </>
   );
 }

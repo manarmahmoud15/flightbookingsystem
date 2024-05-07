@@ -10,13 +10,15 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import MostVisited from './components/MostVisited/MostVisited'
 import Details from './components/Details/Details'
 import FlightDetails from "./components/FlightDetails/FlightDetails";
+import About from "./components/About/About";
+// import { Provider } from "react-redux";
+// import store from "./redux/store";
+
 import FlightsDashboard from "./components/FlightsDashboard/FlightsDashboard";
 import FlightDashboardContextProvider from "./Context/flightDashboardContext";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import ConfirmEmail from './components/ConfirmEmail/ConfirmEmail'
-import About from './components/About/About'
-import ConfirmationMessage from "./components/ConfirmationMessage/ConfirmationMessage";
+
 
 const router = createBrowserRouter([
   {

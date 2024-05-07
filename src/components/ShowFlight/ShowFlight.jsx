@@ -44,7 +44,7 @@ export default function ShowFlight() {
     const id = parseInt(e.currentTarget.id)
     dispatch(deleteBooking(id));
   };
-  console.log(data);
+  // console.log(data);
   return (
     <>
       {data.length && (
@@ -71,7 +71,6 @@ export default function ShowFlight() {
                   <StyledTableCell >{data.to}</StyledTableCell>
                   <StyledTableCell >{data.adults}</StyledTableCell>
                   <StyledTableCell >{data.children}</StyledTableCell>
-
                   <StyledTableCell >{data.checkin}</StyledTableCell>
                   <StyledTableCell >{data.checkOut}</StyledTableCell>
                   <StyledTableCell >

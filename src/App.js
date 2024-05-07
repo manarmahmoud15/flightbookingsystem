@@ -18,7 +18,8 @@ import FlightsDashboard from "./components/FlightsDashboard/FlightsDashboard";
 import FlightDashboardContextProvider from "./Context/flightDashboardContext";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-
+import ConfirmEmail from './components/ConfirmEmail/ConfirmEmail'
+import ConfirmationMessage from "./components/ConfirmationMessage/ConfirmationMessage";
 const router = createBrowserRouter([
   {
     path: "",

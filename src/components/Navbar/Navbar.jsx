@@ -42,12 +42,7 @@ export default function AppNavbar() {
               <Link to="#" className="nav-link">Seats</Link>
               <Link to="#" className="nav-link">Destination</Link>
               <Link to="discount" className="nav-link">Discounts</Link>
-<<<<<<< HEAD
               <Link to="flightDashboard" className="nav-link">flight Dashboard</Link>
-=======
-              <Link to="flightdashboard" className="nav-link">Flight Dashboard</Link>
-
->>>>>>> 7d04d662de608434514ac151068c5ae87e8db2c2
 
 
             </Nav>

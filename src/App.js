@@ -14,7 +14,9 @@ import FlightsDashboard from "./components/FlightsDashboard/FlightsDashboard";
 import FlightDashboardContextProvider from "./Context/flightDashboardContext";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import ConfirmEmail from './components/ConfirmEmail/ConfirmEmail'
 import About from './components/About/About'
+import ConfirmationMessage from "./components/ConfirmationMessage/ConfirmationMessage";
 
 const router = createBrowserRouter([
   {
@@ -27,13 +29,15 @@ const router = createBrowserRouter([
       { path: "product", element:<ProtectedRoute><Details /> </ProtectedRoute> },
       { path: "signin", element: <SignIn /> },
       { path: "signup", element: <SignUp /> },
+      // {path:"ConfirmEmail", element:<ConfirmEmail/>},
       { path: "flightdashboard", element:<ProtectedRoute><FlightsDashboard/></ProtectedRoute>  },
       { path: "FlightDetails", element: <FlightDetails /> },
       { path: "about", element: <About/> },
     ],
   },
   { path: "*", element: <NotFound /> },
-
+  {path:"ConfirmEmail", element:<ConfirmEmail/>},
+  {path:"ConfirmationMessage", element:<ConfirmationMessage/>},
 ]);
 
 function App() {

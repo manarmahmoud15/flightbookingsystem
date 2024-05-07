@@ -84,11 +84,8 @@ export default function FlightsDashboard() {
                                     style={{ fontSize: "20px" }}
                                   ></i>
 
-<<<<<<< HEAD
                                   {flight.sourceAirportName}
-=======
                                   {flight.name}
->>>>>>> 7d04d662de608434514ac151068c5ae87e8db2c2
                                 </td>
                                 <td>{flight.sourceAirportStateName}</td>
                                 <td>{flight.destinationAirportStateName}</td>

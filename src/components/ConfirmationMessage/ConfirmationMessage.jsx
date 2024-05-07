@@ -1,5 +1,6 @@
 import React from "react";
 import Img1 from "../../Assets/imgs/Welcome_Email.png";
+import { Link } from "react-router-dom"
 export default function ConfirmationMessage() {
   return (
     <>
@@ -39,13 +40,16 @@ export default function ConfirmationMessage() {
                 </a>
               </div>
               <div className="text-center">
-                <button href="home" type="" className="btn btn-primary">
-                  go Home{" "}
-                  <i
-                    className="fa-solid fa-plane text-warning mx-3"
-                    style={{ fontSize: "16px" }}
-                  ></i>
+              <Link
+                  to={"/signin"}
+                  className="fw-bold mx-3"
+                  style={{ color: "hsl(199, 100%, 33%)" }}
+                >
+                <button className="btn btn-primary">
+                  Go Log In
+                  <i className="fa-solid fa-plane text-warning mx-3" style={{ fontSize: "16px" }}></i>
                 </button>
+              </Link>
               </div>
             </div>
           </div>

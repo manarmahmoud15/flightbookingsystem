@@ -7,12 +7,11 @@ export default function FlightsDashboard() {
   const [Flights, setFlights] = useState([]);
   useEffect(() => {
     axios
-      .get(
-        `https://api.themoviedb.org/3/movie/popular?api_key=d74557f6023c01b46f392b5abfafd020`
-      )
+      .get(`http://localhost:5269/api/Flight`)
       .then((res) => {
-        if (res.data && Array.isArray(res.data.results)) {
-          setFlights(res.data.results);
+        if (res.data && Array.isArray(res.data.data)) {
+          setFlights(res.data.data);
+          console.log(res.data.data);
         } else {
           throw new Error("Invalid response data format");
         }
@@ -22,8 +21,8 @@ export default function FlightsDashboard() {
   ///Remove Flight///
   async function removeFlight(id) {
     let { data } = await CancelFlight(id);
-    console.log(data.data.products);
-    setFlights(data.data.products);
+    console.log(data.data);
+    setFlights(data.data);
   }
   return (
     <section className="intro shadow-3-strong">
@@ -72,22 +71,34 @@ export default function FlightsDashboard() {
                                     style={{ fontSize: "20px" }}
                                   ></i>
 
-                                  {flight.title}
+                                  {flight.sourceAirportName}
                                 </td>
-                                <td>{flight.original_language}</td>
-                                <td>{flight.original_language}</td>
-                                <td>{flight.release_date}</td>
+                                <td>{flight.sourceAirportStateName}</td>
+                                <td>{flight.destinationAirportStateName}</td>
+                                <td>{flight.duration}</td>
 
                                 <td>
-                                  <span
-                                    className="badge badge-success p-1"
-                                    style={{
-                                      backgroundColor: "green",
-                                      color: "white",
-                                    }}
-                                  >
-                                    Active
-                                  </span>
+                                  {flight.isActive ? (
+                                    <span
+                                      className="badge badge-active p-1"
+                                      style={{
+                                        backgroundColor: "green",
+                                        color: "white",
+                                      }}
+                                    >
+                                      Active
+                                    </span>
+                                  ) : (
+                                    <span
+                                      className="badge badge-inactive p-1"
+                                      style={{
+                                        backgroundColor: "red",
+                                        color: "white",
+                                      }}
+                                    >
+                                      Inactive
+                                    </span>
+                                  )}
                                 </td>
                                 <td>
                                   <button
@@ -100,7 +111,7 @@ export default function FlightsDashboard() {
                                       color: "white",
                                     }}
                                     onClick={() => {
-                                      removeFlight(flight.product._id);
+                                      removeFlight(flight.destinationAirportId);
                                     }}
                                   >
                                     Cancel

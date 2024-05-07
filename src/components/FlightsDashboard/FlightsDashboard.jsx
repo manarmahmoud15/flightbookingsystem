@@ -7,11 +7,23 @@ export default function FlightsDashboard() {
   const [Flights, setFlights] = useState([]);
   useEffect(() => {
     axios
+<<<<<<< HEAD
       .get(`http://localhost:5269/api/Flight`)
       .then((res) => {
         if (res.data && Array.isArray(res.data.data)) {
           setFlights(res.data.data);
           console.log(res.data.data);
+=======
+      .get(
+        `http://localhost:5269/api/Country`
+      )
+      .then((res) => {
+        console.log(res)
+
+        if (res.data && Array.isArray(res.data.data)) {
+          setFlights(res.data.data);
+          console.log(res.data.data)
+>>>>>>> 7d04d662de608434514ac151068c5ae87e8db2c2
         } else {
           throw new Error("Invalid response data format");
         }
@@ -21,8 +33,13 @@ export default function FlightsDashboard() {
   ///Remove Flight///
   async function removeFlight(id) {
     let { data } = await CancelFlight(id);
+<<<<<<< HEAD
     console.log(data.data);
     setFlights(data.data);
+=======
+    console.log(data.data.data);
+    setFlights(data.data.data);
+>>>>>>> 7d04d662de608434514ac151068c5ae87e8db2c2
   }
   return (
     <section className="intro shadow-3-strong">
@@ -71,7 +88,11 @@ export default function FlightsDashboard() {
                                     style={{ fontSize: "20px" }}
                                   ></i>
 
+<<<<<<< HEAD
                                   {flight.sourceAirportName}
+=======
+                                  {flight.name}
+>>>>>>> 7d04d662de608434514ac151068c5ae87e8db2c2
                                 </td>
                                 <td>{flight.sourceAirportStateName}</td>
                                 <td>{flight.destinationAirportStateName}</td>

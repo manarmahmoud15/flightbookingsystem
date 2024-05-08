@@ -1,9 +1,12 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { userContext } from "../../Context/TokenContext";
+import { jwtDecode } from 'jwt-decode';
+
+
 
 export default function SignIn() {
   let {setUserToken} = useContext(userContext)
@@ -41,6 +44,43 @@ export default function SignIn() {
     }
     
   });
+
+ async function handleCallbackResponse (response){
+// console.log("JWT token" + response.credential);
+// console.log("hello");
+// var decoded = jwtDecode(response.credential); 
+// console.log(decoded);
+var IdToken = response.credential;
+// console.log(IdToken);
+let res = await axios.post('http://localhost:5269/api/account/googleLogin',null,{
+  headers: {
+    'Content-Type': 'application/json', // Set the Content-Type header to JSON
+    'IdToken' : IdToken
+  }
+});
+console.log(res);
+if (res.data.isSuccess) { 
+  navigate("/home");
+  localStorage.setItem('userToken' , res.token)
+  setUserToken(res.token)
+}
+else
+{
+  alert("Invalid gmail")
+} 
+  }
+
+  useEffect(() => {
+    window.google.accounts.id.initialize({
+      client_id : "399127494108-4nfatoh6irn0hq0po8jv18qsr220dfmk.apps.googleusercontent.com",
+      callback : handleCallbackResponse
+    });
+    window.google.accounts.id.renderButton(
+      document.getElementById("signInDiv"),
+      {theme : "outline" , size : "large"}
+    );
+    window.google.accounts.id.prompt();
+  },[])
 
   return (
     <div className="my-5">
@@ -105,6 +145,7 @@ export default function SignIn() {
                   )}
                 </button>
               </div>
+    <div id="signInDiv"></div> 
               <p className="text-muted  d-inline">
                 I don't have an account
                 <Link

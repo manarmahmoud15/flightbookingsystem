@@ -5,12 +5,12 @@ export default function Ticket() {
   return (
     <div className="container ticket mt-5 mb-2">
       <div className="row">
-        <div className="col-1 left d-flex justify-content-center">
+        <div className="col-1 left d-flex justify-content-between">
           <div className="text">
             <h1>BOARDING</h1>
           </div>
         </div>
-        <div className="col-7 center ">
+        <div className="col-7 center">
           <div className="text">
             <h1>
               <i

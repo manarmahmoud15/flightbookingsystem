@@ -1,18 +1,18 @@
-body,
+/* body,
 html {
   min-height: 100vh;
   display: grid;
   color: black;
   font-size: 14px;
   letter-spacing: 0.1em;
-}
+} */
 
 .container {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   height: auto;
 }
 
-.text {
+.center .text , .right .text{
   font-family: "Staatliches", cursive;
   display: flex;
   text-align: center;

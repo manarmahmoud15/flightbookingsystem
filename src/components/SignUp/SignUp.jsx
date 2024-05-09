@@ -23,6 +23,9 @@ export default function SignUp() {
       confirmPassword: Yup.string()
       .required("Confirm Password is reqired")
       .oneOf([Yup.ref("password") ], "Not Matched"),
+      passportNum : Yup.string().required("passport Num is required") ,
+      nationalId : Yup.string().required("national Id is required") ,
+
   });
 
   // function validate(val) {
@@ -69,6 +72,8 @@ export default function SignUp() {
       phoneNumber: "",
       password: "",
       confirmPassword: "",
+      passportNum : "" ,
+      nationalId : ""
     },
     // validate ,
     validationSchema: validationSchema,
@@ -78,7 +83,7 @@ export default function SignUp() {
         let response = await axios.post('http://localhost:5269/api/Account/register', values);
         let data = response.data;
         console.log(response.data);
-        if (data.message === "Account Created Successfully and Confiramtion mail has been sent") {
+        if (data.message === "Account Created Successfully and Confiramtion mail has been sent , and there is the Passenger ID => save it and send it when he wants to Add a ticket") {
           navigate("/signin");
         } else {
           seterrMsg("Registration failed, please try again.");
@@ -153,6 +158,40 @@ export default function SignUp() {
                 )}
               </div>
               <div className="col-md-12">
+                <label htmlFor="userpassportNum">passportNum:</label>
+                <input
+                  type="tel"
+                  id="userpassportNum"
+                  name="passportNum"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.passportNum}
+                  className="form-control"
+                />
+                {formik.errors.passportNum && formik.touched.passportNum ? (
+                  <p className="text-danger">{formik.errors.passportNum}</p>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className="col-md-12">
+                <label htmlFor="usernationalId">National Id:</label>
+                <input
+                  type="tel"
+                  id="usernationalId"
+                  name="nationalId"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.nationalId}
+                  className="form-control"
+                />
+                {formik.errors.nationalId && formik.touched.nationalId ? (
+                  <p className="text-danger">{formik.errors.nationalId}</p>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className="col-md-12">
                 <label htmlFor="userPassword">Password:</label>
                 <input
                   type="password"
@@ -188,6 +227,8 @@ export default function SignUp() {
                 )}
               </div>
               {errMsg !== null ? <p className="text-danger">{errMsg} </p> : ""}
+
+              
               <div className="col-md-12 text-end my-2">
                 <button
                   type="submit"
@@ -195,7 +236,7 @@ export default function SignUp() {
                   className="btn"
                   disabled={!(formik.dirty && formik.isValid)}
                 > 
-                <Link to={"/ConfirmEmail"} style={{ textDecoration: 'none' }}>
+                <Link to={"/signin"} style={{ textDecoration: 'none' }}>
                 
                   Register
                   </Link>

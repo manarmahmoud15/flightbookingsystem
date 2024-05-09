@@ -9,18 +9,18 @@ export default function SignUp() {
   const [Loading, setloading] = useState(false);
   const [errMsg, seterrMsg] = useState(null);
   let validationSchema = Yup.object({
-    name: Yup.string()
+    userName: Yup.string()
       .min(3, "min length is 3")
       .max(20, "max length is 20")
       .required("Name is Reqired"),
     email: Yup.string().required("Email is Reqired").email("Enter Valid Email"),
-    phone: Yup.string()
+    phoneNumber: Yup.string()
       .required("Phone is Required")
       .matches(/^01[0125][0-9]{8}$/, "Enter Valid Phone Number"),
     password: Yup.string()
       .required("Password is Reqired")
       .matches(/^[A-Z][a-z0-9]{6,15}$/, "Enter Valid Password"),
-    rePassword: Yup.string()
+      confirmPassword: Yup.string()
       .required("Confirm Password is reqired")
       .oneOf([Yup.ref("password") ], "Not Matched"),
   });
@@ -64,21 +64,21 @@ export default function SignUp() {
   // }
   const formik = useFormik({
     initialValues: {
-      name: "",
+      userName: "",
       email: "",
-      phone: "",
+      phoneNumber: "",
       password: "",
-      rePassword: "",
+      confirmPassword: "",
     },
     // validate ,
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       setloading(true);
       try {
-        let response = await axios.post('https://ecommerce.routemisr.com/api/v1/auth/signup', values);
+        let response = await axios.post('http://localhost:5269/api/Account/register', values);
         let data = response.data;
-        console.log(data);
-        if (data.message === "success") {
+        console.log(response.data);
+        if (data.message === "Account Created Successfully and Confiramtion mail has been sent") {
           navigate("/signin");
         } else {
           seterrMsg("Registration failed, please try again.");
@@ -106,14 +106,14 @@ export default function SignUp() {
                 <input
                   type="text"
                   id="username"
-                  name="name"
+                  name="userName"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.name}
+                  value={formik.values.userName}
                   className="form-control"
                 />
-                {formik.errors.name && formik.touched.name ? (
-                  <p className="text-danger">{formik.errors.name}</p>
+                {formik.errors.userName && formik.touched.userName ? (
+                  <p className="text-danger">{formik.errors.userName}</p>
                 ) : (
                   " "
                 )}
@@ -140,14 +140,14 @@ export default function SignUp() {
                 <input
                   type="tel"
                   id="userPhone"
-                  name="phone"
+                  name="phoneNumber"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.phone}
+                  value={formik.values.phoneNumber}
                   className="form-control"
                 />
-                {formik.errors.phone && formik.touched.phone ? (
-                  <p className="text-danger">{formik.errors.phone}</p>
+                {formik.errors.phoneNumber && formik.touched.phoneNumber ? (
+                  <p className="text-danger">{formik.errors.phoneNumber}</p>
                 ) : (
                   ""
                 )}
@@ -174,15 +174,15 @@ export default function SignUp() {
                 <input
                   type="password"
                   id="userConfirmPassword"
-                  name="rePassword"
+                  name="confirmPassword"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.rePassword}
+                  value={formik.values.confirmPassword}
                   className="form-control"
                 />
-                {formik.errors.rePassword &&
-                formik.touched.rePassword ? (
-                  <p className="text-danger">{formik.errors.rePassword}</p>
+                {formik.errors.confirmPassword &&
+                formik.touched.confirmPassword ? (
+                  <p className="text-danger">{formik.errors.confirmPassword}</p>
                 ) : (
                   ""
                 )}
@@ -194,8 +194,11 @@ export default function SignUp() {
                   style={{ backgroundColor: "#0aad0a", color: "white" }}
                   className="btn"
                   disabled={!(formik.dirty && formik.isValid)}
-                >
+                > 
+                <Link to={"/ConfirmEmail"} style={{ textDecoration: 'none' }}>
+                
                   Register
+                  </Link>
                   {Loading ? (
                     <span>
                       <li className="fa-solid text-light mx-2 fa-spinner fa-spin"></li>

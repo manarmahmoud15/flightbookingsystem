@@ -18,7 +18,7 @@ export default function ConfirmEmail() {
     onSubmit: (values) => {
       setLoading(true);
       axios
-        .post("/api/confirmEmail", values)
+        .post("http://localhost:5269/api/Account/confirm-email", values)
         .then((response) => {
           setLoading(false);
         })
@@ -67,11 +67,14 @@ export default function ConfirmEmail() {
               </div>
               <div className="text-center">
                 <button type="button" className="btn btn-primary mt-3">
+                  <Link to={"/ConfirmationMessage"} style={{ textDecoration: 'none' }}>
+                  
                   {loading ? (
                     <span className="fa-solid text-light mx-2 fa-spinner fa-spin"></span>
                   ) : (
                     "Confirm"
                   )}
+                  </Link>
                 </button>
               </div>
             </form>

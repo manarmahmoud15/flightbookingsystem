@@ -28,10 +28,11 @@ const router = createBrowserRouter([
     path: "",
     element: <Layout />,
     children: [
-      { path: "", element:<ProtectedRoute><Home /></ProtectedRoute>  },
-      { path: "home", element: <ProtectedRoute><Home /></ProtectedRoute>  },
-      { path: "MostVisited", element:<ProtectedRoute> <MostVisited/> </ProtectedRoute>  },
-      { path: "product", element:<ProtectedRoute><Details /> </ProtectedRoute> },
+      { path: "", element:<ProtectedRoute><Home /></ProtectedRoute>},
+      { path: "home", element: <ProtectedRoute><Home /></ProtectedRoute> },
+      { path: "MostVisited", element:<ProtectedRoute> <MostVisited/> </ProtectedRoute>},
+      { path: "product", element:<ProtectedRoute><Details /> </ProtectedRoute>},
+      // { path: "ticket", element:<ProtectedRoute><Ticket/></ProtectedRoute> },
       { path: "signin", element: <SignIn /> },
       { path: "signup", element: <SignUp /> },
       // {path:"ConfirmEmail", element:<ConfirmEmail/>},
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
   { path: "*", element: <NotFound /> },
   {path:"ConfirmEmail", element:<ConfirmEmail/>},
   {path:"ConfirmationMessage", element:<ConfirmationMessage/>},
+  { path: "ticket", element:<ProtectedRoute><Ticket/></ProtectedRoute> }
 ]);
 
 function App() {

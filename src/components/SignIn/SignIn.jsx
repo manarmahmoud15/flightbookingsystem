@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { userContext } from "../../Context/TokenContext";
-import { jwtDecode } from 'jwt-decode';
+// import { jwtDecode } from 'jwt-decode';
 
 
 
@@ -56,7 +56,7 @@ export default function SignIn() {
 // console.log(decoded);
 var IdToken = response.credential;
 // console.log(IdToken);
-let res = await axios.post('http://localhost:5269/api/account/googleLogin',null,{
+let res = await axios.post('http://localhost:5269/api/Account/googleLogin',null,{
   headers: {
     'Content-Type': 'application/json', // Set the Content-Type header to JSON
     'IdToken' : IdToken

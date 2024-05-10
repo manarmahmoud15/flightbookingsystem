@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import video from "../../Assets/Videos/205873.mp4";
 import { GrLocation } from "react-icons/gr";
 import { IoCalendarNumber } from "react-icons/io5";
@@ -38,7 +38,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    // console.log("Selected values:", { selectedSource, selectedDestination, selectedCheckIn, selectedCheckOut });
+    console.log("Selected values:", { selectedSource, selectedDestination, selectedCheckIn, selectedCheckOut });
     if (selectedSource && selectedDestination && selectedCheckIn && selectedCheckOut) {
       const checkInDate = new Date(selectedCheckIn).toDateString();
       const checkOutDate = new Date(selectedCheckOut).toDateString();
@@ -109,6 +109,8 @@ export default function Home() {
   const checkOutChange = (e) => {
     setSelectedCheckOut(e.target.value); 
   }
+
+ 
   return (
     <>
       <section className="home">

@@ -23,6 +23,7 @@ import ConfirmationMessage from "./components/ConfirmationMessage/ConfirmationMe
 import Ticket from './components/Ticket/Ticket'
 import ShowAllFlight from "./components/ShowAllFlight/showAllFlight";
 import ForgetPassword from "./components/forgetPassword/forgetPassword";
+import FlightContextProvider from "./Context/FlightContext";
 
 
 const router = createBrowserRouter([
@@ -54,7 +55,9 @@ function App() {
     <div>
       <FlightDashboardContextProvider>
         <TokenContextProvider>
+          <FlightContextProvider >
           <RouterProvider router={router}></RouterProvider>
+          </FlightContextProvider>
         </TokenContextProvider>
       </FlightDashboardContextProvider>
     </div>

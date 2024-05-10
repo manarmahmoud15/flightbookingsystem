@@ -1,5 +1,6 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
+import { useContext } from "react";
 // import { Paper, Accordion, Alert } from "@mui/material";
 import {
   Table,
@@ -14,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteBooking } from "../../redux/actions";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { FlightContext } from "../../Context/FlightContext";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,6 +40,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
   
 export default function ShowFlight() {
+  let {AddTicket} = useContext(FlightContext)
+
   const data = useSelector((state) => state.data);
   const dispatch = useDispatch();
   // const handleDelete = (e) => {
@@ -45,6 +49,10 @@ export default function ShowFlight() {
   //   dispatch(deleteBooking(id));
   // };
   // console.log(data);
+  async function AddNewTicket(id ,section ,price ,FlightClass ,flightID) {
+    let{data} = await AddTicket(id ,section ,price ,FlightClass ,flightID)
+    console.log(data)
+  }
   return (
     <>
       {data.length && (
@@ -86,9 +94,10 @@ export default function ShowFlight() {
                   <StyledTableCell >
                     <Link to='FlightDetails'
                     className="btn btn-xs bg-red-500 text-white"
+                    onClick={()=> {AddNewTicket(2025, 0 , 15 ,0 , 1)}}
                     >
                       {" "}
-                      Details
+                      Book 
                     </Link>
                   </StyledTableCell>
                 </StyledTableRow>

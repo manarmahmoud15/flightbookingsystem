@@ -13,6 +13,7 @@ import FlightDetails from "./components/FlightDetails/FlightDetails";
 import About from "./components/About/About";
 // import { Provider } from "react-redux";
 // import store from "./redux/store";
+import AddTicket from './components/AddTicket/AddTicket'
 
 import FlightsDashboard from "./components/FlightsDashboard/FlightsDashboard";
 import FlightDashboardContextProvider from "./Context/flightDashboardContext";
@@ -41,7 +42,8 @@ const router = createBrowserRouter([
       { path: "FlightDetails", element: <ProtectedRoute><FlightDetails /></ProtectedRoute> },
       { path: "about", element: <ProtectedRoute><About/></ProtectedRoute> },  
       { path: "ticket", element:<ProtectedRoute><Ticket/></ProtectedRoute> },
-      {path : 'ShowAllFlight' , element : <ProtectedRoute><ShowAllFlight/></ProtectedRoute>}
+      {path : 'ShowAllFlight' , element : <ProtectedRoute><ShowAllFlight/></ProtectedRoute>},
+      {path : 'addticket' , element : <ProtectedRoute><AddTicket/></ProtectedRoute>}
     ],
   },
   { path: "*", element: <NotFound /> },

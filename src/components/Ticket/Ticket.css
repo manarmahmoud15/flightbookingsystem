@@ -7,10 +7,10 @@ html {
   letter-spacing: 0.1em;
 } */
 
-.container {
+/* .container {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   height: auto;
-}
+} */
 
 .center .text , .right .text{
   font-family: "Staatliches", cursive;

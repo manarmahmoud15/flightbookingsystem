@@ -1,103 +1,121 @@
-import React from 'react';
+import React from "react";
 import axios from "axios";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, useFormik } from "formik";
 import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { userContext } from "../../Context/TokenContext";
+import { FlightContext } from "../../Context/FlightContext";
 
 export default function AddTicket() {
-  const [loading, setLoading] = useState(false);
-  const [errMsg, setErrMsg] = useState(null);
-  const [SuccessMsg,  setSuccessMsg] = useState(null);
- 
-  let { setUserToken } = useContext(userContext);
-  let navigate = useNavigate();
+  const basicPrice = 2000;
+  const [price, setPrice] = useState(0);
+  const[classs , setClasss] = useState('1')
+  const [section, setSection] = useState("0");
+  const [passengerId, setPassengerId] = useState("2030");
+  const [flightId, setFlightId] = useState("1");
 
-  const initialValues = {
-    
-    Class: "0",
-    Price: 30000 ,
-    Section:"front",
-    PassengerId:8,
-    FlightId:1
-  };
+  useEffect(() => {
+    switch (setClasss) {
+      case "0":
+        setPrice(basicPrice);
+        break;
+
+      case "1":
+        setPrice(basicPrice * 1.5);
+        break;
+
+      default:
+        break;
+    }
+  }, [setClasss]);
+
+  const { AddTicket } = useContext(FlightContext);
 
   const validationSchema = Yup.object({
-   
+    classs: Yup.string().required("Class is required"),
+    section: Yup.string().required("Section is required"),
+    passengerId: Yup.string().required("Passenger ID is required"),
+    flightId: Yup.string().required("Flight ID is required"),
   });
 
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      setLoading(true);
-      // const response = await axios.post('http://localhost:5269/api/Ticket', values);
-      // console.log(response.data);
-      // setSuccessMsg(response.data.message); // Set success message state
+      await AddTicket(Number(passengerId), Number(flightId), Number(price), Number(section), Number(classs));
+      console.log("Ticket added successfully!");
     } catch (error) {
-      setErrMsg(error.message);
-    } finally {
-      setLoading(false);
-      setSubmitting(false);
+      console.error("Failed to add ticket:", error.message);
     }
   };
 
   return (
-    <div className='container'>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-          
-
-            <div className="form-row">
-              <div className="form-group col-md-4">
-                <label htmlFor="class">Class</label>
-                <Field as="select" name="Class" className="form-control">
-                  <option value="0">0</option>
-                  <option value="1">1</option>
-                </Field>
-              </div>
-              <div className="form-group col-md-4">
-                <label htmlFor="price">Price</label>
-                <Field as="select" name="Price" className="form-control">
-                  <option value="30000">30000</option>
-                  <option value="20000">20000</option>
-                </Field>
-              </div>
-              <div className="form-group col-md-4">
-                <label htmlFor="price">Section</label>
-                <Field as="select" name="Section" className="form-control">
-                  <option value="0">Front</option>
-                  <option value="1">Middle</option>
-                  <option value="2">Back</option>
-                  <option value="3">Window</option>
-
-                </Field>
-              </div>
-              <div className="form-group col-md-4">
-                <label htmlFor="passengerid">PassengerId</label>
-                <Field as="select" name="PassengerId" className="form-control">
-                  <option value="8">8</option>
-                </Field>
-              </div>
-              <div className="form-group col-md-4">
-                <label htmlFor="flightid">FlightId</label>
-                <Field as="select" name="FlightId" className="form-control">
-                  <option value="1">1</option>
-                </Field>
-              </div>
-           
-            </div>
-
-            <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-              {isSubmitting ? "Submitting..." : "Book"}
-            </button>
-          </Form>
-        )}
-      </Formik>
+    <div className="container">
+      <form onSubmit={handleSubmit}>
+        <div className="form-row">
+          <div className="form-group col-md-4">
+            <label htmlFor="class">Class</label>
+            <select
+              name="Class"
+              value={classs}
+              onChange={(e) => setClasss(e.target.value)}
+              className="form-control"
+            >
+              <option value="0">Economy</option>
+              <option value="1">VIP</option>
+            </select>
+          </div>
+          <div className="form-group col-md-4">
+            <label htmlFor="price">Price</label>
+            <input
+              name="Price"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              className="form-control"
+              type="text"
+              disabled
+            />
+          </div>
+          <div className="form-group col-md-4">
+            <label htmlFor="section">Section</label>
+            <select
+              name="Section"
+              value={section}
+              onChange={(e) => setSection(e.target.value)}
+              className="form-control"
+            >
+              <option value="0">Front</option>
+              <option value="1">Middle</option>
+              <option value="2">Back</option>
+              <option value="3">Window</option>
+            </select>
+          </div>
+          <div className="form-group col-md-4">
+            <label htmlFor="passengerid">PassengerId</label>
+            <select
+              name="PassengerId"
+              value={passengerId}
+              onChange={(e) => setPassengerId(e.target.value)}
+              className="form-control"
+            >
+              <option value="2030">2030</option>
+            </select>
+          </div>
+          <div className="form-group col-md-4">
+            <label htmlFor="flightid">FlightId</label>
+            <select
+              name="FlightId"
+              onChange={(e) => setFlightId(e.target.value)}
+              className="form-control"
+            >
+              <option value="1">1</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Book
+        </button>
+      </form>
     </div>
   );
 }

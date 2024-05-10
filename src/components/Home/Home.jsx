@@ -30,6 +30,7 @@ export default function Home() {
       try {
         const { data } = await axios.get("http://localhost:5269/api/Flight");
         setFlights(data.data);
+        console.log(data.data)
       } catch (error) {
         console.error("Failed to fetch flights:", error);
       }
@@ -168,6 +169,7 @@ export default function Home() {
                             value={flight.sourceAirportNum}
                           >
                             {flight.sourceAirportName}
+                            
                           </option>
                         ))}
                       </select>

@@ -1,14 +1,16 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { passengerContext } from "../../Context/PassengerIDContext";
 
 export default function SignUp() {
   let navigate = useNavigate();
   const [Loading, setloading] = useState(false);
   const [errMsg, seterrMsg] = useState(null);
-  let validationSchema = Yup.object({
+   let{setPassengerID} =useContext(passengerContext)
+   let validationSchema = Yup.object({
     userName: Yup.string()
       .min(3, "min length is 3")
       .max(20, "max length is 20")
@@ -34,7 +36,10 @@ export default function SignUp() {
       let data = response.data;
       console.log(data);
       if (data.isSuccess) {
+        localStorage.setItem('passengerId' , data.data)
+        
         navigate("/signin");
+
       } else {
         seterrMsg("Registration failed, please try again.");
       }

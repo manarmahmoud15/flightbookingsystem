@@ -6,17 +6,17 @@ import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { userContext } from "../../Context/TokenContext";
 import { FlightContext } from "../../Context/FlightContext";
+import { passengerContext } from "../../Context/PassengerIDContext";
 
 export default function AddTicket() {
   const basicPrice = 2000;
   const [price, setPrice] = useState(0);
   const[classs , setClasss] = useState('1')
   const [section, setSection] = useState("0");
-  const [passengerId, setPassengerId] = useState("2030");
-  const [flightId, setFlightId] = useState("1");
-
+  const [flightId, setFlightId] = useState("2");
+  const {passengerId} = useContext(passengerContext)
   useEffect(() => {
-    switch (setClasss) {
+    switch (classs) {
       case "0":
         setPrice(basicPrice);
         break;
@@ -28,7 +28,7 @@ export default function AddTicket() {
       default:
         break;
     }
-  }, [setClasss]);
+  }, [classs]);
 
   const { AddTicket } = useContext(FlightContext);
 
@@ -91,24 +91,14 @@ export default function AddTicket() {
             </select>
           </div>
           <div className="form-group col-md-4">
-            <label htmlFor="passengerid">PassengerId</label>
-            <select
-              name="PassengerId"
-              value={passengerId}
-              onChange={(e) => setPassengerId(e.target.value)}
-              className="form-control"
-            >
-              <option value="2030">2030</option>
-            </select>
-          </div>
-          <div className="form-group col-md-4">
             <label htmlFor="flightid">FlightId</label>
             <select
               name="FlightId"
+              value={flightId}
               onChange={(e) => setFlightId(e.target.value)}
               className="form-control"
             >
-              <option value="1">1</option>
+              <option value="2">2</option>
             </select>
           </div>
         </div>

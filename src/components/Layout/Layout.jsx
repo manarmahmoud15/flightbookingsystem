@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import AppNavbar from "../Navbar/Navbar";
 import { userContext } from "../../Context/TokenContext";
 import Footer from "../Footer/Footer";
+import { passengerContext } from "../../Context/PassengerIDContext";
 export default function Layout() {
   let { userToken, UserToken } = useContext(userContext);
 
@@ -10,6 +11,13 @@ export default function Layout() {
   useEffect(() => {
     if (localStorage.getItem("userToken") !== null) {
       setUserToken(localStorage.getItem("userToken"));
+    }
+  }, []);
+  const { setPassengerID } = useContext(passengerContext);
+  useEffect(() => {
+    if (localStorage.getItem("passengerId") !== null) {
+      setPassengerID(localStorage.getItem("passengerId"));
+      
     }
   }, []);
   return (

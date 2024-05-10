@@ -25,6 +25,7 @@ import Ticket from './components/Ticket/Ticket'
 import ShowAllFlight from "./components/ShowAllFlight/showAllFlight";
 import ForgetPassword from "./components/forgetPassword/forgetPassword";
 import FlightContextProvider from "./Context/FlightContext";
+import PassengerContextProvider from "./Context/PassengerIDContext";
 
 
 const router = createBrowserRouter([
@@ -57,9 +58,11 @@ function App() {
     <div>
       <FlightDashboardContextProvider>
         <TokenContextProvider>
+          <PassengerContextProvider>
           <FlightContextProvider >
           <RouterProvider router={router}></RouterProvider>
           </FlightContextProvider>
+          </PassengerContextProvider>
         </TokenContextProvider>
       </FlightDashboardContextProvider>
     </div>

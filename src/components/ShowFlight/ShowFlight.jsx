@@ -40,10 +40,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function ShowFlight() {
   const data = useSelector((state) => state.data);
   const dispatch = useDispatch();
-  const handleDelete = (e) => {
-    const id = parseInt(e.currentTarget.id)
-    dispatch(deleteBooking(id));
-  };
+  // const handleDelete = (e) => {
+  //   const id = parseInt(e.currentTarget.id)
+  //   dispatch(deleteBooking(id));
+  // };
   // console.log(data);
   return (
     <>
@@ -54,11 +54,11 @@ export default function ShowFlight() {
               <TableRow>
                 <StyledTableCell>Destination Form</StyledTableCell>
                 <StyledTableCell >Destination To</StyledTableCell>
-                <StyledTableCell >Adults</StyledTableCell>
-                <StyledTableCell >Children</StyledTableCell>
+                {/* <StyledTableCell >Adults</StyledTableCell>
+                <StyledTableCell >Children</StyledTableCell> */}
                 <StyledTableCell >Check In</StyledTableCell>
                 <StyledTableCell >Check Out</StyledTableCell>
-                <StyledTableCell >Delete</StyledTableCell>
+                {/* <StyledTableCell >Delete</StyledTableCell> */}
                 <StyledTableCell >Details</StyledTableCell>
               </TableRow>
             </TableHead>
@@ -69,11 +69,11 @@ export default function ShowFlight() {
                     {data.from}
                   </StyledTableCell>
                   <StyledTableCell >{data.to}</StyledTableCell>
-                  <StyledTableCell >{data.adults}</StyledTableCell>
-                  <StyledTableCell >{data.children}</StyledTableCell>
+                  {/* <StyledTableCell >{data.adults}</StyledTableCell>
+                  <StyledTableCell >{data.children}</StyledTableCell> */}
                   <StyledTableCell >{data.checkin}</StyledTableCell>
-                  <StyledTableCell >{data.checkOut}</StyledTableCell>
-                  <StyledTableCell >
+                  <StyledTableCell >{data.checkout}</StyledTableCell>
+                  {/* <StyledTableCell >
                     <button
                       className="btn btn-xs bg-red-500 text-white"
                       id={`${data.id}`}
@@ -82,7 +82,7 @@ export default function ShowFlight() {
                       {" "}
                       <MdDelete />
                     </button>
-                  </StyledTableCell>
+                  </StyledTableCell> */}
                   <StyledTableCell >
                     <Link to='FlightDetails'
                     className="btn btn-xs bg-red-500 text-white"

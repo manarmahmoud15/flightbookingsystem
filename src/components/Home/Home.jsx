@@ -15,126 +15,100 @@ import ShowFlight from "../ShowFlight/ShowFlight";
 import axios from "axios";
 
 export default function Home() {
-  const data = useSelector((state) => state.data);
-  let dispatch = useDispatch();
-  const size = data.length;
-  // console.log(data);
-  const [adultCount, setAdultCount] = useState(0);
-  const [childCount, setChildCount] = useState(0);
+  const dispatch = useDispatch();
   const [flights, setFlights] = useState([]);
-  const [selectedFlight, setSelectedFlight] = useState(null);
+  const [selectedSource, setSelectedSource] = useState("");
+  const [selectedDestination, setSelectedDestination] = useState("");
+  const [selectedCheckIn, setSelectedCheckIn] = useState("");
+  const [selectedCheckOut, setSelectedCheckOut] = useState("");
+  // const [adultCount, setAdultCount] = useState(0);
+  // const [childCount, setChildCount] = useState(0);
+  const [bookingData, setBookingData] = useState({});
 
-  const handleAdultIncrement = () => {
-    setAdultCount(adultCount + 1);
-    SetBookingData({
-      ...BookingData,
-      adults: adultCount + 1,
-      children: childCount,
-    });
-  };
-
-  const handleAdultDecrement = () => {
-    if (adultCount > 0) {
-      setAdultCount(adultCount - 1);
-      SetBookingData({
-        ...BookingData,
-        adults: adultCount - 1,
-        children: childCount,
-      });
-    }
-  };
-
-  const handleChildIncrement = () => {
-    setChildCount(childCount + 1);
-    SetBookingData({
-      ...BookingData,
-      adults: adultCount,
-      children: childCount + 1,
-    });
-  };
-
-  const handleChildDecrement = () => {
-    if (childCount > 0) {
-      setChildCount(childCount - 1);
-      SetBookingData({
-        ...BookingData,
-        adults: adultCount,
-        children: childCount - 1,
-      });
-    }
-  };
-
-  const [BookingData, SetBookingData] = useState({});
-  // const handleChange = (e) => {
-  //   SetBookingData({
-  //     ...BookingData,
-  //     [e.target.name]: e.target.value,
-  //     adults: adultCount,
-  //     children: childCount,
-  //   });
-  // };
-  // const handleBook = (e) => {
-  //   e.preventDefault();
-  //   // console.log(e.target.value)
-  //   if (Object.keys(BookingData).length === 6) {
-  //     dispatch(makeBooking({ ...BookingData, id: size + 1 }));
-  //   } else {
-  //     alert("please select data properly !");
-  //   }
-  // };
-  // console.log(BookingData);
   useEffect(() => {
-    const fetchData = async () => {
+    async function fetchData() {
       try {
-        const response = await axios.get("http://localhost:5269/api/Flight");
-        setFlights(response.data.data);
-        console.log(response.data.data);
+        const { data } = await axios.get("http://localhost:5269/api/Flight");
+        setFlights(data.data);
       } catch (error) {
         console.error("Failed to fetch flights:", error);
       }
-    };
+    }
     fetchData();
   }, []);
+
   useEffect(() => {
-    if (selectedFlight) {
-      SetBookingData({
-        ...BookingData,
-        from: selectedFlight.sourceAirportName,
-        to: selectedFlight.destinationAirportName,
-        checkin: selectedFlight.departureTime.split("T")[0],
-        checkOut: selectedFlight.arrivalTime.split("T")[0],
-      });
+    // console.log("Selected values:", { selectedSource, selectedDestination, selectedCheckIn, selectedCheckOut });
+    if (selectedSource && selectedDestination && selectedCheckIn && selectedCheckOut) {
+      const checkInDate = new Date(selectedCheckIn).toDateString();
+      const checkOutDate = new Date(selectedCheckOut).toDateString();
+      const selectedFlight = flights.find(flight =>
+        flight.sourceAirportNum.toString() === selectedSource &&
+        flight.destinationAirportNum.toString() === selectedDestination &&
+        new Date(flight.departureTime).toDateString() === checkInDate &&
+        new Date(flight.arrivalTime).toDateString() === checkOutDate
+      );
+  
+      if (selectedFlight) {
+        setBookingData({
+          from: selectedFlight.sourceAirportName,
+          to: selectedFlight.destinationAirportName,
+          checkin: selectedFlight.departureTime.split("T")[0],
+          checkout: selectedFlight.arrivalTime.split("T")[0],
+        });
+      } else {
+        console.log("No matching flight found");
+        setBookingData({});
+      }
+    } else {
+      setBookingData({});
     }
-  }, [selectedFlight]);
+  }, [selectedSource, selectedDestination, selectedCheckIn, selectedCheckOut, flights]);
+  
 
-  const handleFlightChange = (e) => {
-    const flightId = e.target.value;
-    const flight = flights.find(
-      (f) => f.sourceAirportNum.toString() === flightId
-    );
-    setSelectedFlight(flight);
-  };
+  // const handleIncrement = (type) => {
+  //   if (type === "adult") {
+  //     setAdultCount(adultCount + 1);
+  //   } else {
+  //     setChildCount(childCount + 1);
+  //   }
+  // };
 
-  const handleChange = (e) => {
-    SetBookingData({
-      ...BookingData,
-      [e.target.name]: e.target.value,
-      adults: adultCount,
-      children: childCount,
-    });
-  };
+  // const handleDecrement = (type) => {
+  //   if (type === "adult" && adultCount > 0) {
+  //     setAdultCount(adultCount - 1);
+  //   } else if (type === "child" && childCount > 0) {
+  //     setChildCount(childCount - 1);
+  //   }
+  // };
 
   const handleBook = (e) => {
     e.preventDefault();
-    if (Object.keys(BookingData).length === 6) {
-      dispatch(
-        makeBooking({ ...BookingData, id: selectedFlight?.sourceAirportNum })
-      );
+    if (Object.keys(bookingData).length === 4) {
+      dispatch(makeBooking({ ...bookingData, id: new Date().getTime() }));
     } else {
-      alert("please select data properly !");
+      alert("Please select all fields properly!");
+      console.log(bookingData)
     }
   };
-
+  const sourceChange = (e) => {
+    e.preventDefault ();
+    setSelectedSource(e.target.value);
+  setSelectedDestination(""); 
+  setSelectedCheckIn(""); 
+  setSelectedCheckOut(""); 
+  };
+  const destinationChange = (e) => {
+    setSelectedDestination(e.target.value); 
+    setSelectedCheckIn(""); 
+    setSelectedCheckOut(""); 
+  }
+  const checkInChange = (e) => {
+    setSelectedCheckIn(e.target.value); 
+  }
+  const checkOutChange = (e) => {
+    setSelectedCheckOut(e.target.value); 
+  }
   return (
     <>
       <section className="home">
@@ -174,28 +148,27 @@ export default function Home() {
                       <GrLocation className="icon" />
                     </div>
                     <div className="texts">
-                      <h6>Destination Form</h6>
-                      <div>
-                        <select
-                          required
-                          // onChange={(e) => handleChange(e)}
-                          onChange={handleFlightChange}
-                          value={selectedFlight?.sourceAirportNum || ""}
-                          name="from"
-                          id="from"
-                          style={{ border: "none" }}
-                          className="my-1"
-                        >
-                          {flights.map((flight ,index) => (
-                            <option
-                              key={index}
-                              value={flight.sourceAirportNum}
-                            >
-                              {flight.sourceAirportName}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+                      <h6>Destination From</h6>
+                      <select
+                        required
+                        onChange={(e) => sourceChange(e)}
+                        
+                        value={selectedSource}
+                        name="from"
+                        id="from"
+                        style={{ border: "none" }}
+                        className="my-1"
+                      >
+                        <option value="">Select Source Airport</option>
+                        {flights.map((flight) => (
+                          <option
+                            key={flight.sourceAirportNum}
+                            value={flight.sourceAirportNum}
+                          >
+                            {flight.sourceAirportName}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -207,31 +180,36 @@ export default function Home() {
                     </div>
                     <div className="texts">
                       <h6>Destination To</h6>
-                      <div>
-                        <select
-                          required
-                          // onChange={(e) => handleChange(e)}
-                          onChange={handleFlightChange}
-                          value={selectedFlight?.destinationAirporNum || ""}
-                          name="to"
-                          id="to"
-                          style={{ border: "none" }}
-                          className="my-1"
-                        >
-                          {flights.map((flight ,index) => (
+                      <select
+                        required
+                        onChange={(e) => destinationChange(e)}
+                        value={selectedDestination}
+                        name="to"
+                        id="to"
+                        style={{ border: "none" }}
+                        className="my-1"
+                        disabled={!selectedSource}
+                      >
+                        <option value="">Select Destination Airport</option>
+                        {flights
+                          .filter(
+                            (flight) =>
+                              flight.sourceAirportNum.toString() ===
+                              selectedSource
+                          )
+                          .map((flight) => (
                             <option
-                            key={index}
-                              value={flight.destinationAirporNum}
+                              key={flight.destinationAirportNum}
+                              value={flight.destinationAirportNum}
                             >
                               {flight.destinationAirportName}
                             </option>
                           ))}
-                        </select>
-                      </div>
+                      </select>
                     </div>
                   </div>
                 </div>
-                <div className="searchInput flex">
+                {/* <div className="searchInput flex">
                   <div className="singleInput flex">
                     <div className="iconDiv">
                       <MdOutlineFamilyRestroom className="icon" />
@@ -280,7 +258,7 @@ export default function Home() {
                           <hr />
                           <div className="flex-row mx-3">
                             {" "}
-                            {/* Separate row for children */}
+                           
                             <p>Childs</p>
                             <div className="counter-buttons">
                               <button
@@ -304,7 +282,7 @@ export default function Home() {
                       </Popup>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="searchInput flex">
                   <div className="singleInput flex">
@@ -315,26 +293,36 @@ export default function Home() {
                       <h4>Check In</h4>
                       <select
                         name="checkin"
-                        value={BookingData.checkin}
-                        onChange={handleChange}
+                        id="checkin"
+                        onChange={(e) => checkInChange(e)}
+                        value={selectedCheckIn}
+                        style={{ border: "none" }}
+                        className="my-1"
+                        disabled={!selectedDestination}
                         required
                       >
                         <option value="">Select a Check-in Date</option>
-                        {flights.map((flight, index) => (
-                          <option
-                            key={index}
-                            value={flight.departureTime.split("T")[0]}
-                          >
-                            {new Date(
-                              flight.departureTime
-                            ).toLocaleDateString()}
-                          </option>
-                        ))}
+                        {flights
+                          .filter(
+                            (flight) =>
+                              flight.destinationAirportNum.toString() ===
+                                selectedDestination &&
+                              flight.sourceAirportNum.toString() === selectedSource
+                          )
+                          .map((flight, index) => (
+                            <option
+                              key={index}
+                              value={flight.departureTime.split("T")[0]}
+                            >
+                              {new Date(
+                                flight.departureTime
+                              ).toLocaleDateString()}
+                            </option>
+                          ))}
                       </select>
                     </div>
                   </div>
                 </div>
-
                 <div className="searchInput flex">
                   <div className="singleInput flex">
                     <div className="iconDiv">
@@ -346,22 +334,32 @@ export default function Home() {
                     <div className="texts">
                       <h4>Check Out</h4>
                       <select
-                        name="checkin"
-                        value={BookingData.checkOut}
-                        onChange={handleChange}
+                        name="checkout"
+                        onChange={(e) => checkOutChange(e)}
+                        value={selectedCheckOut}
+                        style={{ border: "none" }}
+                        className="my-1"
+                        disabled={!selectedDestination}
                         required
                       >
                         <option value="">Select a Check-in Date</option>
-                        {flights.map((flight, index) => (
-                          <option
-                            key={index}
-                            value={flight.arrivalTime.split("T")[0]}
-                          >
-                            {new Date(
-                              flight.departureTime
-                            ).toLocaleDateString()}
-                          </option>
-                        ))}
+                        {flights
+                          .filter(
+                            (flight) =>
+                              flight.destinationAirportNum.toString() ===
+                              selectedDestination &&
+                              flight.sourceAirportNum.toString() === selectedSource
+                          )
+                          .map((flight, index) => (
+                            <option
+                              key={index}
+                              value={flight.arrivalTime.split("T")[0]}
+                            >
+                              {new Date(
+                                flight.departureTime
+                              ).toLocaleDateString()}
+                            </option>
+                          ))}
                       </select>
                     </div>
                   </div>

@@ -23,7 +23,7 @@ export default function AppNavbar() {
     <Navbar style={{ backgroundColor: "white", color: "black" }} expand="lg">
       <Container>
         <Navbar.Brand to="#home">
-          <a style={{textDecoration: 'none'}} className="fw-bold logo flex">
+          <a style={{ textDecoration: "none" }} className="fw-bold logo flex">
             {" "}
             <h1>
               <MdOutlineTravelExplore className="icon" />
@@ -35,24 +35,39 @@ export default function AppNavbar() {
         <Navbar.Collapse id="basic-navbar-nav">
           {userToken !== null ? (
             <Nav className="me-auto">
-              <Link to="home" className="nav-link">Home </Link>
-              <Link to="MostVisited" className="nav-link">MostVisited</Link>
-              <Link to="about" className="nav-link">About</Link>
-              <Link to="#" className="nav-link">Offers</Link>
-              <Link to="#" className="nav-link">Seats</Link>
-              <Link to="#" className="nav-link">Destination</Link>
-              <Link to="discount" className="nav-link">Discounts</Link>
-              <Link to="flightDashboard" className="nav-link">flight Dashboard</Link>
-
-
+              <Link to="home" className="nav-link">
+                Home{" "}
+              </Link>
+              <Link to="MostVisited" className="nav-link">
+                MostVisited
+              </Link>
+              <Link to="about" className="nav-link">
+                About
+              </Link>
+              <Link to="discount" className="nav-link">
+                Discounts
+              </Link>
+              <Link to="flightDashboard" className="nav-link">
+                flight Dashboard
+              </Link>
+              <Link to="ticket" className="nav-link">
+                ticket
+              </Link>
+              <Link to="ShowAllFlight" className="nav-link">
+                Show All Flight
+              </Link>
             </Nav>
           ) : (
             ""
           )}
           {userToken === null ? (
             <Nav className="ms-auto">
-              <Link to="signup"  className="btn log text-white" >Register</Link>
-              <Link to="signin" className="btn log ms-3 text-white">Log in</Link>
+              <Link to="signup" className="btn log text-white">
+                Register
+              </Link>
+              <Link to="signin" className="btn log ms-3 text-white">
+                Log in
+              </Link>
             </Nav>
           ) : (
             ""
@@ -73,7 +88,9 @@ export default function AppNavbar() {
                 <Link to="https://www.linkedin.com">
                   <FaLinkedin color="white" />
                 </Link>
-                <Link onClick={() => logOut()} className="btn log text-white">Log Out</Link>
+                <Link onClick={() => logOut()} className="btn log text-white">
+                  Log Out
+                </Link>
               </>
             ) : (
               ""

@@ -12,17 +12,6 @@ export default function FlightsDashboard() {
         if (res.data && Array.isArray(res.data.data)) {
           setFlights(res.data.data);
           console.log(res.data.data);
-
-//       .get(
-//         `http://localhost:5269/api/Country`
-//       )
-//       .then((res) => {
-//         console.log(res)
-
-//         if (res.data && Array.isArray(res.data.data)) {
-//           setFlights(res.data.data);
-//           console.log(res.data.data)
-// >>>>>>> 7d04d662de608434514ac151068c5ae87e8db2c2
         } else {
           throw new Error("Invalid response data format");
         }

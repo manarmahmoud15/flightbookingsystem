@@ -27,45 +27,26 @@ export default function SignUp() {
       nationalId : Yup.string().required("national Id is required") ,
 
   });
-
-  // function validate(val) {
-  //   let errors = {};
-  //   if (!val.Name) {
-  //     errors.Name = "name is required";
-  //   } else if (val.Name.length < 3) {
-  //     errors.Name = "min length is 3 char";
-  //   } else if (val.Name.length > 20) {
-  //     errors.Name = "max length is 20 char";
-  //   }
-  //   if (!val.Phone) {
-  //     errors.Phone = "Phone is required";
-  //   } else if (!/^01[1250][0-9]{8}$/.test(val.Phone)) {
-  //     errors.Phone = "Enter a Valid Phone Number";
-  //   }
-
-  //   if (!val.email) {
-  //     errors.email = "email is Required";
-  //   } else if (
-  //     !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/i.test(val.email)
-  //   ) {
-  //     errors.email = "Enter a Valid Email";
-  //   }
-  //   if (!val.Password) {
-  //     errors.Password = "Password is Required";
-  //   } else if (!/^[A-Z][a-z0-9]{6,15}$/.test(val.Password)) {
-  //     errors.Password = "Invalid Password ";
-  //   }
-  //   if (!val.ConfirmPassword)
-  //   {
-  //     errors.ConfirmPassword = "Confirm Password is required"
-  //   }
-  //   else if (val.ConfirmPassword !== val.Password)
-  //   {
-  //     errors.ConfirmPassword = 'Not Matched'
-  //   }
-  //   return errors;
-  // }
-  const formik = useFormik({
+  async function register(values) {
+    setloading(true);
+    try {
+      let response = await axios.post('http://localhost:5269/api/Account/register', values);
+      let data = response.data;
+      console.log(data);
+      if (data.isSuccess) {
+        navigate("/signin");
+      } else {
+        seterrMsg("Registration failed, please try again.");
+      }
+    } catch (err) {
+      console.error(err);
+      seterrMsg(err.response?.data?.message || "An unexpected error occurred");
+    } finally {
+      setloading(false);  
+    }
+  }
+  
+  let formik = useFormik({
     initialValues: {
       userName: "",
       email: "",
@@ -77,23 +58,7 @@ export default function SignUp() {
     },
     // validate ,
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
-      setloading(true);
-      try {
-        let response = await axios.post('http://localhost:5269/api/Account/register', values);
-        let data = response.data;
-        console.log(response.data);
-        if (data.message === "Account Created Successfully and Confiramtion mail has been sent , and there is the Passenger ID => save it and send it when he wants to Add a ticket") {
-          navigate("/signin");
-        } else {
-          seterrMsg("Registration failed, please try again.");
-        }
-      } catch (err) {
-        seterrMsg(err.response?.data?.message || "An unexpected error occurred");
-      } 
-        setloading(false);  
-      
-    }
+    onSubmit: register
     
   });
 
@@ -197,6 +162,7 @@ export default function SignUp() {
                   type="password"
                   id="userPassword"
                   name="password"
+                  // autoComplete="current-password"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   value={formik.values.password}
@@ -236,7 +202,7 @@ export default function SignUp() {
                   className="btn"
                   disabled={!(formik.dirty && formik.isValid)}
                 > 
-                <Link to={"/signin"} style={{ textDecoration: 'none' }}>
+                <Link style={{ textDecoration: 'none' }}>
                 
                   Register
                   </Link>

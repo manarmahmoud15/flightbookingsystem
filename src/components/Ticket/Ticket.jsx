@@ -3,11 +3,11 @@ import "./Ticket.css";
 
 export default function Ticket() {
   return (
-    <div className="container ticket mt-5 mb-2">
+    <div className="container ticket my-5">
       <div className="row">
         <div className="col-1 left d-flex justify-content-between">
-          <div className="text">
-            <h1>BOARDING</h1>
+          <div className="text my-5">
+            <h1 className="my-5">BOARDING</h1>
           </div>
         </div>
         <div className="col-7 center">
@@ -30,7 +30,7 @@ export default function Ticket() {
               <p>cairo</p>
             </div>
             <div className="barcode float-end me-2">
-              <h5 className="px-3" style={{backgroundColor:'#669bbc', color:'white'}}>Boarding Till</h5>
+              <h5 className="px-3 py-2" style={{backgroundColor:'#669bbc', color:'white'}}>Boarding Till</h5>
               <h1>18:15</h1>
               <img
                 style={{ maxWidth: "100px" }}
@@ -98,7 +98,7 @@ export default function Ticket() {
 
           <div className="botom mt-2">
             <div className="barcode float-start ms-2 ">
-              <h5 className="px-3" style={{backgroundColor:'#669bbc', color:'white'}}>Boarding Till</h5>
+              <h5 className="px-4 py-2" style={{backgroundColor:'#669bbc', color:'white'}} >Boarding Till</h5>
               <h2>18:15</h2>
             </div>
             <div className="barcode seat-info float-end p-2 ms-2">

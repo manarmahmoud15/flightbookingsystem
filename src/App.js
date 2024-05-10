@@ -21,6 +21,8 @@ import store from "./redux/store";
 import ConfirmEmail from './components/ConfirmEmail/ConfirmEmail'
 import ConfirmationMessage from "./components/ConfirmationMessage/ConfirmationMessage";
 import Ticket from './components/Ticket/Ticket'
+import ShowAllFlight from "./components/ShowAllFlight/showAllFlight";
+import ForgetPassword from "./components/forgetPassword/forgetPassword";
 
 
 const router = createBrowserRouter([
@@ -31,20 +33,20 @@ const router = createBrowserRouter([
       { path: "", element:<ProtectedRoute><Home /></ProtectedRoute>},
       { path: "home", element: <ProtectedRoute><Home /></ProtectedRoute> },
       { path: "MostVisited", element:<ProtectedRoute> <MostVisited/> </ProtectedRoute>},
-      { path: "product", element:<ProtectedRoute><Details /> </ProtectedRoute>},
-      // { path: "ticket", element:<ProtectedRoute><Ticket/></ProtectedRoute> },
+      { path: "details", element:<ProtectedRoute><Details /> </ProtectedRoute>},
       { path: "signin", element: <SignIn /> },
       { path: "signup", element: <SignUp /> },
-      // {path:"ConfirmEmail", element:<ConfirmEmail/>},
       { path: "flightdashboard", element:<ProtectedRoute><FlightsDashboard/></ProtectedRoute>  },
-      { path: "FlightDetails", element: <FlightDetails /> },
-      { path: "about", element: <About/> },
+      { path: "FlightDetails", element: <ProtectedRoute><FlightDetails /></ProtectedRoute> },
+      { path: "about", element: <ProtectedRoute><About/></ProtectedRoute> },  
+      { path: "ticket", element:<ProtectedRoute><Ticket/></ProtectedRoute> },
+      {path : 'ShowAllFlight' , element : <ProtectedRoute><ShowAllFlight/></ProtectedRoute>}
     ],
   },
   { path: "*", element: <NotFound /> },
   {path:"ConfirmEmail", element:<ConfirmEmail/>},
   {path:"ConfirmationMessage", element:<ConfirmationMessage/>},
-  { path: "ticket", element:<ProtectedRoute><Ticket/></ProtectedRoute> }
+  {path:'changePassword' , element : <ForgetPassword/>}
 ]);
 
 function App() {

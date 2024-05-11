@@ -99,7 +99,7 @@ export default function AddTicket() {
                   id="to"
                   className="form-control"
                   value={flightDetails?.data?.destinationAirportName}
-                  readOnly
+                   readOnly
                 />
               </div>
             </div>

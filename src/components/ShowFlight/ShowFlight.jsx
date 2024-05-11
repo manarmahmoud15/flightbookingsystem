@@ -16,7 +16,7 @@ import { deleteBooking } from "../../redux/actions";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { FlightContext } from "../../Context/FlightContext";
-
+import { SearchFlightContext } from "../../Context/SearchFlightContext";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -40,6 +40,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
   
 export default function ShowFlight() {
+  const {  selectFlight } = useContext(SearchFlightContext);
+  const datafromsearch = useSelector((state) => state.data);
+
+  const handleSelectFlight = (flightData) => {
+    selectFlight (flightData);
+  };
+
+
   let {AddTicket} = useContext(FlightContext)
 
   const data = useSelector((state) => state.data);
@@ -92,12 +100,13 @@ export default function ShowFlight() {
                     </button>
                   </StyledTableCell> */}
                   <StyledTableCell >
-                    <Link to='FlightDetails'
+                    <Link to='/addticket'
                     className="btn btn-xs bg-red-500 text-white"
-                    onClick={()=> {AddNewTicket(2025, 0 , 15 ,0 , 1)}}
+                   //onClick={()=> {AddNewTicket(2025, 0 , 15 ,0 , 1)}}
+                   onClick={() => handleSelectFlight(datafromsearch)}
                     >
                       {" "}
-                      Book 
+                      Book Now
                     </Link>
                   </StyledTableCell>
                 </StyledTableRow>

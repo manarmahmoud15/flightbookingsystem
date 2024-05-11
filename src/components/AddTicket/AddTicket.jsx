@@ -58,7 +58,7 @@ export default function AddTicket() {
     try {
       await AddTicket(
         Number(passengerId),
-        Number(param),
+        Number(param.id),
         Number(price),
         Number(section),
         Number(classs)
@@ -68,7 +68,8 @@ export default function AddTicket() {
       console.error("Failed to add ticket:", error.message);
     }
   };
-
+console.log(section)
+console.log(classs)
   console.log(flightDetails.data)
   return (
     <div className="container Ticketform mt-3 mb-3">

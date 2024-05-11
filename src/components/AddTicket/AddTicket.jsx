@@ -11,16 +11,12 @@ export default function AddTicket() {
   const [price, setPrice] = useState(0);
   const [classs, setClasss] = useState("1");
   const [section, setSection] = useState("0");
-<<<<<<< HEAD
   const [flightId, setFlightId] = useState("1");
   const {passengerId} = useContext(passengerContext)
-=======
-  const [flightId, setFlightId] = useState("2");
-  const { passengerId } = useContext(passengerContext);
+
   const { AddTicket } = useContext(FlightContext);
   const { searchData, selectFlight } = useContext(SearchFlightContext);
 
->>>>>>> b034af6528377f12786db2e455a8b2d7c2429349
   useEffect(() => {
     switch (classs) {
       case "0":

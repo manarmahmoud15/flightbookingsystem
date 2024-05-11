@@ -14,7 +14,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { deleteBooking } from "../../redux/actions";
 import { MdDelete } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { FlightContext } from "../../Context/FlightContext";
 import { SearchFlightContext } from "../../Context/SearchFlightContext";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -40,15 +40,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
   
 export default function ShowFlight() {
-  const {  selectFlight } = useContext(SearchFlightContext);
-  const datafromsearch = useSelector((state) => state.data);
+  // const {  selectFlight } = useContext(SearchFlightContext);
+  // const datafromsearch = useSelector((state) => state.data);
 
-  const handleSelectFlight = (flightData) => {
-    selectFlight (flightData);
-  };
+  // const handleSelectFlight = (flightData) => {
+  //   selectFlight (flightData);
+  // };
 
 
-  let {AddTicket} = useContext(FlightContext)
+  // let {AddTicket} = useContext(FlightContext)
 
   const data = useSelector((state) => state.data);
   const dispatch = useDispatch();
@@ -57,10 +57,12 @@ export default function ShowFlight() {
   //   dispatch(deleteBooking(id));
   // };
   // console.log(data);
-  async function AddNewTicket(id ,section ,price ,FlightClass ,flightID) {
-    let{data} = await AddTicket(id ,section ,price ,FlightClass ,flightID)
-    console.log(data)
-  }
+  // async function AddNewTicket(id ,section ,price ,FlightClass ,flightID) {
+  //   let{data} = await AddTicket(id ,section ,price ,FlightClass ,flightID)
+  //   console.log(data)
+  // }
+// console.log('data', data.id)
+
   return (
     <>
       {data.length && (
@@ -89,6 +91,7 @@ export default function ShowFlight() {
                   <StyledTableCell >{data.children}</StyledTableCell> */}
                   <StyledTableCell >{data.checkin}</StyledTableCell>
                   <StyledTableCell >{data.checkout}</StyledTableCell>
+
                   {/* <StyledTableCell >
                     <button
                       className="btn btn-xs bg-red-500 text-white"
@@ -100,10 +103,11 @@ export default function ShowFlight() {
                     </button>
                   </StyledTableCell> */}
                   <StyledTableCell >
-                    <Link to='/addticket'
+                    <Link to={`/addticket/${data.id}`}
                     className="btn btn-xs bg-red-500 text-white"
                    //onClick={()=> {AddNewTicket(2025, 0 , 15 ,0 , 1)}}
-                   onClick={() => handleSelectFlight(datafromsearch)}
+                  //  onClick={() => handleSelectFlight(datafromsearch)}
+                  // onClick={() => Navigate(`/addticket/${data.id}`)}
                     >
                       {" "}
                       Book Now
@@ -115,6 +119,7 @@ export default function ShowFlight() {
           </Table>
         </TableContainer>
       )}
+      
     </>
   );
 }

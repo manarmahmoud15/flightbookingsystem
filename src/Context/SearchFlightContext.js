@@ -20,7 +20,7 @@ export default function SearchDataContextProvider(props){
       };
 
 
-return <SearchFlightContext.Provider value={{ searchData, updateSearchData , selectFlight}}>
+return <SearchFlightContext.Provider value={{ searchData, updateSearchData , selectFlight ,setSearchData}}>
 {props.children}
 </SearchFlightContext.Provider>
 }

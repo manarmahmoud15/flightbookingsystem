@@ -44,7 +44,7 @@ const router = createBrowserRouter([
       { path: "about", element: <ProtectedRoute><About/></ProtectedRoute> },  
       { path: "ticket", element:<ProtectedRoute><Ticket/></ProtectedRoute> },
       {path : 'ShowAllFlight' , element : <ProtectedRoute><ShowAllFlight/></ProtectedRoute>},
-      {path : 'addticket' , element : <ProtectedRoute><AddTicket/></ProtectedRoute>}
+      {path : 'addticket/:id' , element : <ProtectedRoute><AddTicket/></ProtectedRoute>}
     ],
   },
   { path: "*", element: <NotFound /> },

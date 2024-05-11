@@ -24,6 +24,7 @@ export default function Home() {
   // const [adultCount, setAdultCount] = useState(0);
   // const [childCount, setChildCount] = useState(0);
   const [bookingData, setBookingData] = useState({});
+  const [id , setID] = useState(null)
 
   useEffect(() => {
     async function fetchData() {
@@ -37,7 +38,7 @@ export default function Home() {
     }
     fetchData();
   }, []);
-
+  
   useEffect(() => {
     console.log("Selected values:", { selectedSource, selectedDestination, selectedCheckIn, selectedCheckOut });
     if (selectedSource && selectedDestination && selectedCheckIn && selectedCheckOut) {
@@ -51,6 +52,7 @@ export default function Home() {
       );
   
       if (selectedFlight) {
+        setID(selectedFlight.id)
         setBookingData({
           from: selectedFlight.sourceAirportName,
           to: selectedFlight.destinationAirportName,
@@ -59,6 +61,7 @@ export default function Home() {
         });
       } else {
         console.log("No matching flight found");
+        setID(null)
         setBookingData({});
       }
     } else {
@@ -86,12 +89,13 @@ export default function Home() {
   const handleBook = (e) => {
     e.preventDefault();
     if (Object.keys(bookingData).length === 4) {
-      dispatch(makeBooking({ ...bookingData, id: new Date().getTime() }));
+      dispatch(makeBooking({ ...bookingData, id: id }));
     } else {
       alert("Please select all fields properly!");
       console.log(bookingData)
     }
   };
+  console.log(id)
   const sourceChange = (e) => {
     e.preventDefault ();
     setSelectedSource(e.target.value);
@@ -110,7 +114,9 @@ export default function Home() {
   const checkOutChange = (e) => {
     setSelectedCheckOut(e.target.value); 
   }
-
+  const IDChange = (e)=> {
+    setID(e.target.value)
+  }
  
   return (
     <>
@@ -169,6 +175,7 @@ export default function Home() {
                             value={flight.sourceAirportNum}
                           >
                             {flight.sourceAirportName}
+                            
                             
                           </option>
                         ))}

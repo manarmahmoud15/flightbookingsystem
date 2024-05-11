@@ -5,18 +5,22 @@ import * as Yup from "yup";
 import Img1 from "../../Assets/imgs/Airporrt.webp";
 import "./AddTicket.css";
 import { SearchFlightContext } from "../../Context/SearchFlightContext";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function AddTicket() {
+  const param = useParams()
+  console.log('id' ,param);
   const basicPrice = 2000;
   const [price, setPrice] = useState(0);
   const [classs, setClasss] = useState("1");
   const [section, setSection] = useState("0");
-  const [flightId, setFlightId] = useState("1");
+  const [flightId, setFlightId] = useState("");
   const {passengerId} = useContext(passengerContext)
 
   const { AddTicket } = useContext(FlightContext);
   const { searchData, selectFlight } = useContext(SearchFlightContext);
-
+  const [flightDetails , setFlightDetails] = useState ({});
   useEffect(() => {
     switch (classs) {
       case "0":
@@ -54,7 +58,17 @@ export default function AddTicket() {
       console.error("Failed to add ticket:", error.message);
     }
   };
-
+  useEffect(() => {
+    axios.get(`http://localhost:5269/api/Flight/${param.id}`
+    ,{
+    param :{
+      page :1 
+    }
+  })
+     .then((res) => setFlightDetails(res.data))
+     .catch((error)=> console.log(error))
+  },[]);
+  console.log(flightDetails.data)
   return (
     <div className="container Ticketform mt-3 mb-3">
       <div className="row align-items-center justify-content-center">
@@ -72,7 +86,7 @@ export default function AddTicket() {
                   type="text"
                   id="from"
                   className="form-control"
-                  value={searchData.source}
+                  value={flightDetails?.data?.sourceAirportName}
                   readOnly
                 />
               </div>
@@ -82,7 +96,7 @@ export default function AddTicket() {
                   type="text"
                   id="to"
                   className="form-control"
-                  value={searchData.destination}
+                  value={flightDetails?.data?.destinationAirportName}
                   readOnly
                 />
               </div>
@@ -94,7 +108,7 @@ export default function AddTicket() {
                   type="text"
                   id="checkin"
                   className="form-control"
-                  value={searchData.checkIn}
+                  value={flightDetails?.data?.departureTime}
                   readOnly
                 />
               </div>
@@ -104,9 +118,10 @@ export default function AddTicket() {
                   type="text"
                   id="checkout"
                   className="form-control"
-                  value={searchData.checkOut}
+                  value={flightDetails?.data?.arrivalTime}
                   readOnly
                 />
+                
               </div>
             </div>
 
@@ -151,14 +166,21 @@ export default function AddTicket() {
               </div>
               <div className="col">
                 <label htmlFor="inputState">FlightId</label>
-                <select
+                <input
+                  type="text"
                   id="flightIdSelect"
-                  value={flightId}
+                  className="form-control"
+                  value={flightDetails?.data?.id}
+                  readOnly
+                />
+                {/* <select
+                  id="flightIdSelect"
+                  value={flightDetails?.data?.id }
                   onChange={(e) => setFlightId(e.target.value)}
                   className="form-control"
                 >
                   <option value="2">2</option>
-                </select>
+                </select> */}
               </div>
             </div>
             <button type="submit" className="btn btn-primary">

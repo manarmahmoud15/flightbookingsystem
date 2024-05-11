@@ -1,7 +1,8 @@
 import React from "react";
 import "./Ticket.css";
 
-export default function Ticket() {
+export default function  Ticket(props) {
+  console.log(props);
   return (
     <div className="container ticket my-5">
       <div className="row">

@@ -13,7 +13,7 @@ export default function AddTicket() {
   const [price, setPrice] = useState(0);
   const[classs , setClasss] = useState('1')
   const [section, setSection] = useState("0");
-  const [flightId, setFlightId] = useState("2");
+  const [flightId, setFlightId] = useState("1");
   const {passengerId} = useContext(passengerContext)
   useEffect(() => {
     switch (classs) {

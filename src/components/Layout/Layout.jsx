@@ -1,9 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import AppNavbar from "../Navbar/Navbar";
 import { userContext } from "../../Context/TokenContext";
 import Footer from "../Footer/Footer";
 import { passengerContext } from "../../Context/PassengerIDContext";
+import axios from "axios";
 export default function Layout() {
   let { userToken, UserToken } = useContext(userContext);
 
@@ -19,6 +20,19 @@ export default function Layout() {
       setPassengerID(localStorage.getItem("passengerId"));
       
     }
+  }, []);
+  const [system,setSystem] = useState('');
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const { data } = await axios.get("http://localhost:5269/api/System");
+        setSystem(data.data);
+        console.log(data)
+      } catch (error) {
+        console.error("Failed to fetch flights:", error);
+      }
+    }
+    fetchData();
   }, []);
   return (
     <div>

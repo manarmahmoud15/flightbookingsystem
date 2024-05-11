@@ -1,5 +1,5 @@
 // import React, { useContext } from "react";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -7,18 +7,31 @@ import { MdOutlineTravelExplore } from "react-icons/md";
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { userContext } from "../../Context/TokenContext";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 // import { counterContext } from "../../Context/counter";
 
 export default function AppNavbar() {
   let { userToken, setUserToken } = useContext(userContext);
   // let {counter} = useContext(counterContext);
-
+  const [role , setRole] = useState('') 
   let navigate = useNavigate();
   function logOut() {
     localStorage.removeItem("userToken");
     setUserToken(null);
     navigate("/signin");
   }
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const { data } = await axios.get("http://localhost:5269/api/Role");
+        setRole(data.data);
+        console.log(data.data)
+      } catch (error) {
+        console.error("Failed to fetch flights:", error);
+      }
+    }
+    fetchData();
+  }, []);
   return (
     <Navbar style={{ backgroundColor: "white", color: "black" }} expand="lg">
       <Container>
@@ -47,9 +60,12 @@ export default function AppNavbar() {
               <Link to="discount" className="nav-link">
                 Discounts
               </Link>
-              <Link to="flightDashboard" className="nav-link">
+              {
+                role.name == "Admin" ?<Link to="flightDashboard" className="nav-link">
                 flight Dashboard
-              </Link>
+              </Link> : ''
+              }
+              
               <Link to="ticket" className="nav-link">
                 ticket
               </Link>

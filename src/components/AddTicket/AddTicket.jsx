@@ -7,6 +7,7 @@ import "./AddTicket.css";
 import { SearchFlightContext } from "../../Context/SearchFlightContext";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Ticket from "../Ticket/Ticket";
 
 export default function AddTicket() {
   const param = useParams()
@@ -72,6 +73,7 @@ console.log(section)
 console.log(classs)
   console.log(flightDetails.data)
   return (
+    <>  
     <div className="container Ticketform mt-3 mb-3">
       <div className="row align-items-center justify-content-center">
         <div className="col-4">
@@ -99,7 +101,7 @@ console.log(classs)
                   id="to"
                   className="form-control"
                   value={flightDetails?.data?.destinationAirportName}
-                  readOnly
+                   readOnly
                 />
               </div>
             </div>
@@ -192,5 +194,7 @@ console.log(classs)
         </div>
       </div>
     </div>
+    <Ticket TicketData={{flightDetails,price,classs,section,flightId}}/>
+    </>
   );
 }

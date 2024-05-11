@@ -26,7 +26,7 @@ import ShowAllFlight from "./components/ShowAllFlight/showAllFlight";
 import ForgetPassword from "./components/forgetPassword/forgetPassword";
 import FlightContextProvider from "./Context/FlightContext";
 import PassengerContextProvider from "./Context/PassengerIDContext";
-
+import SearchDataContextProvider from "./Context/SearchFlightContext";
 
 const router = createBrowserRouter([
   {
@@ -50,7 +50,8 @@ const router = createBrowserRouter([
   { path: "*", element: <NotFound /> },
   {path:"ConfirmEmail", element:<ConfirmEmail/>},
   {path:"ConfirmationMessage", element:<ConfirmationMessage/>},
-  {path:'changePassword' , element : <ForgetPassword/>}
+  {path:'changePassword' , element : <ForgetPassword/>},
+
 ]);
 
 function App() {
@@ -58,11 +59,13 @@ function App() {
     <div>
       <FlightDashboardContextProvider>
         <TokenContextProvider>
+          <SearchDataContextProvider>
           <PassengerContextProvider>
           <FlightContextProvider >
           <RouterProvider router={router}></RouterProvider>
           </FlightContextProvider>
           </PassengerContextProvider>
+          </SearchDataContextProvider>
         </TokenContextProvider>
       </FlightDashboardContextProvider>
     </div>

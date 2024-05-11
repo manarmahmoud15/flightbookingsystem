@@ -5,23 +5,14 @@ import * as Yup from "yup";
 import Img1 from "../../Assets/imgs/Airporrt.webp";
 import "./AddTicket.css";
 import { SearchFlightContext } from "../../Context/SearchFlightContext";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import Ticket from "../Ticket/Ticket";
+import { ticketContext } from "../../Context/TicketContext";
 
 export default function AddTicket() {
   const param = useParams()
   console.log('id' ,param);
-  useEffect(() => {
-    axios.get(`http://localhost:5269/api/Flight/${param.id}`
-    ,{
-    param :{
-      page :1 
-    }
-  })
-     .then((res) => setFlightDetails(res.data))
-     .catch((error)=> console.log(error))
-  },[]);
   const basicPrice = 2000;
   const [price, setPrice] = useState(0);
   const [classs, setClasss] = useState("1");
@@ -32,6 +23,7 @@ export default function AddTicket() {
   const { AddTicket } = useContext(FlightContext);
   const { searchData, selectFlight } = useContext(SearchFlightContext);
   const [flightDetails , setFlightDetails] = useState ({});
+  const [isTicketBooked, setIsTicketBooked] = useState(false);
   useEffect(() => {
     switch (classs) {
       case "0":
@@ -47,33 +39,50 @@ export default function AddTicket() {
     }
   }, [classs]);
 
-  // const validationSchema = Yup.object({
-  //   classs: Yup.string().required("Class is required"),
-  //   section: Yup.string().required("Section is required"),
-  //   passengerId: Yup.string().required("Passenger ID is required"),
-  //   flightId: Yup.string().required("Flight ID is required"),
-  // });
+  const validationSchema = Yup.object({
+    classs: Yup.string().required("Class is required"),
+    section: Yup.string().required("Section is required"),
+    passengerId: Yup.string().required("Passenger ID is required"),
+    flightId: Yup.string().required("Flight ID is required"),
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await AddTicket(
         Number(passengerId),
-        Number(param.id),
+        Number(flightId),
         Number(price),
         Number(section),
         Number(classs)
       );
       console.log("Ticket added successfully!");
+      setIsTicketBooked(true);
     } catch (error) {
       console.error("Failed to add ticket:", error.message);
     }
   };
-console.log(section)
-console.log(classs)
+  useEffect(() => {
+    axios.get(`http://localhost:5269/api/Flight/${param.id}`
+    ,{
+    param :{
+      page :1 
+    }
+  })
+     .then((res) => setFlightDetails(res.data))
+     .catch((error)=> console.log(error))
+  },[]);
   console.log(flightDetails.data)
+  const {ticketData ,SetTicketData} = useContext(ticketContext);
+  
   return (
     <>  
+     <div className="container Ticketform mt-3 mb-3">
+     {isTicketBooked ? (
+  <Ticket
+    TicketData={{ flightDetails, price, classs, section, flightId }}
+  />
+): (
     <div className="container Ticketform mt-3 mb-3">
       <div className="row align-items-center justify-content-center">
         <div className="col-4">
@@ -187,13 +196,16 @@ console.log(classs)
                 </select> */}
               </div>
             </div>
-            <button type="submit" className="btn btn-primary">
+            <Link to='/ticket' type="submit" className="btn btn-primary">
+
               Book
-            </button>
+            </Link>
           </form>
         </div>
       </div>
     </div>
+        )}
+        </div>
     <Ticket TicketData={{flightDetails,price,classs,section,flightId}}/>
     </>
   );

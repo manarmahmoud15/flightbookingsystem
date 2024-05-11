@@ -7,51 +7,122 @@ import SignUp from "./components/SignUp/SignUp";
 import NotFound from "./components/NotFound/NotFound";
 import TokenContextProvider from "./Context/TokenContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-import MostVisited from './components/MostVisited/MostVisited'
-import Details from './components/Details/Details'
+import MostVisited from "./components/MostVisited/MostVisited";
+import Details from "./components/Details/Details";
 import FlightDetails from "./components/FlightDetails/FlightDetails";
 import About from "./components/About/About";
 // import { Provider } from "react-redux";
 // import store from "./redux/store";
-import AddTicket from './components/AddTicket/AddTicket'
+import AddTicket from "./components/AddTicket/AddTicket";
 
 import FlightsDashboard from "./components/FlightsDashboard/FlightsDashboard";
 import FlightDashboardContextProvider from "./Context/flightDashboardContext";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import ConfirmEmail from './components/ConfirmEmail/ConfirmEmail'
+import ConfirmEmail from "./components/ConfirmEmail/ConfirmEmail";
 import ConfirmationMessage from "./components/ConfirmationMessage/ConfirmationMessage";
-import Ticket from './components/Ticket/Ticket'
+import Ticket from "./components/Ticket/Ticket";
 import ShowAllFlight from "./components/ShowAllFlight/showAllFlight";
 import ForgetPassword from "./components/forgetPassword/forgetPassword";
 import FlightContextProvider from "./Context/FlightContext";
 import PassengerContextProvider from "./Context/PassengerIDContext";
 import SearchDataContextProvider from "./Context/SearchFlightContext";
+import TicketContextProvider from "./Context/TicketContext";
 
 const router = createBrowserRouter([
   {
     path: "",
     element: <Layout />,
     children: [
-      { path: "", element:<ProtectedRoute><Home /></ProtectedRoute>},
-      { path: "home", element: <ProtectedRoute><Home /></ProtectedRoute> },
-      { path: "MostVisited", element:<ProtectedRoute> <MostVisited/> </ProtectedRoute>},
-      { path: "details", element:<ProtectedRoute><Details /> </ProtectedRoute>},
+      {
+        path: "",
+        element: (
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "home",
+        element: (
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "MostVisited",
+        element: (
+          <ProtectedRoute>
+            {" "}
+            <MostVisited />{" "}
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "details",
+        element: (
+          <ProtectedRoute>
+            <Details />{" "}
+          </ProtectedRoute>
+        ),
+      },
       { path: "signin", element: <SignIn /> },
       { path: "signup", element: <SignUp /> },
-      { path: "flightdashboard", element:<ProtectedRoute><FlightsDashboard/></ProtectedRoute>  },
-      { path: "FlightDetails", element: <ProtectedRoute><FlightDetails /></ProtectedRoute> },
-      { path: "about", element: <ProtectedRoute><About/></ProtectedRoute> },  
-      { path: "ticket", element:<ProtectedRoute><Ticket/></ProtectedRoute> },
-      {path : 'ShowAllFlight' , element : <ProtectedRoute><ShowAllFlight/></ProtectedRoute>},
-      {path : 'addticket/:id' , element : <ProtectedRoute><AddTicket/></ProtectedRoute>}
+      {
+        path: "flightdashboard",
+        element: (
+          <ProtectedRoute>
+            <FlightsDashboard />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "FlightDetails",
+        element: (
+          <ProtectedRoute>
+            <FlightDetails />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "about",
+        element: (
+          <ProtectedRoute>
+            <About />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "ticket",
+        element: (
+          <ProtectedRoute>
+            <Ticket />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "ShowAllFlight",
+        element: (
+          <ProtectedRoute>
+            <ShowAllFlight />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "addticket/:id",
+        element: (
+          <ProtectedRoute>
+            <AddTicket />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
   { path: "*", element: <NotFound /> },
-  {path:"ConfirmEmail", element:<ConfirmEmail/>},
-  {path:"ConfirmationMessage", element:<ConfirmationMessage/>},
-  {path:'changePassword' , element : <ForgetPassword/>},
-
+  { path: "ConfirmEmail", element: <ConfirmEmail /> },
+  { path: "ConfirmationMessage", element: <ConfirmationMessage /> },
+  { path: "changePassword", element: <ForgetPassword /> },
 ]);
 
 function App() {
@@ -60,17 +131,17 @@ function App() {
       <FlightDashboardContextProvider>
         <TokenContextProvider>
           <SearchDataContextProvider>
-          <PassengerContextProvider>
-          <FlightContextProvider >
-          <RouterProvider router={router}></RouterProvider>
-          </FlightContextProvider>
-          </PassengerContextProvider>
+            <PassengerContextProvider>
+              <TicketContextProvider>
+                <FlightContextProvider>
+                  <RouterProvider router={router}></RouterProvider>
+                </FlightContextProvider>
+              </TicketContextProvider>
+            </PassengerContextProvider>
           </SearchDataContextProvider>
         </TokenContextProvider>
       </FlightDashboardContextProvider>
     </div>
-
-
   );
 }
 

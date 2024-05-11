@@ -66,9 +66,9 @@ export default function AppNavbar() {
               </Link> : ''
               }
               
-              <Link to="ticket" className="nav-link">
+              {/* <Link to="ticket" className="nav-link">
                 ticket
-              </Link>
+              </Link> */}
               <Link to="ShowAllFlight" className="nav-link">
                 Show All Flight
               </Link>

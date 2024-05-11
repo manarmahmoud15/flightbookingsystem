@@ -19,11 +19,13 @@ export default function AddTicket() {
   const [section, setSection] = useState("0");
   const [flightId, setFlightId] = useState("");
   const {passengerId} = useContext(passengerContext)
-
   const { AddTicket } = useContext(FlightContext);
   const { searchData, selectFlight } = useContext(SearchFlightContext);
   const [flightDetails , setFlightDetails] = useState ({});
   const [isTicketBooked, setIsTicketBooked] = useState(false);
+
+  const { SetTicketData } = useContext(ticketContext);
+  const [ticketDetails, setTicketDetails] = useState({});
   useEffect(() => {
     switch (classs) {
       case "0":
@@ -47,17 +49,18 @@ export default function AddTicket() {
   });
 
   const handleSubmit = async (e) => {
+    setIsTicketBooked(true);
     e.preventDefault();
     try {
-      await AddTicket(
+      SetTicketData( await AddTicket(
         Number(passengerId),
-        Number(flightId),
+        Number(param.id),
         Number(price),
         Number(section),
         Number(classs)
-      );
+      ));
       console.log("Ticket added successfully!");
-      setIsTicketBooked(true);
+      
     } catch (error) {
       console.error("Failed to add ticket:", error.message);
     }
@@ -73,17 +76,18 @@ export default function AddTicket() {
      .catch((error)=> console.log(error))
   },[]);
   console.log(flightDetails.data)
-  const {ticketData ,SetTicketData} = useContext(ticketContext);
-  
+  // const {ticketData ,SetTicketData} = useContext(ticketContext);
+  console.log("Data passed to Ticket:", { flightDetails, price, classs, section, flightId });
+
   return (
     <>  
-     <div className="container Ticketform mt-3 mb-3">
-     {isTicketBooked ? (
-  <Ticket
-    TicketData={{ flightDetails, price, classs, section, flightId }}
-  />
-): (
-    <div className="container Ticketform mt-3 mb-3">
+      <div className="container Ticketform mt-3 mb-3">
+      {isTicketBooked ? (
+        <Ticket
+          TicketData={{ flightDetails, price, classs, section, flightId }}
+        />
+      ) : (
+        <div className="container Ticketform mt-3 mb-3">
       <div className="row align-items-center justify-content-center">
         <div className="col-4">
           <div className="img-container">
@@ -196,17 +200,17 @@ export default function AddTicket() {
                 </select> */}
               </div>
             </div>
-            <Link to='/ticket' type="submit" className="btn btn-primary">
+            <button onClick={handleSubmit} type="submit" className="btn btn-primary">
 
               Book
-            </Link>
+            </button>
           </form>
         </div>
       </div>
     </div>
         )}
         </div>
-    <Ticket TicketData={{flightDetails,price,classs,section,flightId}}/>
+    {/* <Ticket TicketData={{flightDetails,price,classs,section,flightId}}/> */}
     </>
   );
 }

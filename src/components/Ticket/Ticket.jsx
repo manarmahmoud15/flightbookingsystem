@@ -6,7 +6,7 @@ export default function  Ticket(props) {
   const ticketData = props.TicketData?.flightDetails?.data;
   console.log(ticketData)
   const {passengerId} = useContext(passengerContext)
-
+  console.log("TicketData:", props.TicketData);
   return (
     <div className="container ticket my-5">
       <div className="row">

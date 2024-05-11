@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Ticket.css";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { FlightContext } from "../../Context/FlightContext";
 
 export default function Ticket() {
+  const { AddTicket } = useContext(FlightContext);
+  const [flightDetails , setFlightDetails] = useState({});
+
+
+  const param = useParams() 
+  useEffect(() => {
+    axios.get(`http://localhost:5269/api/Flight/${param.id}`
+    ,{
+    param :{
+      page :1 
+    }
+  })
+     .then((res) => setFlightDetails(res.data))
+     .catch((error)=> console.log(error))
+  },[]);
   return (
     <div className="container ticket my-5">
       <div className="row">

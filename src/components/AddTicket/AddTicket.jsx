@@ -11,6 +11,16 @@ import axios from "axios";
 export default function AddTicket() {
   const param = useParams()
   console.log('id' ,param);
+  useEffect(() => {
+    axios.get(`http://localhost:5269/api/Flight/${param.id}`
+    ,{
+    param :{
+      page :1 
+    }
+  })
+     .then((res) => setFlightDetails(res.data))
+     .catch((error)=> console.log(error))
+  },[]);
   const basicPrice = 2000;
   const [price, setPrice] = useState(0);
   const [classs, setClasss] = useState("1");
@@ -36,19 +46,19 @@ export default function AddTicket() {
     }
   }, [classs]);
 
-  const validationSchema = Yup.object({
-    classs: Yup.string().required("Class is required"),
-    section: Yup.string().required("Section is required"),
-    passengerId: Yup.string().required("Passenger ID is required"),
-    flightId: Yup.string().required("Flight ID is required"),
-  });
+  // const validationSchema = Yup.object({
+  //   classs: Yup.string().required("Class is required"),
+  //   section: Yup.string().required("Section is required"),
+  //   passengerId: Yup.string().required("Passenger ID is required"),
+  //   flightId: Yup.string().required("Flight ID is required"),
+  // });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await AddTicket(
         Number(passengerId),
-        Number(flightId),
+        Number(param),
         Number(price),
         Number(section),
         Number(classs)
@@ -58,16 +68,7 @@ export default function AddTicket() {
       console.error("Failed to add ticket:", error.message);
     }
   };
-  useEffect(() => {
-    axios.get(`http://localhost:5269/api/Flight/${param.id}`
-    ,{
-    param :{
-      page :1 
-    }
-  })
-     .then((res) => setFlightDetails(res.data))
-     .catch((error)=> console.log(error))
-  },[]);
+
   console.log(flightDetails.data)
   return (
     <div className="container Ticketform mt-3 mb-3">

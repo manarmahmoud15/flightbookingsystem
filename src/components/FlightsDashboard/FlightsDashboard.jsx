@@ -42,8 +42,8 @@ export default function FlightsDashboard() {
   return (
     
     <section className="intro shadow-3-strong">
-      {
-      role.name == "Admin" ?<div className="bg-image h-100">
+      {/* { role.name == "Admin" ? */}
+      <div className="bg-image h-100">
       <div className="mask d-flex align-items-center h-100">
         <div className="container mt-3 mb-5 ">
           <div className="row justify-content-center">
@@ -76,8 +76,8 @@ export default function FlightsDashboard() {
                         </tr>
                       </thead>
                       <tbody>
-                        {Flights.map((flight) => (
-                          <React.Fragment key={flight._id}>
+                        {Flights &&Flights.map((flight) => (
+                          <React.Fragment key={flight.id}>
                             <tr>
                               <td
                                 className="fw-bold"
@@ -88,12 +88,12 @@ export default function FlightsDashboard() {
                                   style={{ fontSize: "20px" }}
                                 ></i>
 
-                                {flight.sourceAirportName}
-                                {flight.name}
+                                {flight?.sourceAirportName}
+                                {flight?.name}
                               </td>
-                              <td>{flight.sourceAirportStateName}</td>
-                              <td>{flight.destinationAirportStateName}</td>
-                              <td>{flight.duration}</td>
+                              <td>{flight?.sourceAirportStateName}</td>
+                              <td>{flight?.destinationAirportStateName}</td>
+                              <td>{flight?.duration}</td>
 
                               <td>
                                 {flight.isActive ? (
@@ -148,8 +148,8 @@ export default function FlightsDashboard() {
         </div>
       </div>
     </div> 
-    : <p>Sorry , You Are not Admin</p>
-    }
+    {/* // : <p>Sorry , You Are not Admin</p>
+    // } */}
       
     </section>
   );

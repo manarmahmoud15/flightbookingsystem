@@ -2,7 +2,6 @@ import axios from "axios";
 import { createContext,useState } from "react";
 export let flightDashboardContext = createContext();
 export default function FlightDashboardContextProvider(props) {
-  let BaseUrl = `https://ecommerce.routemisr.com`;
   let header = {
     token: localStorage.getItem("userToken"),
   };
@@ -10,7 +9,7 @@ export default function FlightDashboardContextProvider(props) {
   ////////////Delete Flight////////
   function CancelFlight(id) {
     return axios.delete(
-      `${BaseUrl}/api/v1/cart/${id}`,
+      `http://localhost:5269/api/Flight/${id}`,
 
       { headers: header }
     );
@@ -18,7 +17,7 @@ export default function FlightDashboardContextProvider(props) {
   ////////////Update Flight////////
   function UpdateFlight(id, count) {
     return axios.put(
-      `${BaseUrl}/api/v1/cart/${id}`,
+      `http://localhost:5269/api/Flight?id=${id}`,
       {
         count: count,
       },

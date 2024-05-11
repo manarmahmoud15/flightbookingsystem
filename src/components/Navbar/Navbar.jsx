@@ -60,15 +60,18 @@ export default function AppNavbar() {
               <Link to="discount" className="nav-link">
                 Discounts
               </Link>
-              {
+              {/* {
                 role.name == "Admin" ?<Link to="flightDashboard" className="nav-link">
                 flight Dashboard
               </Link> : ''
-              }
+              } */}
+              <Link to="flightDashboard" className="nav-link">
+                flight Dashboard
+              </Link> 
               
-              {/* <Link to="ticket" className="nav-link">
+              <Link to="ticket" className="nav-link">
                 ticket
-              </Link> */}
+              </Link>
               <Link to="ShowAllFlight" className="nav-link">
                 Show All Flight
               </Link>

@@ -108,7 +108,7 @@ export default function AddTicket() {
                   type="text"
                   id="checkin"
                   className="form-control"
-                  value={flightDetails?.data?.departureTime}
+                  value={flightDetails?.data?.departureTime.split("T")[0]}
                   readOnly
                 />
               </div>
@@ -118,7 +118,7 @@ export default function AddTicket() {
                   type="text"
                   id="checkout"
                   className="form-control"
-                  value={flightDetails?.data?.arrivalTime}
+                  value={flightDetails?.data?.arrivalTime.split("T")[0]}
                   readOnly
                 />
                 

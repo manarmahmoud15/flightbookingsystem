@@ -52,7 +52,7 @@ const options = {
 //   });
 
   return (
-    <div>
+    <div className="mx-auto">
       <div className="card mostVisitedCard" style={{ width: "18rem" }}>
   <img className="card-img-top" src={flightDetails.image} alt="Card cap" /> 
   <div className="card-body">

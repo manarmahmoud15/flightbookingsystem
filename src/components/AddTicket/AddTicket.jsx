@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { FlightContext } from "../../Context/FlightContext";
 import { passengerContext } from "../../Context/PassengerIDContext";
 import * as Yup from "yup";
-import Img1 from "../../Assets/imgs/Airporrt.webp";
+import Img1 from "../../Assets/imgs/Flight Booking-cuate.png";
 import "./AddTicket.css";
 import { SearchFlightContext } from "../../Context/SearchFlightContext";
 import { Link, useParams } from "react-router-dom";

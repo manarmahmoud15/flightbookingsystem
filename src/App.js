@@ -29,6 +29,7 @@ import PassengerContextProvider from "./Context/PassengerIDContext";
 import SearchDataContextProvider from "./Context/SearchFlightContext";
 import TicketContextProvider from "./Context/TicketContext";
 import AddPassenger from "./components/AddPassenger/AddPassenger";
+import AddPassengerContextProvider from "./Context/AddPassengerContext";
 
 const router = createBrowserRouter([
   {
@@ -144,7 +145,9 @@ function App() {
             <PassengerContextProvider>
               <TicketContextProvider>
                 <FlightContextProvider>
-                  <RouterProvider router={router}></RouterProvider>
+                  <AddPassengerContextProvider>
+                    <RouterProvider router={router}></RouterProvider>
+                  </AddPassengerContextProvider>
                 </FlightContextProvider>
               </TicketContextProvider>
             </PassengerContextProvider>

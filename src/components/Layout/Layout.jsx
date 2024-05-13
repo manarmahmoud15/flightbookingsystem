@@ -21,19 +21,19 @@ export default function Layout() {
       
     }
   }, []);
-  // const [system,setSystem] = useState('');
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const { data } = await axios.get("http://localhost:5269/api/System");
-  //       setSystem(data.data);
-  //       console.log(data)
-  //     } catch (error) {
-  //       console.error("Failed to fetch flights:", error);
-  //     }
-  //   }
-  //   fetchData();
-  // }, []);
+  const [system,setSystem] = useState('');
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const { data } = await axios.get("http://localhost:5269/api/System");
+        setSystem(data.data);
+        console.log(data)
+      } catch (error) {
+        console.error("Failed to fetch flights:", error);
+      }
+    }
+    fetchData();
+  }, []);
   return (
     <div>
       <AppNavbar />

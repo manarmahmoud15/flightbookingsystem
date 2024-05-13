@@ -34,10 +34,10 @@ export default function FlightsDashboard() {
   ///Remove Flight///
   async function removeFlight(id) {
     let { data } = await CancelFlight(id);
-    console.log(data.data);
-    setFlights(data.data);
-    console.log(data.data.data);
-    setFlights(data.data.data);
+    // console.log(data.data);
+    setFlights(data?.data);
+    // console.log(data.data.data);
+    setFlights(data?.data?.data);
   }
   return (
     
@@ -129,7 +129,7 @@ export default function FlightsDashboard() {
                                     color: "white",
                                   }}
                                   onClick={() => {
-                                    removeFlight(flight.destinationAirportId);
+                                    removeFlight(flight.id);
                                   }}
                                 >
                                   Cancel

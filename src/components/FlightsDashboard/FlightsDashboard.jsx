@@ -35,9 +35,9 @@ export default function FlightsDashboard() {
   async function removeFlight(id) {
     let { data } = await CancelFlight(id);
     console.log(data.data);
-    setFlights(data.data);
-    console.log(data.data.data);
-    setFlights(data.data.data);
+    setFlights(data?.data);
+    console.log(data?.data?.data);
+    setFlights(data?.data?.data);
   }
   return (
     

@@ -28,7 +28,11 @@ import FlightContextProvider from "./Context/FlightContext";
 import PassengerContextProvider from "./Context/PassengerIDContext";
 import SearchDataContextProvider from "./Context/SearchFlightContext";
 import TicketContextProvider from "./Context/TicketContext";
+
 import NewFlight from "./components/NewFlight/NewFlight";
+import AddPassenger from "./components/AddPassenger/AddPassenger";
+import AddPassengerContextProvider from "./Context/AddPassengerContext";
+
 
 const router = createBrowserRouter([
   {
@@ -61,6 +65,15 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "addpassenger",
+        element: (
+          <ProtectedRoute>
+            {" "}
+            <AddPassenger />{" "}
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: "details",
         element: (
           <ProtectedRoute>
@@ -79,7 +92,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "FlightDetails",
+        path: "FlightDetails/:id",
         element: (
           <ProtectedRoute>
             <FlightDetails />
@@ -136,7 +149,9 @@ function App() {
             <PassengerContextProvider>
               <TicketContextProvider>
                 <FlightContextProvider>
-                  <RouterProvider router={router}></RouterProvider>
+                  <AddPassengerContextProvider>
+                    <RouterProvider router={router}></RouterProvider>
+                  </AddPassengerContextProvider>
                 </FlightContextProvider>
               </TicketContextProvider>
             </PassengerContextProvider>

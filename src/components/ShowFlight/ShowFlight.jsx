@@ -37,8 +37,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-
-  
 export default function ShowFlight() {
   // const {  selectFlight } = useContext(SearchFlightContext);
   // const datafromsearch = useSelector((state) => state.data);
@@ -46,7 +44,6 @@ export default function ShowFlight() {
   // const handleSelectFlight = (flightData) => {
   //   selectFlight (flightData);
   // };
-
 
   // let {AddTicket} = useContext(FlightContext)
 
@@ -61,36 +58,42 @@ export default function ShowFlight() {
   //   let{data} = await AddTicket(id ,section ,price ,FlightClass ,flightID)
   //   console.log(data)
   // }
-// console.log('data', data.id)
+  // console.log('data', data.id)
+  const currentTime = new Date();
+
+  // Calculate the time 24 hours from now
+  const twentyFourHoursLater = new Date(
+    currentTime.getTime() + 24 * 60 * 60 * 100
+  );
 
   return (
     <>
       {data.length && (
-        <TableContainer  className="container">
-          <Table  >
+        <TableContainer className="container">
+          <Table>
             <TableHead>
               <TableRow>
                 <StyledTableCell>Destination Form</StyledTableCell>
-                <StyledTableCell >Destination To</StyledTableCell>
+                <StyledTableCell>Destination To</StyledTableCell>
                 {/* <StyledTableCell >Adults</StyledTableCell>
                 <StyledTableCell >Children</StyledTableCell> */}
-                <StyledTableCell >Check In</StyledTableCell>
-                <StyledTableCell >Check Out</StyledTableCell>
+                <StyledTableCell>Check In</StyledTableCell>
+                <StyledTableCell>Check Out</StyledTableCell>
                 {/* <StyledTableCell >Delete</StyledTableCell> */}
-                <StyledTableCell >Details</StyledTableCell>
+                <StyledTableCell>Details</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map((data , index) => (
+              {data.map((data, index) => (
                 <StyledTableRow key={index}>
                   <StyledTableCell component="th" scope="row">
                     {data.from}
                   </StyledTableCell>
-                  <StyledTableCell >{data.to}</StyledTableCell>
+                  <StyledTableCell>{data.to}</StyledTableCell>
                   {/* <StyledTableCell >{data.adults}</StyledTableCell>
                   <StyledTableCell >{data.children}</StyledTableCell> */}
-                  <StyledTableCell >{data.checkin}</StyledTableCell>
-                  <StyledTableCell >{data.checkout}</StyledTableCell>
+                  <StyledTableCell>{data.checkin}</StyledTableCell>
+                  <StyledTableCell>{data.checkout}</StyledTableCell>
 
                   {/* <StyledTableCell >
                     <button
@@ -102,14 +105,12 @@ export default function ShowFlight() {
                       <MdDelete />
                     </button>
                   </StyledTableCell> */}
-                  <StyledTableCell >
-                    <Link to={`/addticket/${data.id}`}
-                    className="btn btn-xs bg-red-500 text-white"
-                   //onClick={()=> {AddNewTicket(2025, 0 , 15 ,0 , 1)}}
-                  //  onClick={() => handleSelectFlight(datafromsearch)}
-                  // onClick={() => Navigate(`/addticket/${data.id}`)}
+                  <StyledTableCell>
+                    <Link
+                      to={`/addticket/${data.id}`}
+                      className="btn btn-xs bg-red-500 text-white"
+                      disabled={twentyFourHoursLater <= data.checkin ? true : false}
                     >
-                      {" "}
                       Book Now
                     </Link>
                   </StyledTableCell>
@@ -119,7 +120,6 @@ export default function ShowFlight() {
           </Table>
         </TableContainer>
       )}
-      
     </>
   );
 }

@@ -91,7 +91,7 @@ else
       <h1 style={{ color: "hsl(199, 100%, 33%)" }} className="text-center">
         Login Form
       </h1>
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={formik.handleSubmit} encType={'multipart/form-data'}>
         <div className="row ">
           <div className="col-md-8 m-auto w-50 shadow p-4 bg-light">
             <div className="row gy-4">

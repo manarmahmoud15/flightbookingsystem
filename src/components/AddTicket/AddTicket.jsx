@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { FlightContext } from "../../Context/FlightContext";
 import { passengerContext } from "../../Context/PassengerIDContext";
 import * as Yup from "yup";
-import Img1 from "../../Assets/imgs/Airporrt.webp";
+import Img1 from "../../Assets/imgs/Flight Booking-cuate.png";
 import "./AddTicket.css";
 import { SearchFlightContext } from "../../Context/SearchFlightContext";
 import { Link, useParams } from "react-router-dom";
@@ -20,12 +20,9 @@ export default function AddTicket() {
   const [flightId, setFlightId] = useState("");
   const {passengerId} = useContext(passengerContext)
   const { AddTicket } = useContext(FlightContext);
-  const { searchData, selectFlight } = useContext(SearchFlightContext);
   const [flightDetails , setFlightDetails] = useState ({});
   const [isTicketBooked, setIsTicketBooked] = useState(false);
-
   const { SetTicketData } = useContext(ticketContext);
-  const [ticketDetails, setTicketDetails] = useState({});
   useEffect(() => {
     switch (classs) {
       case "0":
@@ -47,7 +44,7 @@ export default function AddTicket() {
     passengerId: Yup.string().required("Passenger ID is required"),
     flightId: Yup.string().required("Flight ID is required"),
   });
-
+  console.log('id' ,passengerId)
   const handleSubmit = async (e) => {
     setIsTicketBooked(true);
     e.preventDefault();

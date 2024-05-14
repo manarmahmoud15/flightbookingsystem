@@ -59,6 +59,7 @@ export default function ShowAllFlight() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
+
   return (
     <TableContainer className="container my-5">
       <Table>
@@ -84,6 +85,7 @@ export default function ShowAllFlight() {
                 {/* <Link to={`/FlightDetails/${item.id}`} className="btn btn-xs bg-blue-500 text-white">
                   Book Now
                 </Link> */}
+                
                 <Link to="/ticket" className="btn btn-xs bg-blue-500 text-white">
                   Book Now
                 </Link>

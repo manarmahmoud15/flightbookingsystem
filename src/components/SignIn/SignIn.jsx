@@ -66,6 +66,7 @@ export default function SignIn() {
     window.google.accounts.id.prompt();
   }, []);
 
+
   async function handleCallbackResponse(response) {
     var IdToken = response.credential;
     let res = await axios.post(
@@ -87,6 +88,34 @@ export default function SignIn() {
       alert("Invalid Gmail");
     }
   }
+
+  return (
+    <div className="my-5">
+      <h1 style={{ color: "hsl(199, 100%, 33%)" }} className="text-center">
+        Login Form
+      </h1>
+      <form onSubmit={formik.handleSubmit} encType={'multipart/form-data'}>
+        <div className="row ">
+          <div className="col-md-8 m-auto w-50 shadow p-4 bg-light">
+            <div className="row gy-4">
+              <div className="col-md-12">
+                <label htmlFor="userName">userName:</label>
+                <input
+                  type="text"
+                  id="userName"
+                  name="userName"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.userName}
+                  className="form-control"
+                />
+                {formik.errors.userName && formik.touched.userName ? (
+                  <p className="text-danger">{formik.errors.userName}</p>
+                ) : (
+                  ""
+                )}
+              </div>
+
 
   return (
     <div className="container-fluid">

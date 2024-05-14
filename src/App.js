@@ -28,9 +28,10 @@ import FlightContextProvider from "./Context/FlightContext";
 import PassengerContextProvider from "./Context/PassengerIDContext";
 import SearchDataContextProvider from "./Context/SearchFlightContext";
 import TicketContextProvider from "./Context/TicketContext";
+
+import NewFlight from "./components/NewFlight/NewFlight";
 import AddPassenger from "./components/AddPassenger/AddPassenger";
-import Discount from "./components/TopTraveller/Discount";
-import BeforeTravel from "./components/BeforeTravel/BeforeTravel";
+
 
 const router = createBrowserRouter([
   {
@@ -90,7 +91,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "FlightDetails",
+        path: "FlightDetails/:id",
         element: (
           <ProtectedRoute>
             <FlightDetails />
@@ -130,27 +131,14 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "discount",
-        element: (
-          <ProtectedRoute>
-            <Discount />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "beforetravel",
-        element: (
-          <ProtectedRoute>
-            <BeforeTravel/>
-          </ProtectedRoute>
-        ),
-      }
+
     ],
   },
   { path: "*", element: <NotFound /> },
   { path: "ConfirmEmail", element: <ConfirmEmail /> },
   { path: "ConfirmationMessage", element: <ConfirmationMessage /> },
   { path: "changePassword", element: <ForgetPassword /> },
+  { path: "NewFlight", element: <NewFlight /> },
 ]);
 
 function App() {
@@ -162,7 +150,9 @@ function App() {
             <PassengerContextProvider>
               <TicketContextProvider>
                 <FlightContextProvider>
-                  <RouterProvider router={router}></RouterProvider>
+                  <AddPassengerContextProvider>
+                    <RouterProvider router={router}></RouterProvider>
+                  </AddPassengerContextProvider>
                 </FlightContextProvider>
               </TicketContextProvider>
             </PassengerContextProvider>

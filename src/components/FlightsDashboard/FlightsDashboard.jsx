@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./FlightsDashboard.module.css";
 import axios from "axios";
 import { flightDashboardContext } from "../../Context/flightDashboardContext";
+import { Link } from "@mui/material";
 export default function FlightsDashboard() {
   let { CancelFlight } = useContext(flightDashboardContext);
   const [Flights, setFlights] = useState([]);
@@ -34,24 +35,30 @@ export default function FlightsDashboard() {
   ///Remove Flight///
   async function removeFlight(id) {
     let { data } = await CancelFlight(id);
-    console.log(data.data);
-    setFlights(data.data);
-    console.log(data.data.data);
-    setFlights(data.data.data);
+    console.log(data?.data);
+    setFlights(data?.data);
+    console.log(data?.data?.data);
+    setFlights(data?.data?.data);
   }
   return (
     
     <section className="intro shadow-3-strong">
       {/* { role.name == "Admin" ? */}
       <div className="bg-image h-100">
+      
       <div className="mask d-flex align-items-center h-100">
         <div className="container mt-3 mb-5 ">
           <div className="row justify-content-center">
             <div className="col-12">
+            <Link to="/newFlight" className="btn text-light m-2">
+              New flight</Link> 
+                {/* <a href="newFlight" className="btn text-light m-2">
+              New flight</a> */}
               <div
                 className="card shadow-3-strong"
                 style={{ "background-color": " #f5f7fa" }}
               >
+                
                 <div className="card-body">
                   <div className="table-responsive">
                     <table className="table table-borderless mb-0">
@@ -129,7 +136,7 @@ export default function FlightsDashboard() {
                                     color: "white",
                                   }}
                                   onClick={() => {
-                                    removeFlight(flight.destinationAirportId);
+                                    removeFlight(flight.id);
                                   }}
                                 >
                                   Cancel

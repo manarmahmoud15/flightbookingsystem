@@ -6,7 +6,7 @@ export default function About() {
     <>
       <main id="main">
         {/* <!-- ======= About Us Section ======= --> */}
-          <section id="about" className="about">
+          <section section id="about" className="about">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 text-center my-5">

@@ -31,8 +31,6 @@ import TicketContextProvider from "./Context/TicketContext";
 
 import NewFlight from "./components/NewFlight/NewFlight";
 import AddPassenger from "./components/AddPassenger/AddPassenger";
-import AddPassengerContextProvider from "./Context/AddPassengerContext";
-import Thanks from "./components/Thanks/Thanks"
 
 
 const router = createBrowserRouter([
@@ -133,13 +131,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "thank",
-        element: (
-          <ProtectedRoute>
-            <Thanks/>
-          </ProtectedRoute>
-        ),
-      },
+
     ],
   },
   { path: "*", element: <NotFound /> },

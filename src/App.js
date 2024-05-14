@@ -28,9 +28,16 @@ import FlightContextProvider from "./Context/FlightContext";
 import PassengerContextProvider from "./Context/PassengerIDContext";
 import SearchDataContextProvider from "./Context/SearchFlightContext";
 import TicketContextProvider from "./Context/TicketContext";
+
+import NewFlight from "./components/NewFlight/NewFlight";
 import AddPassenger from "./components/AddPassenger/AddPassenger";
 import AddPassengerContextProvider from "./Context/AddPassengerContext";
+<<<<<<< HEAD
 import Thanks from "./components/Thanks/Thanks"
+=======
+
+
+>>>>>>> ce3a526c043e322334e30392b00fb944db1e88a3
 const router = createBrowserRouter([
   {
     path: "",
@@ -142,6 +149,7 @@ const router = createBrowserRouter([
   { path: "ConfirmEmail", element: <ConfirmEmail /> },
   { path: "ConfirmationMessage", element: <ConfirmationMessage /> },
   { path: "changePassword", element: <ForgetPassword /> },
+  { path: "NewFlight", element: <NewFlight /> },
 ]);
 
 function App() {

@@ -32,12 +32,9 @@ import TicketContextProvider from "./Context/TicketContext";
 import NewFlight from "./components/NewFlight/NewFlight";
 import AddPassenger from "./components/AddPassenger/AddPassenger";
 import AddPassengerContextProvider from "./Context/AddPassengerContext";
-<<<<<<< HEAD
 import Thanks from "./components/Thanks/Thanks"
-=======
 
 
->>>>>>> ce3a526c043e322334e30392b00fb944db1e88a3
 const router = createBrowserRouter([
   {
     path: "",

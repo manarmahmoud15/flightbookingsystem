@@ -33,7 +33,7 @@ import NewFlight from "./components/NewFlight/NewFlight";
 import AddPassenger from "./components/AddPassenger/AddPassenger";
 import AddPassengerContextProvider from "./Context/AddPassengerContext";
 import Thanks from "./components/Thanks/Thanks"
-
+import BeforeTravel from "./components/BeforeTravel/BeforeTravel";
 
 const router = createBrowserRouter([
   {
@@ -137,6 +137,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Thanks/>
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "beforetravel",
+        element: (
+          <ProtectedRoute>
+            <BeforeTravel/>
           </ProtectedRoute>
         ),
       },

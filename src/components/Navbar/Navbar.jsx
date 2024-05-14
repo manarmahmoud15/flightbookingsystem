@@ -32,8 +32,9 @@ export default function AppNavbar() {
     }
     fetchData();
   }, []);
+  
   return (
-    <Navbar style={{ backgroundColor: "white", color: "black" }} expand="lg">
+    <Navbar style={{ backgroundColor: "white",fontSize : '17px', color: "black" }} expand="lg">
       <Container>
         <Navbar.Brand to="#home">
           <a style={{ textDecoration: "none" }} className="fw-bold logo flex">
@@ -75,6 +76,7 @@ export default function AppNavbar() {
               <Link to="ShowAllFlight" className="nav-link">
                 Show All Flight
               </Link>
+              
             </Nav>
           ) : (
             ""

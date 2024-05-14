@@ -8,10 +8,14 @@ export default function AddPassengerContextProvider (props){
     let headers = { token: localStorage.getItem("userToken") };
     // let{passengerId,setPassengerID} =useContext(passengerContext)
 
-    // const [flight , setFlight] = useState(0); 
+    // const [flight , setFlight] = useState(0); 4
+    localStorage.getItem('passengerId' ,null)
+
+
     function AddPassenger (PassengerName ,gender ,age ,isChild,passportNum ,nationalId ,flightId ) {
         console.log("Context:", {PassengerName ,gender ,age ,isChild,passportNum ,nationalId ,flightId });
          axios.post (
+
             'http://localhost:5269/api/Passenger',
             {
                 name : PassengerName ,
@@ -27,9 +31,10 @@ export default function AddPassengerContextProvider (props){
             }
         )
         .then(response => {
+
            console.log("New Passenger ID:", response.data.data);
             // setPassengerID(response.data.data)
-            // localStorage.setItem('passengerId' , data.data)
+            localStorage.setItem('passengerId' , response.data.data)
             // console.log('d' ,passengerId)
 
         })

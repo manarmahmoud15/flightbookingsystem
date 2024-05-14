@@ -89,7 +89,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "FlightDetails",
+        path: "FlightDetails/:id",
         element: (
           <ProtectedRoute>
             <FlightDetails />

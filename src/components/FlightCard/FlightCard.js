@@ -84,5 +84,6 @@ export default function FlightCard(props) {
       </div>
 
     </div>
+    </div>
   );
 }

@@ -19,6 +19,7 @@ export default function Discount() {
         <figure className="cardPosition me-3 col-3">
           <img src={img2} alt="Mountains" />
           <figcaption>Egypt</figcaption>
+          {/* <p>Hi</p> */}
           <span className="badge">20% OFF</span>
         </figure>
        <figure className="cardPosition me-3 col-3">

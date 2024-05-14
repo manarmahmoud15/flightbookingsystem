@@ -35,6 +35,7 @@ import AddPassengerContextProvider from "./Context/AddPassengerContext";
 import Thanks from "./components/Thanks/Thanks"
 import BeforeTravel from "./components/BeforeTravel/BeforeTravel";
 
+
 const router = createBrowserRouter([
   {
     path: "",
@@ -148,6 +149,8 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+
+
     ],
   },
   { path: "*", element: <NotFound /> },

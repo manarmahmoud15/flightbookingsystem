@@ -33,12 +33,12 @@ export default function Footer() {
             <small>KEEP IN TOUCH</small>
             <h2>Travel With Us</h2>
           </div>
-          <div className="inputDiv flex">
+          {/* <div className="inputDiv flex">
             <input type="text" placeholder="Enter Email Address" />
             <button className="btn flex mt-3" type="submit">
               Send <FiSend className="icon" />
             </button>
-          </div>
+          </div> */}
         </div>
         <div className="footerCard flex">
           <div className="footerIntro ps-3 flex">

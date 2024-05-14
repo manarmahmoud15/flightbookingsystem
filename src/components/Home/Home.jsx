@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { makeBooking } from "../../redux/actions";
 import ShowFlight from "../ShowFlight/ShowFlight";
 import axios from "axios";
+import BeforeTravel from "../BeforeTravel/BeforeTravel";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -391,6 +392,7 @@ export default function Home() {
       </section>
       <ShowFlight />
       <MostVisited />
+      <BeforeTravel/>
       <Discount />
     </>
   );

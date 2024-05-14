@@ -29,6 +29,8 @@ import PassengerContextProvider from "./Context/PassengerIDContext";
 import SearchDataContextProvider from "./Context/SearchFlightContext";
 import TicketContextProvider from "./Context/TicketContext";
 import AddPassenger from "./components/AddPassenger/AddPassenger";
+import Discount from "./components/TopTraveller/Discount";
+import BeforeTravel from "./components/BeforeTravel/BeforeTravel";
 
 const router = createBrowserRouter([
   {
@@ -127,6 +129,22 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        path: "discount",
+        element: (
+          <ProtectedRoute>
+            <Discount />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "beforetravel",
+        element: (
+          <ProtectedRoute>
+            <BeforeTravel/>
+          </ProtectedRoute>
+        ),
+      }
     ],
   },
   { path: "*", element: <NotFound /> },

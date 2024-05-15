@@ -1,5 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-
+import Img from "../../Assets/imgs/Tablet login.gif";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import { userContext } from "../../Context/TokenContext";
 
 export default function SignIn() {
@@ -62,7 +66,27 @@ export default function SignIn() {
     window.google.accounts.id.prompt();
   }, []);
 
-
+  async function handleCallbackResponse(response) {
+    var IdToken = response.credential;
+    let res = await axios.post(
+      "http://localhost:5269/api/Account/googleLogin",
+      null,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          IdToken: IdToken,
+        },
+      }
+    );
+    console.log(res);
+    if (res.data.isSuccess) {
+      navigate("/home");
+      localStorage.setItem("userToken", res.token);
+      setUserToken(res.token);
+    } else {
+      alert("Invalid Gmail");
+    }
+  }
 
   return (
     <div className="container-fluid">

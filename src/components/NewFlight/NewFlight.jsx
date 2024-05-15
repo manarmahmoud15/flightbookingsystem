@@ -7,37 +7,37 @@ function NewFlight(props) {
     const [Airports, setAirports] = useState([]);
     const [selectedStartAirport, setSelectedStartAirport] = useState('');
     const [selectedDestinationAirport, setSelectedDestinationAirport] = useState('');
-
-
-
     const [loading, setloading] = useState(false);
     const [errMsg, seterrMsg] = useState(null); 
-    let validationSchema = Yup.object({
-        departureTime: Yup.date()
-            .required("Departure Time is required"),
-        arrivalTime: Yup.date() 
-            .required("Arrival time is required")
-            .min(Yup.ref('departureTime'), 'Arrival time must be after departure time'),
-        image : Yup.string()
-            .required("Image is required"),
-        startAirport: Yup.string() 
-            .required("Start airport is required"),
-        destinationAirport: Yup.string() 
-            .required("Destination airport is required"),
-            // .test('not-equal', 'Start airport and destination airport cannot be the same', function(value) {
+   
+    const validationSchema = Yup.object({
+      departureTime: Yup.date()
+          .required("Departure Time is required"),
+      arrivalTime: Yup.date() 
+          .required("Arrival time is required")
+          .min(Yup.ref('departureTime'), 'Arrival time must be after departure time'),
+      image: Yup.mixed()
+          .required("Image is required"),
+      startAirport: Yup.string() 
+          .required("Start airport is required"),
+      destinationAirport: Yup.string()
+          .required("Destination airport is required")
+          .notOneOf([Yup.ref('startAirport')], 'Start airport and destination airport cannot be the same'),
+             // .test('not-equal', 'Start airport and destination airport cannot be the same', function(value) {
             //     const { startAirport } = this.parent; // Accessing the value of startAirport
             //     console.log(startAirport);
             //     return value === startAirport; // Return true if the destination airport is different from the start airport
             // })
-    });
+  });
+
     
     const formik = useFormik({
       initialValues: {
         departureTime: "",
         arrivalTime: "",
-        image: "",
-        startAirport : "",
-        destinationAirport : ""
+        image: null,
+        startAirport: "",
+        destinationAirport: ""
       },
       // validate ,
       validationSchema: validationSchema,
@@ -219,102 +219,100 @@ const validateForm = () => {
           .catch((error) => console.log(error));
       }, []);
 
-    return (
+      return (
         <div className='container'>
             <h2 className='text-center text-primary'>New flight</h2>
-            <form onSubmit={formik.handleSubmit} encType={'multipart/form-data'}> 
-            <div id='allErrors'>
+            <form onSubmit={formik.handleSubmit} encType='multipart/form-data'> 
+                <div id='allErrors'></div>
 
-            </div>
                 <div className="form-group m-2">
                     <label htmlFor="startAirport" className="d-block">Select start airport:</label>
-                    <select id="startAirport" onChange={handleStartAirportChange} className="form-control">
-                        {Airports.map((item, index) => (
-                            <option key={item.id}>{item.name}</option>
+                    <select 
+                        id="startAirport" 
+                        name='startAirport' 
+                        onChange={formik.handleChange} 
+                        onBlur={formik.handleBlur}
+                        value={formik.values.startAirport} 
+                        className="form-control"
+                    >
+                        <option value="" label="Select start airport" />
+                        {Airports.map((item) => (
+                            <option key={item.id} value={item.name}>{item.name}</option>
                         ))}
                     </select>
-                    {errors.selectedStartAirport && <p className="text-danger">{errors.selectedStartAirport}</p>}
+                    {formik.errors.startAirport && formik.touched.startAirport && <p className="text-danger">{formik.errors.startAirport}</p>}
                 </div>
 
                 <div className="form-group m-2">
                     <label htmlFor="destinationAirport" className="d-block">Select destination airport:</label>
-                    <select id="destinationAirport" onChange={handleDestinationAirportChange} className="form-control">
-                        {Airports.map((item, index) => (
-                            <option key={item.id}>{item.name}</option>
+                    <select 
+                        id="destinationAirport" 
+                        name='destinationAirport' 
+                        onChange={formik.handleChange} 
+                        onBlur={formik.handleBlur}
+                        value={formik.values.destinationAirport} 
+                        className="form-control"
+                    >
+                        <option value="" label="Select destination airport" />
+                        {Airports.map((item) => (
+                            <option key={item.id} value={item.name}>{item.name}</option>
                         ))}
                     </select>
-                    {errors.selectedDestinationAirport && <p className="text-danger">{errors.selectedDestinationAirport}</p>}
+                    {formik.errors.destinationAirport && formik.touched.destinationAirport && <p className="text-danger">{formik.errors.destinationAirport}</p>}
                 </div>
 
                 <div className="form-group m-2">
-                    <label htmlFor="password" className='d-block'>Departure time : </label>
-                    <input className='d-block' id='departureTime'
-                    name='departureTime'
-                     type='datetime-local'
-                     onBlur={formik.handleBlur}
-                     onChange={formik.handleChange}
-                //   onChange={handleDepartureTimeChange} 
-                     value={formik.values.departureTime}
+                    <label htmlFor="departureTime" className='d-block'>Departure time : </label>
+                    <input 
+                        className='d-block' 
+                        id='departureTime'
+                        name='departureTime'
+                        type='datetime-local'
+                        onBlur={formik.handleBlur}
+                        onChange={formik.handleChange}
+                        value={formik.values.departureTime}
                     />
-                    {/* {errors.departureTime && <p className="text-danger">{errors.departureTime}</p>} */}
-                    {formik.errors.departureTime && formik.touched.departureTime ? (
-                  <p className="text-danger"> {formik.errors.departureTime}</p>
-                ) : (
-                  ""
-                )}
-                
+                    {formik.errors.departureTime && formik.touched.departureTime && <p className="text-danger">{formik.errors.departureTime}</p>}
                 </div>
 
                 <div className="form-group m-2">
-                    <label htmlFor="password" className='d-block'>Arrival time : </label>
-                    <input className='d-block' id='arrivalTime' name='arrivalTime'
-                     type='datetime-local' 
-                     onBlur={formik.handleBlur}
-                     onChange={formik.handleChange}
-                //    onChange={handleArrivalTimeChange} 
-                     value={formik.values.arrivalTime} 
+                    <label htmlFor="arrivalTime" className='d-block'>Arrival time : </label>
+                    <input 
+                        className='d-block' 
+                        id='arrivalTime' 
+                        name='arrivalTime'
+                        type='datetime-local' 
+                        onBlur={formik.handleBlur}
+                        onChange={formik.handleChange}
+                        value={formik.values.arrivalTime} 
                     />
-                   {formik.errors.arrivalTime && formik.touched.arrivalTime ? (
-                  <p className="text-danger"> {formik.errors.arrivalTime}</p>
-                ) : (
-                  ""
-                )}
+                    {formik.errors.arrivalTime && formik.touched.arrivalTime && <p className="text-danger">{formik.errors.arrivalTime}</p>}
                 </div>
-
 
                 <div className="form-group m-2">
-                    <label htmlFor="password" className='d-block'>Image : </label>
-                    <input className='d-block' id='image' name='image'
-                     type='file' 
-                     onBlur={formik.handleBlur}
-                     onChange={formik.handleChange}
-                  // onChange={handleImageChange}
-                     value={formik.values.image}
+                    <label htmlFor="image" className='d-block'>Image : </label>
+                    <input 
+                        className='d-block' 
+                        id='image' 
+                        name='image'
+                        type='file' 
+                        onBlur={formik.handleBlur}
+                        onChange={(event) => {
+                            formik.setFieldValue("image", event.currentTarget.files[0]);
+                        }}
                     />
-                   {formik.errors.image && formik.touched.image ? (
-                  <p className="text-danger"> {formik.errors.image}</p>
-                ) : (
-                  ""
-                )}
+                    {formik.errors.image && formik.touched.image && <p className="text-danger">{formik.errors.image}</p>}
                 </div>
-            
-{/* 
-                <div className="form-check">
-                    <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                    <label className="form-check-label" htmlFor="exampleCheck1">
-                        Check me out
-                    </label>
-                </div> */}
 
-
-                {errMsg !== null ? <p className="text-danger">{errMsg} </p> : ""}
-                <button type="submit" onClick={addFlight} className="btn btn-primary m-2"
-                  disabled={!(formik.dirty &&formik.isValid)}
+                {errMsg !== null && <p className="text-danger">{errMsg}</p>}
+                <button type="submit" className="btn btn-primary m-2"
+                  disabled={!(formik.dirty && formik.isValid)}
                   >
-                    Add
+                    {loading ? 'Loading...' : 'Add'}
                 </button>
             </form>
         </div>
     );
+
 }
 export default NewFlight;

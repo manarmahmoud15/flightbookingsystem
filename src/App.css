@@ -8,7 +8,7 @@
 }
 :root {
   --primaryColor: hsl(199, 100%, 33%);
-  --secondaryColor: hsl(187, 85%, 43%);
+  --secondaryColor: hsl(199, 100%, 33%);
   --gradientColor: linear-gradient(to right, hsl(187, 85%, 43%), hsl(199, 100%, 33%));
   --whiteColor: hsl(0, 0%, 100%);
   --blackColor: hsl(201, 33%, 16%);

@@ -23,6 +23,11 @@ function NewFlight(props) {
       destinationAirport: Yup.string()
           .required("Destination airport is required")
           .notOneOf([Yup.ref('startAirport')], 'Start airport and destination airport cannot be the same'),
+             // .test('not-equal', 'Start airport and destination airport cannot be the same', function(value) {
+            //     const { startAirport } = this.parent; // Accessing the value of startAirport
+            //     console.log(startAirport);
+            //     return value === startAirport; // Return true if the destination airport is different from the start airport
+            // })
   });
 
     
@@ -39,24 +44,18 @@ function NewFlight(props) {
       onSubmit: async (values) => {
         setloading(true);
         try {
-            const formData = new FormData();
-            formData.append('image', values.image); // Append the image file to form data
-            formData.append('departureTime', values.departureTime);
-            formData.append('arrivalTime', values.arrivalTime);
-            formData.append('startAirport', values.startAirport);
-            formData.append('destinationAirport', values.destinationAirport);
-    
-            let response = await axios.post('http://localhost:5269/api/Flight', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data' // Set content type to multipart/form-data
-                }
-            });
-    
-            let data = response.data;
-            console.log('res' ,response);
-            console.log('data',data)
+            console.log(values);
+          let response = await axios.post('http://localhost:5269/api/Flight', values);
+          let data = response.data;
+          console.log(response);
+          console.log(data)
+        //   if (data.message === "Token Created Successfully") {
+        //   //  navigate("/home");
+        //     localStorage.setItem('userToken' , data.token)
+        //   //  setUserToken(data.token)
+        //   } 
         } catch (err) {
-            seterrMsg(err.response?.data?.message || "An error occurred during adding.");
+          seterrMsg(err.response?.data?.message || "An error occurred during adding.");
         }
           setloading(false); 
         
@@ -65,51 +64,59 @@ function NewFlight(props) {
     });
 
 
-    // const addFlight = (e) => {
+    const addFlight = (e) => {
+        // e.preventDefault(); 
+        // if (!validateForm()) {
+        //     return;
+        // }
+        if(formik.values.selectedDestinationAirport ===
+             formik.values.selectedStartAirport 
+            ||formik.values.arrivalTime <= formik.values.departureTime)
+            e.preventDefault();
 
-    //     if(formik.values.selectedDestinationAirport ===
-    //          formik.values.selectedStartAirport 
-    //         ||formik.values.arrivalTime <= formik.values.departureTime)
-    //         e.preventDefault();
+        if( formik.values.selectedStartAirport === 
+            formik.values.selectedDestinationAirport)
+            { 
+               // e.preventDefault(); 
+                console.log("prevented");
+                document.getElementById("allErrors").innerHTML = "<span className='text-danger'>start airport and destination airport cannot be the same</span>";
+            } 
+            else
+            {
+                document.getElementById("allErrors").innerHTML = "<span className='text-danger'></span>";
+            }
 
-    //     if( formik.values.selectedStartAirport === 
-    //         formik.values.selectedDestinationAirport)
-    //         { 
-    //            // e.preventDefault(); 
-    //             console.log("prevented");
-    //             document.getElementById("allErrors").innerHTML = "<span className='text-danger'>start airport and destination airport cannot be the same</span>";
-    //         } 
-    //         else
-    //         {
-    //             document.getElementById("allErrors").innerHTML = "<span className='text-danger'></span>";
-    //         }
+            if( formik.values.arrivalTime <= formik.values.departureTime)
+                {
+                   // e.preventDefault(); 
+                    console.log("prevented2");  
+                    document.getElementById("allErrors").innerHTML = "<span className='text-danger'>Arrival time must be after departure time</span>";
+                } 
+            else
+            {
+                document.getElementById("allErrors").innerHTML = "<span className=\"text-danger\"></span>";
+            }
+        // Perform any necessary validation
+        
+        // Call the addFlight function with necessary data
+        // addFlight({
+          
+        // });
+    };
 
-    //         if( formik.values.arrivalTime <= formik.values.departureTime)
-    //             {
-    //                // e.preventDefault(); 
-    //                 console.log("prevented2");  
-    //                 document.getElementById("allErrors").innerHTML = "<span className='text-danger'>Arrival time must be after departure time</span>";
-    //             } 
-    //         else
-    //         {
-    //             document.getElementById("allErrors").innerHTML = "<span className=\"text-danger\"></span>";
-    //         }
+    const handleStartAirportChange = (event) => {
+        setSelectedStartAirport(event.target.value);
+        console.log(selectedStartAirport);
+    };
 
-    // };
-
-    // const handleStartAirportChange = (event) => {
-    //     setSelectedStartAirport(event.target.value);
-    //     console.log(selectedStartAirport);
-    // };
-
-    // const handleDestinationAirportChange = (event) => {
-    //     setSelectedDestinationAirport(event.target.value);
-    //     console.log(selectedDestinationAirport);
-    // };
+    const handleDestinationAirportChange = (event) => {
+        setSelectedDestinationAirport(event.target.value);
+        console.log(selectedDestinationAirport);
+    };
 
     // const [departureTime, setDepartureTime] = useState(''); 
     // const [arrivalTime, setArrivalTime] = useState('');  
-    const [imageURL, setImageURL] = useState({});  
+    const [image, setImage] = useState({});  
     const [errors, setErrors] = useState({}); // State to manage validation errors
 
 
@@ -126,11 +133,11 @@ function NewFlight(props) {
 
     const handleImageChange = (event) => {
         let reader = new FileReader();
-  setImageURL(event.target.files[0]); 
+  setImage(event.target.files[0]); 
   reader.readAsDataURL(event.target.files[0]);
   reader.onload = () => {
-    setImageURL(reader.result);
-    console.log(imageURL);
+    setImage(reader.result);
+    console.log(image);
     };
     }
 
@@ -164,8 +171,8 @@ const validateForm = () => {
     // }
 
     // Validate image
-    if (!imageURL) { 
-        errors.imageURL = "Please select an image.";
+    if (!image) { 
+        errors.image = "Please select an image.";
         isValid = false;
     }
 
@@ -198,19 +205,19 @@ const validateForm = () => {
           .catch((error) => console.log(error));
       }, []);
 
-    //   useEffect(() => {
-    //     axios
-    //       .get(`http://localhost:5269/api/plane`)
-    //       .then((res) => { 
-    //         if (res.data && Array.isArray(res.data.data)) {
-    //             setAirports(res.data.data);
-    //           console.log(res.data.data);
-    //         } else {
-    //           throw new Error("Invalid response data format");
-    //         }
-    //       })
-    //       .catch((error) => console.log(error));
-    //   }, []);
+      useEffect(() => {
+        axios
+          .get(`http://localhost:5269/api/plane`)
+          .then((res) => { 
+            if (res.data && Array.isArray(res.data.data)) {
+                setAirports(res.data.data);
+              console.log(res.data.data);
+            } else {
+              throw new Error("Invalid response data format");
+            }
+          })
+          .catch((error) => console.log(error));
+      }, []);
 
       return (
         <div className='container'>
@@ -286,12 +293,12 @@ const validateForm = () => {
                     <label htmlFor="image" className='d-block'>Image : </label>
                     <input 
                         className='d-block' 
-                        id='imageURL' 
-                        name='imageURL'
+                        id='image' 
+                        name='image'
                         type='file' 
                         onBlur={formik.handleBlur}
                         onChange={(event) => {
-                            formik.setFieldValue("imageURL", event.currentTarget.files[0]);
+                            formik.setFieldValue("image", event.currentTarget.files[0]);
                         }}
                     />
                     {formik.errors.image && formik.touched.image && <p className="text-danger">{formik.errors.image}</p>}

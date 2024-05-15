@@ -23,12 +23,12 @@ function NewFlight(props) {
         startAirport: Yup.string() 
             .required("Start airport is required"),
         destinationAirport: Yup.string() 
-            .required("Destination airport is required"),
-            // .test('not-equal', 'Start airport and destination airport cannot be the same', function(value) {
-            //     const { startAirport } = this.parent; // Accessing the value of startAirport
-            //     console.log(startAirport);
-            //     return value === startAirport; // Return true if the destination airport is different from the start airport
-            // })
+            .required("Destination airport is required")
+            .test('not-equal', 'Start airport and destination airport cannot be the same', function(value) {
+                const { startAirport } = this.parent; // Accessing the value of startAirport
+                console.log(startAirport);
+                return value === startAirport; // Return true if the destination airport is different from the start airport
+            })
     });
     
     const formik = useFormik({
@@ -69,13 +69,13 @@ function NewFlight(props) {
         // if (!validateForm()) {
         //     return;
         // }
-        if(formik.values.selectedDestinationAirport ===
-             formik.values.selectedStartAirport 
+        if(selectedDestinationAirport ===
+             selectedStartAirport 
             ||formik.values.arrivalTime <= formik.values.departureTime)
             e.preventDefault();
 
-        if( formik.values.selectedStartAirport === 
-            formik.values.selectedDestinationAirport)
+        if( selectedStartAirport === 
+            selectedDestinationAirport)
             { 
                // e.preventDefault(); 
                 console.log("prevented");
@@ -228,7 +228,7 @@ const validateForm = () => {
             </div>
                 <div className="form-group m-2">
                     <label htmlFor="startAirport" className="d-block">Select start airport:</label>
-                    <select id="startAirport" onChange={handleStartAirportChange} className="form-control">
+                    <select id="startAirport"  onChange={handleStartAirportChange} className="form-control">
                         {Airports.map((item, index) => (
                             <option key={item.id}>{item.name}</option>
                         ))}
@@ -238,7 +238,7 @@ const validateForm = () => {
 
                 <div className="form-group m-2">
                     <label htmlFor="destinationAirport" className="d-block">Select destination airport:</label>
-                    <select id="destinationAirport" onChange={handleDestinationAirportChange} className="form-control">
+                    <select id="destinationAirport"  onChange={handleStartAirportChange} className="form-control">
                         {Airports.map((item, index) => (
                             <option key={item.id}>{item.name}</option>
                         ))}
@@ -270,7 +270,7 @@ const validateForm = () => {
                     <input className='d-block' id='arrivalTime' name='arrivalTime'
                      type='datetime-local' 
                      onBlur={formik.handleBlur}
-                     onChange={formik.handleChange}
+                     onChange={formik.handleChange} 
                 //    onChange={handleArrivalTimeChange} 
                      value={formik.values.arrivalTime} 
                     />
@@ -309,7 +309,7 @@ const validateForm = () => {
 
                 {errMsg !== null ? <p className="text-danger">{errMsg} </p> : ""}
                 <button type="submit" onClick={addFlight} className="btn btn-primary m-2"
-                  disabled={!(formik.dirty &&formik.isValid)}
+                 // disabled={!(formik.dirty &&formik.isValid)}
                   >
                     Add
                 </button>

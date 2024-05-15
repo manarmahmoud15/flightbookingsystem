@@ -69,7 +69,7 @@ const router = createBrowserRouter([
       {
         path: "addpassenger",
         element: (
-          <ProtectedRoute>
+          <ProtectedRoute> 
             {" "}
             <AddPassenger />{" "}
           </ProtectedRoute>
@@ -80,6 +80,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Details />{" "}
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "NewFlight",
+        element: (
+          <ProtectedRoute>
+            <NewFlight />
           </ProtectedRoute>
         ),
       },

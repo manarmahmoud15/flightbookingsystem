@@ -36,8 +36,8 @@ export default function FlightCard(props) {
 
   return (
     <div className="mx-auto">
-      <div className="card mostVisitedCard" style={{ width: "18rem" }}>
-  <img className="card-img-top" src={flightDetails.image} alt="Card cap" /> 
+      {/* <div className="card mostVisitedCard" style={{ width: "18rem" }}>
+  <img className="card-img-top" src={flightDetails.imageURL} alt="Card cap" /> 
   <div className="card-body">
     <h3 className="card-title">{flightDetails.country}</h3>
 
@@ -56,11 +56,11 @@ export default function FlightCard(props) {
     <i className="fa-solid fa-circle-info text-light"></i>  Details 
     </a>
   </div>
-</div>
+</div> */}
 
     <div>
       <div className="card mostVisitedCard" style={{ width: "18rem", opacity: 0 }} ref={mostVisitedCardRef}>
-        <img className="card-img-top" src={flightDetails.image} alt="Card cap" />
+        <img className="card-img-top" src={flightDetails.imageURL} alt="Card cap" />
         <div className="card-body">
           <h5 className="card-title">From <span style={{ color: 'hsl(199, 100%, 33%)' }}> {flightDetails.sourceAirportName}</span></h5>
           <h5 className="card-title">
@@ -78,7 +78,7 @@ export default function FlightCard(props) {
             className="btn btn-primary"
             onClick={() => navigate(`/FlightDetails/${flightDetails.id}`)}
           >
-            Details
+           <i className="fa-solid fa-circle-info text-light"></i>  Details
           </button>
         </div>
       </div>

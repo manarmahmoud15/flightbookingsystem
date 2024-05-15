@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./FlightsDashboard.module.css";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { flightDashboardContext } from "../../Context/flightDashboardContext";
-import { Link } from "@mui/material";
 export default function FlightsDashboard() {
   let { CancelFlight } = useContext(flightDashboardContext);
   const [Flights, setFlights] = useState([]);

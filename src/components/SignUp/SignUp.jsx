@@ -5,13 +5,13 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { passengerContext } from "../../Context/PassengerIDContext";
 import signupImg from "../../Assets/imgs/Sign up.gif";
-
+import { Modal, Button } from 'react-bootstrap';
 export default function SignUp() {
   let navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState(null);
   let { setPassengerID } = useContext(passengerContext);
-
+  const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   let validationSchema = Yup.object({
     userName: Yup.string().min(3, "Minimum length is 3").max(20, "Maximum length is 20").required("Name is required"),
     email: Yup.string().required("Email is required").email("Enter a valid email"),
@@ -55,6 +55,20 @@ export default function SignUp() {
     validationSchema: validationSchema,
     onSubmit: register,
   });
+  const handleRegisterClick = (e) => {
+    e.preventDefault();
+    setShowModal(true); // Show the modal immediately when the button is clicked
+  };
+
+  const handleClose = () => {
+    setShowModal(false);
+  };
+
+  const handleFormSubmit = () => {
+    formik.handleSubmit();
+    setShowModal(false);
+    window.open("https://mail.google.com/mail/u/0/?hl=ar#inbox", "_blank");
+  };
 
   return (
     <div className="container">
@@ -195,13 +209,15 @@ export default function SignUp() {
               </div>
               {/* Other form fields go here */}
               <div className="col-md-12 text-end my-2">
+             
                 <button
                   type="submit"
                   style={{ backgroundColor: "#0aad0a", color: "white" }}
                   className="btn"
                   disabled={!(formik.dirty && formik.isValid)}
-                >
+                  onClick={handleRegisterClick}                >
                   Register
+            
                   {loading ? (
                     <span>
                       <li className="fa-solid text-light mx-2 fa-spinner fa-spin"></li>
@@ -221,6 +237,22 @@ export default function SignUp() {
           </div>
         </div>
       </div>
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Registration Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          please go to gmail to confirm mail
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleFormSubmit} >
+            Confirm
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

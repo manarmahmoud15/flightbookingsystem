@@ -379,7 +379,7 @@ const validateForm = () => {
 
                 {errMsg !== null && <p className="text-danger">{errMsg}</p>}
                 <button type="submit" className="btn btn-primary m-2"
-              //    disabled={!(formik.dirty && formik.isValid)}
+                 disabled={!(formik.dirty && formik.isValid)}
                   >
                     {loading ? 'Loading...' : 'Add'}
                 </button>

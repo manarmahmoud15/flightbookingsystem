@@ -5,6 +5,7 @@ export default function FlightCard(props) {
   const { flightDetails } = props;
   const navigate = useNavigate();
   const mostVisitedCardRef = useRef(null);
+  console.log('img',flightDetails.imageURL)
   
   useEffect(() => {
     const mostVisitedCard = document.querySelectorAll('.mostVisitedCard');
@@ -60,7 +61,7 @@ export default function FlightCard(props) {
 
     <div>
       <div className="card mostVisitedCard" style={{ width: "18rem", opacity: 0 }} ref={mostVisitedCardRef}>
-        <img className="card-img-top" src={flightDetails.imageURL} alt="Card cap" />
+        <img className="card-img-top" src={`http://localhost:5269/Images//${flightDetails.imageURL}`} alt="Card cap" />
         <div className="card-body">
           <h5 className="card-title">From <span style={{ color: 'hsl(199, 100%, 33%)' }}> {flightDetails.sourceAirportName}</span></h5>
           <h5 className="card-title">

@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./FlightsDashboard.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { flightDashboardContext } from "../../Context/flightDashboardContext";
 export default function FlightsDashboard() {
-  let { CancelFlight } = useContext(flightDashboardContext);
-  const [Flights, setFlights] = useState([]);
+  let { CancelFlight  , UpdateFlight} = useContext(flightDashboardContext);
+  const [Flights, setFlights] = useState('');
+  const [EditFlights , setEditFlight] = useState('')
   const [role ,setRole] = useState('')
+  
   useEffect(() => {
     axios
       .get(`http://localhost:5269/api/Flight`)
@@ -39,6 +41,13 @@ export default function FlightsDashboard() {
     setFlights(data?.data);
     console.log(data?.data?.data);
     setFlights(data?.data?.data);
+  }
+  async function EditFlight(id) {
+    let { data } = await UpdateFlight(id);
+    console.log('edit',data?.data);
+    setEditFlight(data?.data);
+    console.log(data?.data?.data);
+    setEditFlight(data?.data?.data);
   }
   return (
     
@@ -140,6 +149,27 @@ export default function FlightsDashboard() {
                                   }}
                                 >
                                   Cancel
+                                </button>
+                              </td>
+                              <td>
+                                <button
+                                  type="button"
+                                  className="btn btn-danger btn-md px-2 py-1"
+                                  style={{
+                                    // backgroundColor: "green",
+                                    borderRadius: "9px",
+                                    border: "none",
+                                    color: "white",
+                                  }}
+                                  onClick={() => {
+                                    // EditFlight(flight.id);
+                                  }}
+                                
+
+                                >
+                                  <Link to='/edit'> 
+                                  Update
+                                  </Link>
                                 </button>
                               </td>
                             </tr>

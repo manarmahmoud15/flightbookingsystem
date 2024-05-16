@@ -28,11 +28,7 @@ function NewFlight(props) {
           .notOneOf([Yup.ref('StartId')], 'Start airport and destination airport cannot be the same'),
           PlaneId: Yup.string()
           .required("Plane is required")
-             // .test('not-equal', 'Start airport and destination airport cannot be the same', function(value) {
-            //     const { startAirport } = this.parent; // Accessing the value of startAirport
-            //     console.log(startAirport);
-            //     return value === startAirport; // Return true if the destination airport is different from the start airport
-            // })
+
   });
 
     
@@ -49,7 +45,7 @@ function NewFlight(props) {
       validationSchema: validationSchema,
       onSubmit: async (values) => {
         setloading(true);
-        // try { 
+
             let saveImgResponse;
             const formData = new FormData();
             formData.append('imageURL', values.imageURL);
@@ -60,8 +56,7 @@ function NewFlight(props) {
                   'Content-Type': 'multipart/form-data' // Specify content type as multipart/form-data
                 }
               });
-            //   console.log(saveImgResponse);
-            //   console.log(saveImgResponse.data.isSuccess);
+
               if(saveImgResponse.data.isSuccess) 
                 {
                     try
@@ -70,7 +65,7 @@ function NewFlight(props) {
                         console.log(saveImgResponse.data.data);
                         let imageURL = saveImgResponse.data.data;
                         console.log(saveImgResponse);
-                        let response = await axios.post(`http://localhost:5269/api/Flight?DepartureTime=${values.DepartureTime}&ArrivalTime=${values.ArrivalTime}&DestinationId=${values.DestinationId}&StartId=${values.StartId}&imageURL=${imageURL}&PlaneId=${values.PlaneId}`, values); 
+                        let response = await axios.put(`http://localhost:5269/api/Flight/?id=${values.id}`, values); 
                        if(response.data.isSuccess)
                         {
                             alert("Flight added successfully");
@@ -84,14 +79,7 @@ function NewFlight(props) {
                     }
                     
                 }
-        //   let saveImgResponse = await axios.post(`http://localhost:5269/api/Flight/saveImage`, values.Image);  
-         
-        //   if (data.message === "Token Created Successfully") {
-        //   //  navigate("/home");
-        //     localStorage.setItem('userToken' , data.token)
-        //   //  setUserToken(data.token)
-        //   } 
-        // } catch (err) {
+  
             else
             {
                 seterrMsg("An error occurred during saving image.");
@@ -105,10 +93,7 @@ function NewFlight(props) {
 
 
     const addFlight = (e) => {
-        // e.preventDefault(); 
-        // if (!validateForm()) {
-        //     return;
-        // }
+
         if(formik.values.DestinationId ===
              formik.values.StartId 
             ||formik.values.ArrivalTime <= formik.values.DepartureTime)
@@ -136,22 +121,8 @@ function NewFlight(props) {
             {
                 document.getElementById("allErrors").innerHTML = "<span className=\"text-danger\"></span>";
             }
-        // Perform any necessary validation
-        
-        // Call the addFlight function with necessary data
-        // addFlight({
-          
-        // });
-    };
 
-    // const onFileSelected = (event) => {
-    //     let reader = new FileReader();
-    //     // this.selectedFile = event.target.files[0]; 
-    //     reader.readAsDataURL(event.target.files[0]);
-    //     reader.onload = () => {
-    //       this.image = reader.result;
-    //       }
-    // } 
+    };
 
 
     const handleStartAirportChange = (event) => {
@@ -164,22 +135,10 @@ function NewFlight(props) {
         console.log(DestinationId);
     };
 
-    // const [departureTime, setDepartureTime] = useState(''); 
-    // const [arrivalTime, setArrivalTime] = useState('');  
     const [imageURL, setimageURL] = useState({});  
     const [errors, setErrors] = useState({}); // State to manage validation errors
 
 
-    // const handleDepartureTimeChange = (event) => {
-    //     setDepartureTime(event.target.value);
-    //     console.log(departureTime);
-    // };
-
-    // const handleArrivalTimeChange = (event) => {
-    //     setArrivalTime(event.target.value);
-    //     console.log(image);
-    // };
-    
 
     const handleImageChange = (event) => {
         let reader = new FileReader();
@@ -196,29 +155,7 @@ const validateForm = () => {
     const errors = {};
     let isValid = true;
 
-    // Validate selected start airport
-    // if (!StartId) {
-    //     errors.StartId = "Please select a start airport.";
-    //     isValid = false;
-    // }
 
-    // Validate selected destination airport
-    // if (!DestinationId) {
-    //     errors.DestinationId = "Please select a destination airport.";
-    //     isValid = false;
-    // }
-
-    // Validate departure time
-    // if (!departureTime) {
-    //     errors.departureTime = "Please enter the departure time.";
-    //     isValid = false;
-    // }
-
-    // Validate arrival time
-    // if (!arrivalTime) {
-    //     errors.arrivalTime = "Please enter the arrival time.";
-    //     isValid = false;
-    // }
 
     // Validate image
     if (!imageURL) { 
@@ -229,17 +166,6 @@ const validateForm = () => {
     setErrors(errors); // Update errors state
     return isValid;
 };
-
-// const addFlight = (e) => {
-//     e.preventDefault(); // Prevent default form submission
-
-//     // Validate form
-//     if (!validateForm()) {
-//         return;
-//     }
-
-
-
 
     useEffect(() => {
         axios
@@ -275,7 +201,7 @@ const validateForm = () => {
 
       return (
         <div className='container'>
-            <h2 className='text-center text-primary'>New flight</h2>
+            <h2 className='text-center text-primary'>Edit flight</h2>
             <form onSubmit={formik.handleSubmit} encType='multipart/form-data'> 
                 <div id='allErrors'></div>
 

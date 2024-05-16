@@ -1,12 +1,15 @@
 import axios from 'axios';
 import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import * as Yup from "yup"; 
 
 function NewFlight(props) {
-    const [Airports, setAirports] = useState([{Id:Yup.number , Name:Yup.string}]);
+    const [Airports, setAirports] = useState([{Id:Yup.number , Name:Yup.string}]); 
+    const [Planes, setPlanes] = useState([{Id:Yup.number , Name:Yup.string}]); 
     const [StartId, setStartId] = useState('');
     const [DestinationId, setDestinationId] = useState('');
+    const [PlaneId, setPlaneId] = useState(''); 
     const [loading, setloading] = useState(false);
     const [errMsg, seterrMsg] = useState(null); 
    
@@ -16,13 +19,15 @@ function NewFlight(props) {
           ArrivalTime: Yup.date() 
           .required("Arrival time is required")
           .min(Yup.ref('DepartureTime'), 'Arrival time must be after departure time'),
-        //   Image: Yup.mixed()
-        //   .required("Image is required"),
+           Image: Yup.mixed()
+           .required("Image is required"),
       StartId: Yup.string() 
           .required("Start airport is required"),
       DestinationId: Yup.string()
           .required("Destination airport is required")
           .notOneOf([Yup.ref('StartId')], 'Start airport and destination airport cannot be the same'),
+          PlaneId: Yup.string()
+          .required("Plane is required")
              // .test('not-equal', 'Start airport and destination airport cannot be the same', function(value) {
             //     const { startAirport } = this.parent; // Accessing the value of startAirport
             //     console.log(startAirport);
@@ -35,28 +40,63 @@ function NewFlight(props) {
       initialValues: {
         DepartureTime: "",
         ArrivalTime: "",
-      //  Image: null,
+        Image: null,
         StartId: "",
-        DestinationId: ""
+        DestinationId: "",
+        PlaneId : ""
       },
       // validate ,
       validationSchema: validationSchema,
       onSubmit: async (values) => {
         setloading(true);
-        try {
-            console.log(values);
-          let response = await axios.post(`http://localhost:5269/api/Flight?DepartureTime=${values.DepartureTime}&ArrivalTime=${values.ArrivalTime}&DestinationId=${values.DestinationId}&StartId=${values.StartId}`, values); 
-          let data = response.data;
-          console.log(response);
-          console.log(data)
+        // try { 
+            let saveImgResponse;
+            const formData = new FormData();
+            formData.append('image', values.Image);
+
+            console.log(values.Image);
+            saveImgResponse = await axios.post('http://localhost:5269/api/Flight/saveImage', formData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data' // Specify content type as multipart/form-data
+                }
+              });
+            //   console.log(saveImgResponse);
+            //   console.log(saveImgResponse.data.isSuccess);
+              if(saveImgResponse.data.isSuccess) 
+                {
+                    try
+                    {
+                        console.log("image saved >> in try");
+                        console.log(saveImgResponse.data.data);
+                        let imageURL = saveImgResponse.data.data;
+                        console.log(saveImgResponse);
+                        let response = await axios.post(`http://localhost:5269/api/Flight?DepartureTime=${values.DepartureTime}&ArrivalTime=${values.ArrivalTime}&DestinationId=${values.DestinationId}&StartId=${values.StartId}&imageURL=${imageURL}&PlaneId=${values.PlaneId}`, values); 
+                       if(response.data.isSuccess)
+                        {
+                            alert("Flight added successfully");
+                        }
+                        let data = response.data;
+                        console.log(response);
+                        console.log(data)
+                    }
+                    catch(err){
+                        seterrMsg(err.response?.data?.message || "An error occurred during adding.");
+                    }
+                    
+                }
+        //   let saveImgResponse = await axios.post(`http://localhost:5269/api/Flight/saveImage`, values.Image);  
+         
         //   if (data.message === "Token Created Successfully") {
         //   //  navigate("/home");
         //     localStorage.setItem('userToken' , data.token)
         //   //  setUserToken(data.token)
         //   } 
-        } catch (err) {
-          seterrMsg(err.response?.data?.message || "An error occurred during adding.");
-        }
+        // } catch (err) {
+            else
+            {
+                seterrMsg("An error occurred during saving image.");
+            }
+        // }
           setloading(false); 
         
       }
@@ -104,6 +144,16 @@ function NewFlight(props) {
         // });
     };
 
+    // const onFileSelected = (event) => {
+    //     let reader = new FileReader();
+    //     // this.selectedFile = event.target.files[0]; 
+    //     reader.readAsDataURL(event.target.files[0]);
+    //     reader.onload = () => {
+    //       this.image = reader.result;
+    //       }
+    // } 
+
+
     const handleStartAirportChange = (event) => {
         setStartId(event.target.value);
         console.log(StartId);
@@ -116,7 +166,7 @@ function NewFlight(props) {
 
     // const [departureTime, setDepartureTime] = useState(''); 
     // const [arrivalTime, setArrivalTime] = useState('');  
-   // const [Image, setImage] = useState({});  
+    const [Image, setImage] = useState({});  
     const [errors, setErrors] = useState({}); // State to manage validation errors
 
 
@@ -131,15 +181,15 @@ function NewFlight(props) {
     // };
     
 
-//     const handleImageChange = (event) => {
-//         let reader = new FileReader();
-//   setImage(event.target.files[0]); 
-//   reader.readAsDataURL(event.target.files[0]);
-//   reader.onload = () => {
-//     setImage(reader.result);
-//     console.log(Image);
-//     };
-//     }
+    const handleImageChange = (event) => {
+        let reader = new FileReader();
+  setImage(event.target.files[0]); 
+  reader.readAsDataURL(event.target.files[0]);
+  reader.onload = () => {
+    setImage(reader.result);
+    console.log(Image);
+    };
+    }
 
 // validation 
 const validateForm = () => {
@@ -170,11 +220,11 @@ const validateForm = () => {
     //     isValid = false;
     // }
 
-    // // Validate image
-    // if (!Image) { 
-    //     errors.Image = "Please select an image.";
-    //     isValid = false;
-    // }
+    // Validate image
+    if (!Image) { 
+        errors.Image = "Please select an image.";
+        isValid = false;
+    }
 
     setErrors(errors); // Update errors state
     return isValid;
@@ -207,17 +257,21 @@ const validateForm = () => {
 
       useEffect(() => {
         axios
-          .get(`http://localhost:5269/api/plane`)
-          .then((res) => { 
+          .get(`http://localhost:5269/api/plane/freePlanes`)
+          .then((res) => {   
+            console.log(res);
             if (res.data && Array.isArray(res.data.data)) {
-                setAirports(res.data.data);
-              console.log(res.data.data);
+                console.log("hh");
+                setPlanes(res.data.data);
+              console.log(Planes);
             } else {
-              throw new Error("Invalid response data format");
+              throw new Error("error happened");
             }
           })
           .catch((error) => console.log(error));
       }, []);
+
+      
 
       return (
         <div className='container'>
@@ -261,6 +315,25 @@ const validateForm = () => {
                     {formik.errors.destinationAirport && formik.touched.destinationAirport && <p className="text-danger">{formik.errors.destinationAirport}</p>}
                 </div>
 
+
+                <div className="form-group m-2">
+                    <label htmlFor="PlaneId" className="d-block">Select Plane:</label>
+                    <select 
+                        id="PlaneId" 
+                        name='PlaneId' 
+                        onChange={formik.handleChange} 
+                        onBlur={formik.handleBlur}
+                        value={formik.values.PlaneId} 
+                        className="form-control"
+                    >
+                        <option value="" label="Select Plane" />
+                        {Planes.map((item) => (
+                            <option key={item.id} value={item.id}>{item.name}</option>
+                        ))}
+                    </select>
+                    {formik.errors.PlaneId && formik.touched.PlaneId && <p className="text-danger">{formik.errors.PlaneId}</p>}
+                </div>
+
                 <div className="form-group m-2">
                     <label htmlFor="departureTime" className='d-block'>Departure time : </label>
                     <input 
@@ -289,7 +362,7 @@ const validateForm = () => {
                     {formik.errors.arrivalTime && formik.touched.arrivalTime && <p className="text-danger">{formik.errors.arrivalTime}</p>}
                 </div>
 
-                {/* <div className="form-group m-2">
+                <div className="form-group m-2">
                     <label htmlFor="Image" className='d-block'>Image : </label>
                     <input 
                         className='d-block' 
@@ -302,11 +375,11 @@ const validateForm = () => {
                         }}
                     />
                     {formik.errors.Image && formik.touched.Image && <p className="text-danger">{formik.errors.Image}</p>}
-                </div> */}
+                </div>
 
                 {errMsg !== null && <p className="text-danger">{errMsg}</p>}
                 <button type="submit" className="btn btn-primary m-2"
-                  disabled={!(formik.dirty && formik.isValid)}
+              //    disabled={!(formik.dirty && formik.isValid)}
                   >
                     {loading ? 'Loading...' : 'Add'}
                 </button>

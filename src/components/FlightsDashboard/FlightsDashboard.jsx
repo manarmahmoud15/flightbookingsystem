@@ -72,8 +72,6 @@ export default function FlightsDashboard() {
             <div className="col-12">
             <Link to="/newFlight" className="btn text-light m-2">
               New flight</Link> 
-                {/* <a href="newFlight" className="btn text-light m-2">
-              New flight</a> */}
               <div
                 className="card shadow-3-strong"
                 style={{ "background-color": " #f5f7fa" }}
@@ -99,7 +97,8 @@ export default function FlightsDashboard() {
                           <th scope="col">To(Destination)</th>
                           <th scope="col">Duration</th>
                           <th scope="col">Status</th>
-                          <th scope="col">Close</th>
+                          <th scope="col">Update</th>
+                          <th scope="col">Delete</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -123,27 +122,46 @@ export default function FlightsDashboard() {
                               <td>{flight?.duration}</td>
 
                               <td>
-                                {flight.isActive ? (
+                                {!flight.isActive ? (
                                   <span
-                                    className="badge badge-active p-1"
+                                    className=" badge-active p-1"
                                     style={{
                                       backgroundColor: "green",
                                       color: "white",
+                                      borderRadius : '10px'
                                     }}
                                   >
                                     Active
                                   </span>
                                 ) : (
                                   <span
-                                    className="badge badge-inactive p-1"
+                                    className=" badge-inactive p-1"
                                     style={{
                                       backgroundColor: "red",
                                       color: "white",
+                                      borderRadius : '10px'
                                     }}
                                   >
                                     Inactive
                                   </span>
                                 )}
+                              </td>
+                              <td>
+                                <button
+                                  type="button"
+                                  className="btn btn-danger btn-md px-2 py-1"
+                                  style={{
+                                    // backgroundColor: "green",
+                                    borderRadius: "9px",
+                                    border: "none",
+                                    color: "white",
+                                  }}                               
+
+                                >
+                                  <Link to='/edit' className="nav-link"> 
+                                  Update
+                                  </Link>
+                                </button>
                               </td>
                               <td>
                                 <button
@@ -162,27 +180,7 @@ export default function FlightsDashboard() {
                                   Cancel
                                 </button>
                               </td>
-                              <td>
-                                <button
-                                  type="button"
-                                  className="btn btn-danger btn-md px-2 py-1"
-                                  style={{
-                                    // backgroundColor: "green",
-                                    borderRadius: "9px",
-                                    border: "none",
-                                    color: "white",
-                                  }}
-                                  onClick={() => {
-                                    // EditFlight(flight.id);
-                                  }}
-                                
-
-                                >
-                                  <Link to='/edit'> 
-                                  Update
-                                  </Link>
-                                </button>
-                              </td>
+                              
                             </tr>
                           </React.Fragment>
                         ))}

@@ -37,10 +37,21 @@ export default function FlightsDashboard() {
   ///Remove Flight///
   async function removeFlight(id) {
     let { data } = await CancelFlight(id);
-    console.log(data?.data);
-    setFlights(data?.data);
-    console.log(data?.data?.data);
-    setFlights(data?.data?.data);
+    console.log('data',data);
+    //setFlights(data?.data);
+    // console.log('set data',data?.data);
+    // setFlights(data?.data?.data);
+    axios
+    .get(`http://localhost:5269/api/Flight`)
+    .then((res) => {
+      if (res.data && Array.isArray(res.data.data)) {
+        setFlights(res.data.data);
+        console.log(res.data.data);
+      } else {
+        throw new Error("Invalid response data format");
+      }
+    })
+    .catch((error) => console.log(error));
   }
   async function EditFlight(id) {
     let { data } = await UpdateFlight(id);

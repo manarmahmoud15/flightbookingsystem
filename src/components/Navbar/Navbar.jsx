@@ -1,5 +1,4 @@
-// import React, { useContext } from "react";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -8,40 +7,41 @@ import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { userContext } from "../../Context/TokenContext";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-// import { counterContext } from "../../Context/counter";
 
 export default function AppNavbar() {
   let { userToken, setUserToken } = useContext(userContext);
-  // let {counter} = useContext(counterContext);
-  const [role , setRole] = useState('') 
+  const [role, setRole] = useState('');
   let navigate = useNavigate();
+
   function logOut() {
     localStorage.removeItem("userToken");
     setUserToken(null);
     navigate("/signin");
   }
+
   useEffect(() => {
     async function fetchData() {
       try {
         const { data } = await axios.get("http://localhost:5269/api/Role");
         setRole(data.data);
-        console.log(data.data)
+        console.log(data.data);
       } catch (error) {
         console.error("Failed to fetch flights:", error);
       }
     }
     fetchData();
   }, []);
+
+
   return (
-    <Navbar style={{ backgroundColor: "white", color: "black" }} expand="lg">
+    <Navbar style={{ backgroundColor: "white", color: "black", fontSize: '17px' }} expand="lg">
       <Container>
         <Navbar.Brand to="#home">
-          <a style={{ textDecoration: "none" }} className="fw-bold logo flex">
-            {" "}
+          <a style={{ textDecoration: "none", fontFamily: "YourFontName, sans-serif" }} className="fw-bold logo flex">
             <h1>
               <MdOutlineTravelExplore className="icon" />
               Travel
-            </h1>{" "}
+            </h1>
           </a>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -49,7 +49,7 @@ export default function AppNavbar() {
           {userToken !== null ? (
             <Nav className="me-auto">
               <Link to="home" className="nav-link">
-                Home{" "}
+                Home
               </Link>
               <Link to="MostVisited" className="nav-link">
                 MostVisited
@@ -60,21 +60,16 @@ export default function AppNavbar() {
               <Link to="discount" className="nav-link">
                 Discounts
               </Link>
-              {/* {
-                role.name == "Admin" ?<Link to="flightDashboard" className="nav-link">
-                flight Dashboard
-              </Link> : ''
-              } */}
               <Link to="flightDashboard" className="nav-link">
                 flight Dashboard
-              </Link> 
-              
+              </Link>
               <Link to="ticket" className="nav-link">
                 ticket
               </Link>
               <Link to="ShowAllFlight" className="nav-link">
                 Show All Flight
               </Link>
+              
             </Nav>
           ) : (
             ""

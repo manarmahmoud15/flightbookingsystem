@@ -53,7 +53,7 @@ export default function  Ticket(props) {
             {/* <h5 className="me-2">Seat</h5> */}
           </div>
           <div className="d-flex justify-content-between mx-auto">
-            <p>{ticketData?.departureTime.split("T")[0]}</p>
+            <p>{ticketData?.departureTime}</p>
             <p>{ticketData?.arrivalTime.split("T")[0]}</p>
             <p>{ticketData?.id}</p>
             {/* <p className="me-2">08 B</p> */}

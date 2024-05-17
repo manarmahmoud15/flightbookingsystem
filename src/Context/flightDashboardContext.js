@@ -15,11 +15,11 @@ export default function FlightDashboardContextProvider(props) {
     );
   }
   ////////////Update Flight////////
-  function UpdateFlight(id, count) {
+  function UpdateFlight(id) {
     return axios.put(
       `http://localhost:5269/api/Flight?id=${id}`,
       {
-        count: count,
+        // count: count,
       },
       { headers: header }
     );

@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./FlightsDashboard.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { flightDashboardContext } from "../../Context/flightDashboardContext";
 export default function FlightsDashboard() {
-  let { CancelFlight } = useContext(flightDashboardContext);
-  const [Flights, setFlights] = useState([]);
+  let { CancelFlight  , UpdateFlight} = useContext(flightDashboardContext);
+  const [Flights, setFlights] = useState('');
+  const [EditFlights , setEditFlight] = useState('')
   const [role ,setRole] = useState('')
+  
   useEffect(() => {
     axios
       .get(`http://localhost:5269/api/Flight`)
@@ -35,10 +37,28 @@ export default function FlightsDashboard() {
   ///Remove Flight///
   async function removeFlight(id) {
     let { data } = await CancelFlight(id);
-    console.log(data?.data);
-    setFlights(data?.data);
+    console.log('data',data);
+    //setFlights(data?.data);
+    // console.log('set data',data?.data);
+    // setFlights(data?.data?.data);
+    axios
+    .get(`http://localhost:5269/api/Flight`)
+    .then((res) => {
+      if (res.data && Array.isArray(res.data.data)) {
+        setFlights(res.data.data);
+        console.log(res.data.data);
+      } else {
+        throw new Error("Invalid response data format");
+      }
+    })
+    .catch((error) => console.log(error));
+  }
+  async function EditFlight(id) {
+    let { data } = await UpdateFlight(id);
+    console.log('edit',data?.data);
+    setEditFlight(data?.data);
     console.log(data?.data?.data);
-    setFlights(data?.data?.data);
+    setEditFlight(data?.data?.data);
   }
   return (
     
@@ -52,8 +72,6 @@ export default function FlightsDashboard() {
             <div className="col-12">
             <Link to="/newFlight" className="btn text-light m-2">
               New flight</Link> 
-                {/* <a href="newFlight" className="btn text-light m-2">
-              New flight</a> */}
               <div
                 className="card shadow-3-strong"
                 style={{ "background-color": " #f5f7fa" }}
@@ -79,7 +97,8 @@ export default function FlightsDashboard() {
                           <th scope="col">To(Destination)</th>
                           <th scope="col">Duration</th>
                           <th scope="col">Status</th>
-                          <th scope="col">Close</th>
+                          <th scope="col">Update</th>
+                          <th scope="col">Delete</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -103,27 +122,46 @@ export default function FlightsDashboard() {
                               <td>{flight?.duration}</td>
 
                               <td>
-                                {flight.isActive ? (
+                                {!flight.isActive ? (
                                   <span
-                                    className="badge badge-active p-1"
+                                    className=" badge-active p-1"
                                     style={{
                                       backgroundColor: "green",
                                       color: "white",
+                                      borderRadius : '10px'
                                     }}
                                   >
                                     Active
                                   </span>
                                 ) : (
                                   <span
-                                    className="badge badge-inactive p-1"
+                                    className=" badge-inactive p-1"
                                     style={{
                                       backgroundColor: "red",
                                       color: "white",
+                                      borderRadius : '10px'
                                     }}
                                   >
                                     Inactive
                                   </span>
                                 )}
+                              </td>
+                              <td>
+                                <button
+                                  type="button"
+                                  className="btn btn-danger btn-md px-2 py-1"
+                                  style={{
+                                    // backgroundColor: "green",
+                                    borderRadius: "9px",
+                                    border: "none",
+                                    color: "white",
+                                  }}                               
+
+                                >
+                                  <Link to='/edit' className="nav-link"> 
+                                  Update
+                                  </Link>
+                                </button>
                               </td>
                               <td>
                                 <button
@@ -142,6 +180,7 @@ export default function FlightsDashboard() {
                                   Cancel
                                 </button>
                               </td>
+                              
                             </tr>
                           </React.Fragment>
                         ))}

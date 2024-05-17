@@ -8,7 +8,7 @@ import NotFound from "./components/NotFound/NotFound";
 import TokenContextProvider from "./Context/TokenContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import MostVisited from "./components/MostVisited/MostVisited";
-import Details from "./components/Details/Details";
+// import Details from "./components/Details/Details";
 import FlightDetails from "./components/FlightDetails/FlightDetails";
 import About from "./components/About/About";
 // import { Provider } from "react-redux";
@@ -34,7 +34,7 @@ import AddPassenger from "./components/AddPassenger/AddPassenger";
 import AddPassengerContextProvider from "./Context/AddPassengerContext";
 import Thanks from "./components/Thanks/Thanks"
 import BeforeTravel from "./components/BeforeTravel/BeforeTravel";
-
+import EditFlight from './components/EditFlight/EditFlight'
 
 const router = createBrowserRouter([
   {
@@ -76,10 +76,10 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "details",
+        path: "edit",
         element: (
           <ProtectedRoute>
-            <Details />{" "}
+            <EditFlight/>
           </ProtectedRoute>
         ),
       },

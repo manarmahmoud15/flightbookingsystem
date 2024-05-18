@@ -7,6 +7,10 @@ export default function  Ticket(props) {
   console.log(ticketData)
   const {passengerId} = useContext(passengerContext)
   console.log("TicketData:", props.TicketData);
+  const arrvTime = ticketData?.arrivalTime.split("T")[1]?.split("Z")[0];
+  const departureTime = ticketData?.departureTime.split("T")[1]?.split("Z")[0];
+
+  console.log(arrvTime)
   return (
     <div className="container ticket my-5">
       <div className="row">
@@ -47,14 +51,18 @@ export default function  Ticket(props) {
 
           <hr style={{ fontWeight: "24px" }}></hr>
           <div className="d-flex justify-content-between mx-auto">
-            <h5>departure Time</h5>
+            <h5>departure  </h5>
+            <h5>Hour</h5>
             <h5>arrival Time</h5>
+            <h5>Hour</h5>
             <h5>Flight</h5>
             {/* <h5 className="me-2">Seat</h5> */}
           </div>
           <div className="d-flex justify-content-between mx-auto">
-            <p>{ticketData?.departureTime}</p>
+            <p>{ticketData?.departureTime.split("T")[0]}</p>
+            <p>{departureTime}</p>
             <p>{ticketData?.arrivalTime.split("T")[0]}</p>
+            <p>{arrvTime}</p>
             <p>{ticketData?.id}</p>
             {/* <p className="me-2">08 B</p> */}
           </div>

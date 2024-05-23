@@ -37,28 +37,6 @@ export default function FlightCard(props) {
 
   return (
     <div className="mx-auto">
-      {/* <div className="card mostVisitedCard" style={{ width: "18rem" }}>
-  <img className="card-img-top" src={flightDetails.imageURL} alt="Card cap" /> 
-  <div className="card-body">
-    <h3 className="card-title">{flightDetails.country}</h3>
-
-    <h5 className="card-title"> 
-         <i className="fa-solid fa-location-dot text-info"></i> {flightDetails.city}
-         <span style={{position: 'absolute', right : '7%'}}> 
-         <strong>{flightDetails.price}$ </strong> </span>
-    </h5>
-
-    <hr></hr>
-    <p className="card-text">
-     {flightDetails.description}
-    </p>
-    <hr></hr>
-    <a href="FlightDetails" className="btn btn-info">
-    <i className="fa-solid fa-circle-info text-light"></i>  Details 
-    </a>
-  </div>
-</div> */}
-
     <div>
       <div className="card mostVisitedCard" style={{ width: "18rem", opacity: 0 }} ref={mostVisitedCardRef}>
         <img className="card-img-top" src={`http://localhost:5269/Images//${flightDetails.imageURL}`} alt="Card cap" />

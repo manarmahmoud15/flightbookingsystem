@@ -1,12 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Img from "../../Assets/imgs/Toronto-amico.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AddPassengerContext } from "../../Context/AddPassengerContext";
-import { Link } from "react-router-dom";
-export default function AddPassenger() {
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+export default function AddNewPassenger() {
   const [flightId, setFlightId] = useState("");
   const { AddPassenger } = useContext(AddPassengerContext);
+  const [Flights, setFlights] = useState('');
+  const navigate = useNavigate();
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
@@ -16,6 +20,23 @@ export default function AddPassenger() {
     gender: Yup.string().required("Gender is required"),
     isChild: Yup.string().required("Child/Adult selection is required"),
   });
+
+  async function NewPassenger(values) {
+    try {
+      await AddPassenger(
+        values.name,
+        Number(values.gender),
+        Number(values.age),
+        values.isChild,
+        values.passportNum,
+        values.nationalId,
+        Number(flightId)
+      );
+      navigate(`/addticket/${flightId}`);
+    } catch (error) {
+      console.error("Failed to add passenger:", error.message);
+    }
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -27,23 +48,21 @@ export default function AddPassenger() {
       isChild: false,
     },
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
-      try {
-        await AddPassenger(
-          values.name,
-          Number(values.gender),
-          Number(values.age),
-          values.isChild,
-          values.passportNum,
-          values.nationalId,
-          Number(flightId)
-        );
-      } catch (error) {
-        console.error("Failed to add passenger:", error.message);
-      }
-    },
+    onSubmit: NewPassenger,
   });
-
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5269/api/Flight`)
+      .then((res) => {
+        if (res.data && Array.isArray(res.data.data)) {
+          setFlights(res.data.data);
+          console.log('flight',res.data.data);
+        } else {
+          throw new Error("Invalid response data format");
+        }
+      })
+      .catch((error) => console.log(error));
+  }, []);
   return (
     <div className="container shadow h-100">
       <div className="row d-flex justify-content-center align-items-center h-100">
@@ -132,10 +151,7 @@ export default function AddPassenger() {
                     <div className="row mb-4">
                       <div className="col">
                         <div className="form-outline">
-                          <label
-                            htmlFor="passportNum"
-                            className="control-label"
-                          >
+                          <label htmlFor="passportNum" className="control-label">
                             Passport Number
                           </label>
                           <input
@@ -176,6 +192,7 @@ export default function AddPassenger() {
                           <label htmlFor="flightId" className="control-label">
                             Flight Id
                           </label>
+
                           <input
                             id="flightId"
                             name="flightId"
@@ -189,7 +206,7 @@ export default function AddPassenger() {
                     </div>
                     <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                       <button type="submit" className="btn btn-primary">
-                        <Link to={`/addticket/${flightId}` }>Add Passenger</Link>
+                        Add Passenger
                       </button>
                     </div>
                   </form>

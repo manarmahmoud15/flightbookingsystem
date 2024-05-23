@@ -6,7 +6,7 @@ export default function  Ticket(props) {
   const ticketData = props.TicketData?.flightDetails?.data;
   console.log(ticketData)
   const {passengerId} = useContext(passengerContext)
-  console.log("TicketData:", props.TicketData);
+  //console.log("TicketData:", props.TicketData);
   const arrvTime = ticketData?.arrivalTime.split("T")[1]?.split("Z")[0];
   const departureTime = ticketData?.departureTime.split("T")[1]?.split("Z")[0];
 
@@ -115,10 +115,6 @@ export default function  Ticket(props) {
               <h5 className="px-4 py-2" style={{backgroundColor:'#669bbc', color:'white'}} >Boarding Till</h5>
               <h2>{ticketData?.duration}</h2>
             </div>
-            {/* <div className="barcode seat-info float-end p-2 ms-2">
-              <h5>Seat</h5>
-              <p>08 B</p>
-            </div> */}
           </div>
         </div>
       </div>

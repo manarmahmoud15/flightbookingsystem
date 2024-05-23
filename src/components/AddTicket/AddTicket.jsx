@@ -4,8 +4,7 @@ import { passengerContext } from "../../Context/PassengerIDContext";
 import * as Yup from "yup";
 import Img1 from "../../Assets/imgs/Flight Booking-cuate.png";
 import "./AddTicket.css";
-import { SearchFlightContext } from "../../Context/SearchFlightContext";
-import { Link, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import axios from "axios";
 import Ticket from "../Ticket/Ticket";
 import { ticketContext } from "../../Context/TicketContext";
@@ -44,13 +43,8 @@ export default function AddTicket() {
     }
   }, [classs]);
 
-  const validationSchema = Yup.object({
-    classs: Yup.string().required("Class is required"),
-    section: Yup.string().required("Section is required"),
-    passengerId: Yup.string().required("Passenger ID is required"),
-    flightId: Yup.string().required("Flight ID is required"),
-  });
-  console.log("id", passengerId);
+
+ // console.log("id", passengerId);
   const handleSubmit = async (e) => {
     setIsTicketBooked(true);
     e.preventDefault();
@@ -79,8 +73,7 @@ export default function AddTicket() {
       .then((res) => setFlightDetails(res.data))
       .catch((error) => console.log(error));
   }, []);
-  console.log(flightDetails.data);
-  // const {ticketData ,SetTicketData} = useContext(ticketContext);
+  //console.log(flightDetails.data);
   console.log("Data passed to Ticket:", {
     flightDetails,
     price,
@@ -205,14 +198,6 @@ export default function AddTicket() {
                         value={flightDetails?.data?.id}
                         readOnly
                       />
-                      {/* <select
-                  id="flightIdSelect"
-                  value={flightDetails?.data?.id }
-                  onChange={(e) => setFlightId(e.target.value)}
-                  className="form-control"
-                >
-                  <option value="2">2</option>
-                </select> */}
                     </div>
                   </div>
                   <div className="row my-3">
@@ -252,7 +237,6 @@ export default function AddTicket() {
         )}
       </div>
 
-      {/* <Ticket TicketData={{flightDetails,price,classs,section,flightId}}/> */}
     </>
   );
 }

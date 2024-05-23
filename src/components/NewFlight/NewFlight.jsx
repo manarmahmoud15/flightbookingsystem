@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
 import * as Yup from "yup";
 import Img from "../../Assets/imgs/Flying around the world-amico.png";
 
@@ -10,9 +9,6 @@ function NewFlight(props) {
     { Id: Yup.number, Name: Yup.string },
   ]);
   const [Planes, setPlanes] = useState([{ Id: Yup.number, Name: Yup.string }]);
-  const [StartId, setStartId] = useState("");
-  const [DestinationId, setDestinationId] = useState("");
-  const [PlaneId, setPlaneId] = useState("");
   const [loading, setloading] = useState(false);
   const [errMsg, seterrMsg] = useState(null);
 
@@ -33,11 +29,7 @@ function NewFlight(props) {
         "Start airport and destination airport cannot be the same"
       ),
     PlaneId: Yup.string().required("Plane is required"),
-    // .test('not-equal', 'Start airport and destination airport cannot be the same', function(value) {
-    //     const { startAirport } = this.parent; // Accessing the value of startAirport
-    //     console.log(startAirport);
-    //     return value === startAirport; // Return true if the destination airport is different from the start airport
-    // })
+
   });
 
   const formik = useFormik({
@@ -53,7 +45,7 @@ function NewFlight(props) {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       setloading(true);
-      // try {
+
       let saveImgResponse;
       const formData = new FormData();
       formData.append("imageURL", values.imageURL);
@@ -64,12 +56,11 @@ function NewFlight(props) {
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data", // Specify content type as multipart/form-data
+            "Content-Type": "multipart/form-data",
           },
         }
       );
-      //   console.log(saveImgResponse);
-      //   console.log(saveImgResponse.data.isSuccess);
+
       if (saveImgResponse.data.isSuccess) {
         try {
           console.log("image saved >> in try");
@@ -92,97 +83,15 @@ function NewFlight(props) {
           );
         }
       }
-      //   let saveImgResponse = await axios.post(`http://localhost:5269/api/Flight/saveImage`, values.Image);
-
-      //   if (data.message === "Token Created Successfully") {
-      //   //  navigate("/home");
-      //     localStorage.setItem('userToken' , data.token)
-      //   //  setUserToken(data.token)
-      //   }
-      // } catch (err) {
       else {
         seterrMsg("An error occurred during saving image.");
       }
-      // }
+      
       setloading(false);
     },
   });
 
-  const addFlight = (e) => {
-    // e.preventDefault();
-    // if (!validateForm()) {
-    //     return;
-    // }
-    if (
-      formik.values.DestinationId === formik.values.StartId ||
-      formik.values.ArrivalTime <= formik.values.DepartureTime
-    )
-      e.preventDefault();
-
-    if (formik.values.StartId === formik.values.DestinationId) {
-      // e.preventDefault();
-      console.log("prevented");
-      document.getElementById("allErrors").innerHTML =
-        "<span className='text-danger'>start airport and destination airport cannot be the same</span>";
-    } else {
-      document.getElementById("allErrors").innerHTML =
-        "<span className='text-danger'></span>";
-    }
-
-    if (formik.values.ArrivalTime <= formik.values.DepartureTime) {
-      // e.preventDefault();
-      console.log("prevented2");
-      document.getElementById("allErrors").innerHTML =
-        "<span className='text-danger'>Arrival time must be after departure time</span>";
-    } else {
-      document.getElementById("allErrors").innerHTML =
-        '<span className="text-danger"></span>';
-    }
-    // Perform any necessary validation
-
-    // Call the addFlight function with necessary data
-    // addFlight({
-
-    // });
-  };
-
-  const handleStartAirportChange = (event) => {
-    setStartId(event.target.value);
-    console.log(StartId);
-  };
-
-  const handleDestinationAirportChange = (event) => {
-    setDestinationId(event.target.value);
-    console.log(DestinationId);
-  };
-  const [imageURL, setimageURL] = useState({});
-  const [errors, setErrors] = useState({});
-
-  const handleImageChange = (event) => {
-    let reader = new FileReader();
-    setimageURL(event.target.files[0]);
-    reader.readAsDataURL(event.target.files[0]);
-    reader.onload = () => {
-      setimageURL(reader.result);
-      console.log(imageURL);
-    };
-  };
-
-  // validation
-  const validateForm = () => {
-    const errors = {};
-    let isValid = true;
-
-    // Validate image
-    if (!imageURL) {
-      errors.imageURL = "Please select an image.";
-      isValid = false;
-    }
-
-    setErrors(errors); // Update errors state
-    return isValid;
-  };
-
+  
   useEffect(() => {
     axios
       .get(`http://localhost:5269/api/Airport`)

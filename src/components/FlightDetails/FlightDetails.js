@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { number } from "yup";
 
 export default function FlightDetails() {
   const [flightDetails, SetFlightDetails] = useState({});
@@ -136,14 +135,6 @@ export default function FlightDetails() {
             </p>
             <br></br> <span style={{ fontWeight: "bold" }}>No stop</span>
           </div>
-
-          {/* <div className="col-md-2 border">
-            <div className="p-2"> {totalPrice} $</div>
-            <div className="p-2">
-              3 seat <span className="fw-light">available</span>
-            </div>
-            <button className="btn btn-danger w-100 m-2">Book Now</button>
-          </div> */}
           <hr></hr>
         </div>
 

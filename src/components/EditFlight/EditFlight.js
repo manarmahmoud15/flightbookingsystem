@@ -1,33 +1,4 @@
-import axios from "axios";
-import { useFormik } from "formik";
-import React, { useEffect, useState } from "react";
-import * as Yup from "yup";
 
-function NewFlight(props) {
-  const [Airports, setAirports] = useState([
-    { Id: Yup.number, Name: Yup.string },
-  ]);
-  const [Planes, setPlanes] = useState([{ Id: Yup.number, Name: Yup.string }]);
-  const [loading, setloading] = useState(false);
-  const [errMsg, seterrMsg] = useState(null);
-
-  const validationSchema = Yup.object({
-    DepartureTime: Yup.date().required("Departure Time is required"),
-    ArrivalTime: Yup.date()
-      .required("Arrival time is required")
-      .min(
-        Yup.ref("DepartureTime"),
-        "Arrival time must be after departure time"
-      ),
-    imageURL: Yup.mixed().required("Image is required"),
-    StartId: Yup.string().required("Start airport is required"),
-    DestinationId: Yup.string()
-      .required("Destination airport is required")
-      .notOneOf(
-        [Yup.ref("StartId")],
-        "Start airport and destination airport cannot be the same"
-      ),
-    PlaneId: Yup.string().required("Plane is required"),
   });
 
   const formik = useFormik({
@@ -82,10 +53,7 @@ function NewFlight(props) {
       } else {
         seterrMsg("An error occurred during saving image.");
       }
-      // }
-      setloading(false);
-    },
-  });
+
 
   useEffect(() => {
     axios
@@ -146,30 +114,7 @@ function NewFlight(props) {
           )}
         </div>
 
-        <div className="form-group m-2">
-          <label htmlFor="DestinationId" className="d-block">
-            Select destination airport:
-          </label>
-          <select
-            id="DestinationId"
-            name="DestinationId"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.destinationAirport}
-            className="form-control"
-          >
-            <option value="" label="Select destination airport" />
-            {Airports.map((item) => (
-              <option key={item.id} value={item.id}>
-                {item.name}
-              </option>
-            ))}
-          </select>
-          {formik.errors.destinationAirport &&
-            formik.touched.destinationAirport && (
-              <p className="text-danger">{formik.errors.destinationAirport}</p>
-            )}
-        </div>
+
 
         <div className="form-group m-2">
           <label htmlFor="PlaneId" className="d-block">
@@ -231,23 +176,6 @@ function NewFlight(props) {
           )}
         </div>
 
-        <div className="form-group m-2">
-          <label htmlFor="imageURL" className="d-block">
-            Image :{" "}
-          </label>
-          <input
-            className="d-block"
-            id="imageURL"
-            name="imageURL"
-            type="file"
-            onBlur={formik.handleBlur}
-            onChange={(event) => {
-              formik.setFieldValue("imageURL", event.currentTarget.files[0]);
-            }}
-          />
-          {formik.errors.imageURL && formik.touched.imageURL && (
-            <p className="text-danger">{formik.errors.imageURL}</p>
-          )}
         </div>
 
         {errMsg !== null && <p className="text-danger">{errMsg}</p>}

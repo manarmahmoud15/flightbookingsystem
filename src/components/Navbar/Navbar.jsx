@@ -12,6 +12,8 @@ export default function AppNavbar() {
   let { userToken, setUserToken } = useContext(userContext);
   const [role, setRole] = useState('');
   let navigate = useNavigate();
+  let userRoles = localStorage.getItem("userroles"); 
+  console.log(userRoles);
 
   function logOut() {
     localStorage.removeItem("userToken");
@@ -60,9 +62,13 @@ export default function AppNavbar() {
               <Link to="addpassenger" className="nav-link">
                 Add New Passenger
               </Link>
-              <Link to="flightDashboard" className="nav-link">
-                flight Dashboard
-              </Link>
+              {userRoles.includes("Admin") && (
+        <Link to="flightDashboard" className="nav-link">
+          Flight Dashboard
+        </Link>
+               )}
+            
+
               <Link to="ticket" className="nav-link">
                 ticket
               </Link>

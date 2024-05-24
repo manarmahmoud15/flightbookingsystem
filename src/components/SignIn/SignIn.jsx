@@ -42,8 +42,14 @@ export default function SignIn() {
         console.log(data);
         if (data.message === "Token Created Successfully") {
           navigate("/home");
-          localStorage.setItem("userToken", data.token);
+          localStorage.setItem("userToken", data.token); 
           setUserToken(data.token);
+          localStorage.setItem("userroles", data.data); 
+
+          if(localStorage.getItem("userroles").includes("Admin"))
+            {
+              navigate("/FlightDashboard");
+            }
         }
       } catch (err) {
         seterrMsg(

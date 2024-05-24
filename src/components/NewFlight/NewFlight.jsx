@@ -79,7 +79,7 @@ function NewFlight(props) {
           console.log(data);
         } catch (err) {
           seterrMsg(
-            err.response?.data?.message || "An error occurred during adding."
+            err.response?.data?.message || "An error occurred during adding."   // handle using this err msg Flight duration cannot be larger than 24 Hours
           );
         }
       }

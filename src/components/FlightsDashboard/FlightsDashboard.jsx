@@ -158,9 +158,9 @@ export default function FlightsDashboard() {
                                   }}                               
 
                                 >
-                                  <Link to='/edit' className="nav-link"> 
+                                  <Link to={`/edit/${flight.id}`} className="nav-link"> 
                                   Update
-                                  </Link>
+                                  </Link>  
                                 </button>
                               </td>
                               <td>

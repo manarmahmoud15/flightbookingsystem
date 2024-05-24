@@ -5,8 +5,6 @@ export let FlightContext = createContext()
 
 export default function FlightContextProvider (props){
     let headers = { token: localStorage.getItem("userToken") };
-
-    const [flight , setFlight] = useState(0); 
     function AddTicket (id ,flightID ,price ,section,FlightClass ) {
         console.log("Context:", {section, price, FlightClass, id, flightID});
         return axios.post (

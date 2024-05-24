@@ -1,15 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import video from "../../Assets/Videos/205873.mp4";
 import { GrLocation } from "react-icons/gr";
 import { IoCalendarNumber } from "react-icons/io5";
-import { RiAccountPinCircleLine } from "react-icons/ri";
 import Discount from "../TopTraveller/Discount";
 import MostVisited from "../MostVisited/MostVisited";
-import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import { MdOutlineFamilyRestroom } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-// import { object } from "yup";
+import { useDispatch } from "react-redux";
 import { makeBooking } from "../../redux/actions";
 import ShowFlight from "../ShowFlight/ShowFlight";
 import axios from "axios";
@@ -22,38 +18,47 @@ export default function Home() {
   const [selectedDestination, setSelectedDestination] = useState("");
   const [selectedCheckIn, setSelectedCheckIn] = useState("");
   const [selectedCheckOut, setSelectedCheckOut] = useState("");
-  // const [adultCount, setAdultCount] = useState(0);
-  // const [childCount, setChildCount] = useState(0);
   const [bookingData, setBookingData] = useState({});
-  const [id , setID] = useState(null)
+  const [id, setID] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const { data } = await axios.get("http://localhost:5269/api/Flight");
         setFlights(data.data);
-        console.log(data.data)
+        console.log(data.data);
       } catch (error) {
         console.error("Failed to fetch flights:", error);
       }
     }
     fetchData();
   }, []);
-  
+
   useEffect(() => {
-    console.log("Selected values:", { selectedSource, selectedDestination, selectedCheckIn, selectedCheckOut });
-    if (selectedSource && selectedDestination && selectedCheckIn && selectedCheckOut) {
+    console.log("Selected values:", {
+      selectedSource,
+      selectedDestination,
+      selectedCheckIn,
+      selectedCheckOut,
+    });
+    if (
+      selectedSource &&
+      selectedDestination &&
+      selectedCheckIn &&
+      selectedCheckOut
+    ) {
       const checkInDate = new Date(selectedCheckIn).toDateString();
       const checkOutDate = new Date(selectedCheckOut).toDateString();
-      const selectedFlight = flights.find(flight =>
-        flight.sourceAirportNum.toString() === selectedSource &&
-        flight.destinationAirportNum.toString() === selectedDestination &&
-        new Date(flight.departureTime).toDateString() === checkInDate &&
-        new Date(flight.arrivalTime).toDateString() === checkOutDate
+      const selectedFlight = flights.find(
+        (flight) =>
+          flight.sourceAirportNum.toString() === selectedSource &&
+          flight.destinationAirportNum.toString() === selectedDestination &&
+          new Date(flight.departureTime).toDateString() === checkInDate &&
+          new Date(flight.arrivalTime).toDateString() === checkOutDate
       );
-  
+
       if (selectedFlight) {
-        setID(selectedFlight.id)
+        setID(selectedFlight.id);
         setBookingData({
           from: selectedFlight.sourceAirportName,
           to: selectedFlight.destinationAirportName,
@@ -62,30 +67,19 @@ export default function Home() {
         });
       } else {
         console.log("No matching flight found");
-        setID(null)
+        setID(null);
         setBookingData({});
       }
     } else {
       setBookingData({});
     }
-  }, [selectedSource, selectedDestination, selectedCheckIn, selectedCheckOut, flights]);
-  
-
-  // const handleIncrement = (type) => {
-  //   if (type === "adult") {
-  //     setAdultCount(adultCount + 1);
-  //   } else {
-  //     setChildCount(childCount + 1);
-  //   }
-  // };
-
-  // const handleDecrement = (type) => {
-  //   if (type === "adult" && adultCount > 0) {
-  //     setAdultCount(adultCount - 1);
-  //   } else if (type === "child" && childCount > 0) {
-  //     setChildCount(childCount - 1);
-  //   }
-  // };
+  }, [
+    selectedSource,
+    selectedDestination,
+    selectedCheckIn,
+    selectedCheckOut,
+    flights,
+  ]);
 
   const handleBook = (e) => {
     e.preventDefault();
@@ -93,32 +87,29 @@ export default function Home() {
       dispatch(makeBooking({ ...bookingData, id: id }));
     } else {
       alert("Please select all fields properly!");
-      console.log(bookingData)
+      console.log(bookingData);
     }
   };
-  console.log(id)
+  //console.log(id)
   const sourceChange = (e) => {
-    e.preventDefault ();
+    e.preventDefault();
     setSelectedSource(e.target.value);
-  setSelectedDestination(""); 
-  setSelectedCheckIn(""); 
-  setSelectedCheckOut(""); 
+    setSelectedDestination("");
+    setSelectedCheckIn("");
+    setSelectedCheckOut("");
   };
   const destinationChange = (e) => {
-    setSelectedDestination(e.target.value); 
-    setSelectedCheckIn(""); 
-    setSelectedCheckOut(""); 
-  }
+    setSelectedDestination(e.target.value);
+    setSelectedCheckIn("");
+    setSelectedCheckOut("");
+  };
   const checkInChange = (e) => {
-    setSelectedCheckIn(e.target.value); 
-  }
+    setSelectedCheckIn(e.target.value);
+  };
   const checkOutChange = (e) => {
-    setSelectedCheckOut(e.target.value); 
-  }
-  const IDChange = (e)=> {
-    setID(e.target.value)
-  }
- 
+    setSelectedCheckOut(e.target.value);
+  };
+
   return (
     <>
       <section className="home">
@@ -162,7 +153,6 @@ export default function Home() {
                       <select
                         required
                         onChange={(e) => sourceChange(e)}
-                        
                         value={selectedSource}
                         name="from"
                         id="from"
@@ -176,8 +166,6 @@ export default function Home() {
                             value={flight.sourceAirportNum}
                           >
                             {flight.sourceAirportName}
-                            
-                            
                           </option>
                         ))}
                       </select>
@@ -221,80 +209,6 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                {/* <div className="searchInput flex">
-                  <div className="singleInput flex">
-                    <div className="iconDiv">
-                      <MdOutlineFamilyRestroom className="icon" />
-                    </div>
-                    <div className="texts">
-                      <h4>Travels</h4>
-                      <Popup
-                        trigger={
-                          <button
-                            onChange={(e) => handleChange(e)}
-                            type="button"
-                            name="travels"
-                            id="travels"
-                            style={{
-                              border: "none",
-                              backgroundColor: "white",
-                            }}
-                          >
-                            Adults : {adultCount} , Child :{childCount}
-                          </button>
-                        }
-                        position="bottom center"
-                        className="w-100"
-                      >
-                        <div className="flex-column">
-                          <div className="flex-row my-3 mx-3">
-                            <p>Adults</p>
-                            <div className="counter-buttons">
-                              <button
-                                className="btn btn-outline-success text-light"
-                                onClick={handleAdultIncrement}
-                                onChange={(e) => handleChange(e)}
-                              >
-                                +
-                              </button>
-                              <span className="mx-2">{adultCount}</span>
-                              <button
-                                className="btn btn-outline-success text-light"
-                                onClick={handleAdultDecrement}
-                                onChange={(e) => handleChange(e)}
-                              >
-                                -
-                              </button>
-                            </div>
-                          </div>
-                          <hr />
-                          <div className="flex-row mx-3">
-                            {" "}
-                           
-                            <p>Childs</p>
-                            <div className="counter-buttons">
-                              <button
-                                className="btn btn-outline-success text-light"
-                                onClick={handleChildIncrement}
-                                onChange={(e) => handleChange(e)}
-                              >
-                                +
-                              </button>
-                              <span className="mx-2">{childCount}</span>
-                              <button
-                                className="btn btn-outline-success text-light"
-                                onClick={handleChildDecrement}
-                                onChange={(e) => handleChange(e)}
-                              >
-                                -
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </Popup>
-                    </div>
-                  </div>
-                </div> */}
 
                 <div className="searchInput flex">
                   <div className="singleInput flex">
@@ -319,7 +233,8 @@ export default function Home() {
                             (flight) =>
                               flight.destinationAirportNum.toString() ===
                                 selectedDestination &&
-                              flight.sourceAirportNum.toString() === selectedSource
+                              flight.sourceAirportNum.toString() ===
+                                selectedSource
                           )
                           .map((flight, index) => (
                             <option
@@ -359,8 +274,9 @@ export default function Home() {
                           .filter(
                             (flight) =>
                               flight.destinationAirportNum.toString() ===
-                              selectedDestination &&
-                              flight.sourceAirportNum.toString() === selectedSource
+                                selectedDestination &&
+                              flight.sourceAirportNum.toString() ===
+                                selectedSource
                           )
                           .map((flight, index) => (
                             <option
@@ -392,7 +308,7 @@ export default function Home() {
       </section>
       <ShowFlight />
       <MostVisited />
-      <BeforeTravel/>
+      <BeforeTravel />
       <Discount />
     </>
   );

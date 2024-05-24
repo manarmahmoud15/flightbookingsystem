@@ -81,11 +81,7 @@ export default function ShowAllFlight() {
               <StyledTableCell>{item.departureTime.split("T")[0]}</StyledTableCell>
               <StyledTableCell>{item.arrivalTime.split("T")[0]}</StyledTableCell>
               <StyledTableCell>{item.duration}</StyledTableCell>
-              <StyledTableCell>
-                {/* <Link to={`/FlightDetails/${item.id}`} className="btn btn-xs bg-blue-500 text-white">
-                  Book Now
-                </Link> */}
-                
+              <StyledTableCell>                
                 <Link to="/ticket" className="btn btn-xs bg-blue-500 text-white">
                   Book Now
                 </Link>

@@ -35,7 +35,4 @@ export default function BeforeTravel() {
     </div>
   );
 }
-//    font-size: 1em;
-// font-family: en;
-// color: #666;
-// margin: 0 0 40px;
+

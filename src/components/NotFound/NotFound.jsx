@@ -1,11 +1,8 @@
 import React from "react";
 import styles from "./NotFound.module.scss";
-import { Link, Navigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 export default function NotFound() {
-  // function goToHome(){
-  //   Navigate("/home");
-  // }
 
   return (
     <>

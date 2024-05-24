@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import * as Yup from "yup"; 
+import { useLocation } from 'react-router-dom';
+
 
 function NewFlight(props) {
     const [Airports, setAirports] = useState([{Id:Yup.number , Name:Yup.string}]); 
@@ -12,6 +14,23 @@ function NewFlight(props) {
     const [PlaneId, setPlaneId] = useState(''); 
     const [loading, setloading] = useState(false);
     const [errMsg, seterrMsg] = useState(null); 
+    const [planeData,setPlaneData ] = useState('')
+    // const location = useLocation();
+    // const { flight } = location.state;
+    // console.log(flight);
+    const param = useParams();
+    console.log('param',param);
+    useEffect(() => {
+      axios
+        .get(`http://localhost:5269/api/Flight/${param.id}`, {
+          param: {
+            page: 1,
+          },
+        })
+        .then((res) => setPlaneData(res.data.data))
+        .catch((error) => console.log(error));
+    }, []);
+console.log(planeData)
    
     const validationSchema = Yup.object({
         DepartureTime: Yup.date()
@@ -214,8 +233,9 @@ const validateForm = () => {
                         onBlur={formik.handleBlur}
                       //  value={formik.values.startAirport} 
                         className="form-control"
+                        // value={flight.sourceAirportId}
                     >
-                        <option value="" label="Select start airport" />
+                        <option value='' label={planeData.sourceAirportCountryName} />
                         {Airports.map((item, index) => (
                             <option key={item.id} value={item.id}>{item.name}</option>
                         ))}
@@ -230,10 +250,11 @@ const validateForm = () => {
                         name='DestinationId' 
                         onChange={formik.handleChange} 
                         onBlur={formik.handleBlur}
-                        value={formik.values.destinationAirport} 
+                       // value={formik.values.destinationAirport} 
                         className="form-control"
+                        // value={flight.destinationAirportId}
                     >
-                        <option value="" label="Select destination airport" />
+                        <option value="" label={planeData.destinationAirportCountryName}  />
                         {Airports.map((item) => (
                             <option key={item.id} value={item.id}>{item.name}</option>
                         ))}
@@ -249,13 +270,25 @@ const validateForm = () => {
                         name='PlaneId' 
                         onChange={formik.handleChange} 
                         onBlur={formik.handleBlur}
-                        value={formik.values.PlaneId} 
+                     //   value={formik.values.PlaneId} 
                         className="form-control"
+                     //   value={pla.planeName}
                     >
-                        <option value="" label="Select Plane" />
+                        
+                        <option value="" label={planeData.planeName} />
                         {Planes.map((item) => (
                             <option key={item.id} value={item.id}>{item.name}</option>
                         ))}
+                        {/* {Planes.map((item) => (
+                            if(item.id == flight.planeId)
+                                {
+                                    <option key={item.id} value={item.id} selected>{item.name}</option>
+                                }
+                                else
+                                {
+                                    <option key={item.id} value={item.id}>{item.name}</option>
+                                }
+                        ))} */}
                     </select>
                     {formik.errors.PlaneId && formik.touched.PlaneId && <p className="text-danger">{formik.errors.PlaneId}</p>}
                 </div>
@@ -307,7 +340,7 @@ const validateForm = () => {
                 <button type="submit" className="btn btn-primary m-2"
                  disabled={!(formik.dirty && formik.isValid)}
                   >
-                    {loading ? 'Loading...' : 'Add'}
+                    {loading ? 'Loading...' : 'Save'}
                 </button>
             </form>
         </div>

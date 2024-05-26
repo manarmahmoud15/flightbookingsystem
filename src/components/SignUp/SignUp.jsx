@@ -32,7 +32,11 @@ export default function SignUp() {
         localStorage.setItem("passengerId", data.data);
         navigate("/signin");
       } else {
-        setErrMsg("Registration failed, please try again.");
+        if (data.message === "Couldn't create Account due to these errors") {
+          setErrMsg("Username already exists, please choose a different one.");
+        } else {
+          setErrMsg("Registration failed, please try again.");
+        }
       }
     } catch (err) {
       console.error(err);

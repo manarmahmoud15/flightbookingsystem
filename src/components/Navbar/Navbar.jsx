@@ -13,7 +13,7 @@ export default function AppNavbar() {
   const [role, setRole] = useState('');
   let navigate = useNavigate();
   let userRoles = localStorage.getItem("userroles"); 
-  console.log(userRoles);
+  console.log('user',userRoles);
 
   function logOut() {
     localStorage.removeItem("userToken");
@@ -26,14 +26,13 @@ export default function AppNavbar() {
       try {
         const { data } = await axios.get("http://localhost:5269/api/Role");
         setRole(data.data);
-        console.log(data.data);
+        console.log('role',data.data.name);
       } catch (error) {
         console.error("Failed to fetch flights:", error);
       }
     }
     fetchData();
   }, []);
-
 
   return (
     <Navbar style={{ backgroundColor: "white", color: "black", fontSize: '17px' }} expand="lg">
@@ -63,19 +62,16 @@ export default function AppNavbar() {
                 Add New Passenger
               </Link>
               {userRoles.includes("Admin") && (
-        <Link to="flightDashboard" className="nav-link">
-          Flight Dashboard
-        </Link>
-               )}
-            
-
+                <Link to="flightDashboard" className="nav-link">
+                  Flight Dashboard
+                </Link>
+              )}
               <Link to="ticket" className="nav-link">
-                ticket
+                Ticket
               </Link>
               <Link to="ShowAllFlight" className="nav-link">
                 Show All Flight
               </Link>
-              
             </Nav>
           ) : (
             ""

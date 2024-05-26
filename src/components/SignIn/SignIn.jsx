@@ -9,8 +9,8 @@ import { userContext } from "../../Context/TokenContext";
 export default function SignIn() {
   let { setUserToken } = useContext(userContext);
   let navigate = useNavigate();
-  const [loading, setloading] = useState(false);
-  const [errMsg, seterrMsg] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [errMsg, setErrMsg] = useState(null);
 
   let validationSchema = Yup.object({
     userName: Yup.string()
@@ -32,7 +32,7 @@ export default function SignIn() {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      setloading(true);
+      setLoading(true);
       try {
         let response = await axios.post(
           "http://localhost:5269/api/Account/login",
@@ -47,16 +47,16 @@ export default function SignIn() {
           localStorage.setItem("userroles", data.data); 
 
           if(localStorage.getItem("userroles").includes("Admin"))
-            {
-              navigate("/FlightDashboard");
-            }
+            navigate("/FlightDashboard");
+        } else {
+          setErrMsg("Invalid username or password.");
         }
       } catch (err) {
-        seterrMsg(
+        setErrMsg(
           err.response?.data?.message || "An error occurred during login."
         );
       }
-      setloading(false);
+      setLoading(false);
     },
   });
 
@@ -85,7 +85,7 @@ export default function SignIn() {
       }
     );
     console.log(res);
-    if (res.data.isSuccess) {
+    if (res?.data?.isSuccess) {
       navigate("/home");
       localStorage.setItem("userToken", res.token);
       setUserToken(res.token);
@@ -143,7 +143,7 @@ export default function SignIn() {
                       ""
                     )}
                   </div>
-                  {errMsg !== null ? <p className="text-danger">{errMsg}</p> : ""}
+                  {errMsg && <p className="text-danger">{errMsg}</p>}
                   <div className="col-md-12 text-end my-2">
                     <button
                       type="submit"
@@ -183,4 +183,4 @@ export default function SignIn() {
       </div>
     </div>
   );
-}
+} 
